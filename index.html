@@ -1,439 +1,540 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>DaisyMo Creatives — Studio Rentals & Self By DMC</title>
-  <meta name="description" content="A modern creative studio in Maple Grove, Minnesota. Rent the space, create content, and book the Self By DMC self-portrait studio." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+  <title>DaisyMo Collective — Studio & Self Sessions</title>
+  <meta name="description" content="DaisyMo — a creative hub for content creators, podcasters and photographers, plus Self by DMC — a fully-equipped DIY self-portrait studio. Book space or reserve a self session." />
+  <meta name="keywords" content="photography studio, self portrait booth, studio rental, podcast studio, DaisyMo" />
+  <link rel="canonical" href="https://bablo247.github.io/daisyMo.landing.page/" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- Calendly widget -->
+  <link rel="stylesheet" href="https://assets.calendly.com/assets/external/widget.css" />
+  <script async src="https://assets.calendly.com/assets/external/widget.js" ></script>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    :root {
-      --bg: #0e0f12;
-      --surface: #14161b;
-      --text: #e9ecf1;
-      --muted: #a9b0bd;
-      --accent: #ff4d8d;  /* CTA / highlight */
-      --accent-2: #6ee7ff; /* subtle creative pop */
-      --border: #242832;
-      --success: #35d07f;
+    :root{
+      --accent: #0f62fe;
+      --muted: #6b7280;
+    }
+    html,body{height:100%;}
+    body{font-family:'Inter',system-ui,Roboto,Arial,'Helvetica Neue',sans-serif;background:#fafafa;color:#0f172a; -webkit-font-smoothing:antialiased; margin:0;}
+    a{transition:all .18s ease;}
+    .brand-logo { height:64px; width:auto; transition:height .25s ease; }
+    .brand-logo.large { height:78px; }
+    /* scale up on large screens */
+    @media (min-width:1200px){
+      .brand-logo { height:88px; }
+      .brand-logo.large { height:110px; }
     }
 
-    * { box-sizing: border-box; }
-    html, body {
-      margin: 0; padding: 0; background: var(--bg); color: var(--text);
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      line-height: 1.5;
+    /* strongly emphasized header title near logos */
+    .brand-strap {
+      font-family: 'Playfair Display', serif;
+      font-weight: 800;
+      color: #07133a;
+      letter-spacing: -0.01em;
+      margin: 0;
+      line-height: 1;
+      font-size: clamp(18px, 2.1vw, 34px); /* responsive, grows on large screens */
     }
+    .brand-sub { font-size: 13px; color:var(--muted); margin-top:4px; }
 
-    /* Layout */
-    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-    header {
-      position: sticky; top: 0; z-index: 50; backdrop-filter: blur(12px);
-      background: rgba(14,15,18,0.7); border-bottom: 1px solid var(--border);
-    }
-    .nav {
-      display: flex; align-items: center; justify-content: space-between; height: 72px;
-    }
-    .brand {
-      display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text);
-    }
-    .logo {
-      width: 36px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      box-shadow: 0 8px 24px rgba(255,77,141,0.25);
-    }
-    .brand h1 { font-family: Poppins, Inter, sans-serif; font-size: 18px; margin: 0; letter-spacing: 0.5px; }
-    nav ul { display: flex; gap: 24px; list-style: none; margin: 0; padding: 0; }
-    nav a {
-      color: var(--muted); text-decoration: none; font-weight: 500; padding: 8px 10px; border-radius: 8px;
-    }
-    nav a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+    header{ backdrop-filter: blur(6px); background:rgba(255,255,255,0.72); border-bottom:1px solid rgba(15,23,42,0.06); z-index:60; position:sticky; top:0; }
+    .header-inner { max-width:1300px; margin:0 auto; padding:18px 22px; display:flex; gap:18px; align-items:center; }
+    .header-left { display:flex; align-items:center; gap:14px; }
+    .header-right { margin-left:auto; display:flex; align-items:center; gap:18px; justify-content:flex-end; }
 
-    .cta {
-      background: var(--accent); color: white; border: none; padding: 10px 16px; border-radius: 10px;
-      font-weight: 700; letter-spacing: 0.3px; cursor: pointer; transition: transform 160ms ease, box-shadow 160ms ease;
-      box-shadow: 0 10px 24px rgba(255,77,141,0.35);
-    }
-    .cta:hover { transform: translateY(-2px); }
-    .cta-outline {
-      background: transparent; color: var(--text); border: 1px solid var(--border); padding: 10px 16px; border-radius: 10px;
-      font-weight: 600; cursor: pointer;
-    }
-    /* Hero */
-    .hero {
-      position: relative; overflow: hidden; padding: 96px 0 72px; border-bottom: 1px solid var(--border);
-    }
-    .hero-grid {
-      display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 32px; align-items: center;
-    }
-    .hero h2 {
-      font-family: Poppins, Inter, sans-serif; font-size: 48px; line-height: 1.1; margin: 0 0 16px;
-    }
-    .hero p { font-size: 18px; color: var(--muted); margin: 0 0 24px; }
-    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .nav { display:flex; gap:18px; align-items:center; }
+    .nav a { color: rgba(15,23,42,0.85); font-weight:600; text-decoration:none; font-size:15px; }
+    .small-ghost { color:var(--muted); font-weight:500; }
 
-    .video-card, .image-card {
-      position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
-      min-height: 340px;
-    }
-    .video-card::after, .image-card::after {
-      content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,22,27,0.0) 0%, rgba(20,22,27,0.6) 70%);
-    }
-    .badge {
-      position: absolute; top: 16px; left: 16px; background: rgba(255,255,255,0.08); border: 1px solid var(--border);
-      padding: 6px 10px; border-radius: 999px; font-size: 12px; color: var(--text);
-    }
-    .card-text {
-      position: absolute; bottom: 16px; left: 16px; right: 16px; font-size: 14px; color: var(--muted);
-    }
+    .cta-primary{ background:linear-gradient(90deg,var(--accent),#0050d4); color:white; padding:12px 20px; border-radius:999px; font-weight:700; box-shadow:0 10px 30px rgba(15,98,254,0.12); display:inline-flex; align-items:center; gap:10px; border:0; cursor:pointer; }
+    .cta-secondary{ padding:10px 14px; border-radius:10px; border:1px solid rgba(2,6,23,0.06); color:var(--muted); font-weight:600; background:white; text-decoration:none; display:inline-flex; align-items:center; }
 
-    /* Sections */
-    section { padding: 72px 0; border-bottom: 1px solid var(--border); }
-    .section-head { display: flex; align-items: end; justify-content: space-between; margin-bottom: 24px; }
-    .section-title {
-      font-family: Poppins, Inter, sans-serif; font-size: 32px; margin: 0;
-    }
-    .section-sub { color: var(--muted); margin: 8px 0 0; max-width: 64ch; }
-    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
-    .card {
-      background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px;
-    }
-    .card h3 {
-      font-size: 20px; margin: 0 0 8px; font-weight: 700;
-    }
-    .card p { color: var(--muted); margin: 0; }
-    .feature {
-      display: flex; gap: 14px; align-items: flex-start; padding: 16px; border: 1px dashed var(--border); border-radius: 12px;
-      background: rgba(255,255,255,0.03);
-    }
-    .feature .dot {
-      width: 10px; height: 10px; border-radius: 999px; background: var(--accent);
-      box-shadow: 0 0 0 6px rgba(255,77,141,0.15);
-      margin-top: 4px;
-    }
+    /* HERO + rest unchanged (kept from previous version, only minimal adjustments) */
+    .hero { position:relative; overflow:visible; }
+    .hero-inner{ max-width:1200px; margin:0 auto; padding:56px 20px; display:grid; grid-template-columns:1fr 560px; gap:28px; align-items:center; }
+    @media (max-width:1000px){ .hero-inner{ grid-template-columns:1fr; padding:36px 18px; } .hero-right{order:-1;} }
 
-    /* Steps */
-    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
-    .step { border: 1px solid var(--border); border-radius: 12px; padding: 16px; background: rgba(255,255,255,0.03); }
-    .step .num { font-weight: 800; color: var(--accent); margin-bottom: 8px; }
+    .kicker{ display:inline-block; background: linear-gradient(90deg, rgba(15,98,254,0.08), rgba(15,98,254,0.06)); color:var(--accent); font-weight:700; padding:6px 12px; border-radius:999px; font-size:13px; }
 
-    /* Gallery */
-    .masonry {
-      column-count: 3; column-gap: 16px;
-    }
-    .masonry .shot {
-      break-inside: avoid; margin-bottom: 16px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border);
-      background: #0b0c10; height: 260px;
-    }
+    .hero-h1{ font-size:clamp(32px,4.5vw,48px); line-height:1.02; letter-spacing:-0.02em; margin-bottom:14px; color:#07133a; }
+    .hero-p{ color:rgba(7,19,58,0.75); max-width:54ch; margin-bottom:22px; font-size:16px; }
 
-    /* Booking */
-    .booking {
-      display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 24px;
-    }
-    .form {
-      background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px;
-    }
-    .field { margin-bottom: 14px; }
-    .label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
-    .input, .select, .date, .time {
-      width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border); background: #0c0d11; color: var(--text);
-    }
-    .muted-note { font-size: 12px; color: var(--muted); margin-top: 6px; }
+    .hero-right { position:relative; border-radius:14px; overflow:hidden; box-shadow: 0 18px 50px rgba(2,6,23,0.06); background:linear-gradient(180deg,#0000,#0000); }
+    .grid-masonry{ display:grid; grid-template-columns: repeat(2,1fr); gap:8px; padding:12px; }
+    .tile{ position:relative; background-size:cover; background-position:center; border-radius:10px; min-height:120px; cursor:pointer; overflow:hidden; will-change:transform; transform-origin:center; transition: transform .36s cubic-bezier(.2,.9,.24,1); }
+    .tile::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0.06), rgba(0,0,0,0.20)); transition:transform .36s ease; }
+    .tile:hover{ transform: translateY(-6px) scale(1.02); }
+    .tile.tall{ grid-row: span 2; min-height:260px; }
+    .tile.wide{ grid-column: span 2; min-height:160px; }
+    .parallax { transform: translateZ(0); }
 
-    .aside {
-      border: 1px solid var(--border); border-radius: 14px; padding: 20px; background: rgba(255,255,255,0.03);
-    }
-    .aside h4 { margin: 0 0 8px; }
-    .aside p { color: var(--muted); margin: 0 0 10px; }
-    .notice {
-      display: flex; gap: 12px; align-items: flex-start; padding: 12px; border-radius: 10px; background: rgba(255,77,141,0.08);
-      border: 1px solid rgba(255,77,141,0.3);
-    }
+    .services { max-width:1200px; margin:36px auto; display:grid; grid-template-columns:repeat(2,1fr); gap:18px; padding:0 20px; }
+    @media (max-width:900px){ .services{ grid-template-columns:1fr; } }
+    .service-card { background: linear-gradient(180deg,#fff,#fbfbff); border-radius:14px; padding:22px; box-shadow: 0 12px 30px rgba(3,10,27,0.06); display:flex; gap:18px; align-items:center; border:1px solid rgba(2,6,23,0.04); }
+    .service-card img{ width:90px; height:90px; object-fit:cover; border-radius:10px; flex-shrink:0; }
+    .service-card h3{ font-size:18px; margin-bottom:6px; color:#07133a; }
 
-    /* Footer */
-    footer { padding: 48px 0; }
-    .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 24px; }
-    .foot h5 { margin: 0 0 10px; font-size: 16px; font-weight: 700; }
-    .foot a { display: inline-block; color: var(--muted); text-decoration: none; margin: 6px 0; }
-    .foot a:hover { color: var(--text); }
+    .modal-backdrop{ position:fixed; inset:0; background:rgba(3,7,18,0.6); display:flex; align-items:center; justify-content:center; z-index:1300; padding:20px; }
+    .modal-card{ background:white; border-radius:12px; max-width:720px; width:100%; box-shadow:0 30px 80px rgba(2,6,23,0.3); padding:20px; }
 
-    /* Responsive */
-    @media (max-width: 1024px) {
-      .hero-grid { grid-template-columns: 1fr; }
-      .booking { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 768px) {
-      nav ul { gap: 14px; }
-      .grid-3 { grid-template-columns: 1fr; }
-      .grid-2 { grid-template-columns: 1fr; }
-      .masonry { column-count: 1; }
-      .hero h2 { font-size: 36px; }
+    .lightbox{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:1200; background:rgba(3,7,18,0.86); padding:20px; }
+    .lightbox img{ max-width:96%; max-height:92vh; border-radius:10px; box-shadow:0 30px 80px rgba(2,6,23,0.6); }
+
+    .reveal-up{ transform: translateY(18px); opacity:0; transition: transform .6s cubic-bezier(.2,.9,.24,1), opacity .6s ease; will-change:transform,opacity; }
+    .reveal-up.in{ transform:none; opacity:1; }
+
+    .sr-only{ position:absolute; left:-10000px; width:1px; height:1px; top:auto; overflow:hidden; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .tile, .cta-primary, .reveal-up { transition: none !important; transform: none !important; }
     }
   </style>
 </head>
-
 <body>
-  <!-- Header -->
+
+  <a class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-white px-3 py-2 rounded shadow" href="#main">Skip to content</a>
+
+  <!-- HEADER -->
   <header>
-    <div class="container nav">
-      <a class="brand" href="#">
-        <span class="logo" aria-hidden="true"></span>
-        <h1>DaisyMo Creatives</h1>
-      </a>
-      <nav>
-        <ul>
-          <li><a href="#rentals">Studio rentals</a></li>
-          <li><a href="#self">Self By DMC</a></li>
-          <li><a href="#gallery">Gallery</a></li>
-          <li><a href="#booking" class="cta">Book now</a></li>
-        </ul>
-      </nav>
+    <div class="header-inner">
+      <div class="header-left">
+        <a href="#top" aria-label="DaisyMo home" class="flex items-center gap-5" style="text-decoration:none;">
+          <img src="assets.LNPG/WhatsApp_Image_2025-10-31_at_23.48.33_4e0b2b6-removebg-preview.png" alt="DaisyMo logo" class="brand-logo large" />
+        </a>
+         <!-- second logo emphasized (smaller stack) -->
+          <a href="#top" aria-label="Self by DMC" style="display:flex; align-items:center; margin-left:8px;">
+            <img src="assets.LNPG/logo-removebg-preview (1).png" alt="Self by DMC" class="brand-logo" style="filter: drop-shadow(0 6px 18px rgba(15,23,42,0.06));"/>
+          </a>
+
+
+       
+
+      <!-- right-aligned nav & CTAs -->
+      <div class="header-right">
+        <nav class="nav" role="navigation" aria-label="Main navigation">
+          <a href="#branches" class="">Spaces</a>
+          <a href="#gallery" class="small-ghost">Gallery</a>
+          <a href="#contact" class="small-ghost">Contact</a>
+        </nav>
+
+        <div style="display:flex; gap:12px; align-items:center;">
+          <button id="primaryBookBtn" class="cta-primary" data-calendly="YOUR_CALENDLY_SCHEDULING_LINK" aria-label="Book a Session">Book a Session</button>
+          <a href="https://bablo247.github.io/daisycollective/" class="cta-secondary">Creative Space</a>
+
+         
+          <!-- mobile menu toggle (visible on small screens only) -->
+          <button id="mobileBtn" aria-expanded="false" aria-label="Open menu" class="md:hidden p-2 rounded-lg ring-1 ring-gray-200" style="display:none;">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"/>
+            </svg>
+          </button>
+        </div>
+      </div>
     </div>
+
+    <!-- mobile nav drawer (kept hidden by default; show via styles if you enable mobile button) -->
+    <nav id="mobileNav" class="hidden" style="display:none;" aria-hidden="true">
+      <div style="padding:12px;">
+        <a href="#branches" class="block py-2">Spaces</a>
+        <a href="#gallery" class="block py-2">Gallery</a>
+        <a href="#contact" class="block py-2">Contact</a>
+        <div style="display:flex; gap:8px; padding-top:8px;">
+          <a href="#" id="mobileBookBtn" class="cta-secondary" style="flex:1; text-align:center;">Book</a>
+          <a href="https://bablo247.github.io/daisycollective/" class="cta-primary" style="flex:1; text-align:center;">Studio</a>
+        </div>
+      </div>
+    </nav>
   </header>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="container hero-grid">
+  <main id="main" class="relative">
+
+    <!-- HERO -->
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-inner">
+        <div class="hero-left">
+           <!-- prominent brand title next to logo -->
+        <div style="display:flex; flex-direction:column; gap:2px;">
+          <div class="brand-strap">DaisyMo Creative</div>
+          <div class="brand-sub">Creative hub & Self Portrait Studio</div>
+        </div>
+      </div>
+          <span class="kicker reveal-up">Two Spaces • One Creative House</span>
+          <h1 id="hero-title" class="hero-h1 text-display reveal-up">A creative hub for makers. A self-portrait studio for doers.</h1>
+          <p class="hero-p reveal-up">DaisyMo Creative is a flexible creative hub for content creators, podcasters, photographers and small teams — rent workspace, host workshops, record podcasts or run collaborative shoots. <strong>Self by DMC</strong> is our walk-in, fully-equipped self-portrait studio: preset lighting, curated backdrops and simple controls so you can produce professional-grade images without a photographer.</p>
+
+          <div class="flex items-center gap-3 mt-6 reveal-up">
+            <button id="openBooking" class="cta-primary" aria-haspopup="dialog" aria-controls="bookingModal" data-calendly="YOUR_CALENDLY_SCHEDULING_LINK">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden class="inline-block"><rect x="3" y="5" width="18" height="16" rx="2" stroke="white" stroke-width="1.6"/><path d="M16 3v4M8 3v4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Book a Session
+            </button>
+            <a href="https://bablo247.github.io/daisycollective/" class="cta-secondary">Book the Creative Space</a>
+          </div>
+
+          <div class="mt-8 flex items-center gap-6 text-sm" style="color:var(--muted);">
+            <div class="flex items-center gap-3">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="text-blue-600"><path d="M12 20v-6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div>
+                <div class="font-semibold">Flexible bookings</div>
+                <div class="text-xs">Hourly & daily options for creators and teams</div>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="text-blue-600"><circle cx="12" cy="12" r="9" stroke-width="1.6"/></svg>
+              <div>
+                <div class="font-semibold">Self sessions</div>
+                <div class="text-xs">Pre-set lighting, curated backdrops, instant previews</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero-right" aria-hidden="true">
+          <div class="grid-masonry" id="gallery">
+            <div class="tile tall parallax reveal-up" role="button" data-src="assets.LNPG/a8a63ff5-3ed2-44f1-a124-7430ced43885.jpg" style="background-image:url('assets.LNPG/a8a63ff5-3ed2-44f1-a124-7430ced43885.jpg');"></div>
+            <div class="tile parallax reveal-up" role="button" data-src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.32_9fe16f1e.jpg" style="background-image:url('assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.32_9fe16f1e.jpg');"></div>
+            <div class="tile wide parallax reveal-up" role="button" data-src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.33_a5cc0da1.jpg" style="background-image:url('assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.33_a5cc0da1.jpg');"></div>
+            <div class="tile parallax reveal-up" role="button" data-src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.35_344561ca.jpg" style="background-image:url('assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.35_344561ca.jpg');"></div>
+            <div class="tile tall parallax reveal-up" role="button" data-src="assets.LNPG/2dff7f6f-9a87-445b-beb9-707355642fd3.jpg" style="background-image:url('assets.LNPG/2dff7f6f-9a87-445b-beb9-707355642fd3.jpg');"></div>
+            <div class="tile parallax reveal-up" role="button" data-src="assets.LNPG/c364c6a1-8435-4395-a662-c4b1288b5ca1.jpg" style="background-image:url('assets.LNPG/c364c6a1-8435-4395-a662-c4b1288b5ca1.jpg');"></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Services / Spaces -->
+    <section id="branches" class="services" aria-label="Studio spaces">
+      <article class="service-card reveal-up" aria-labelledby="studio-title">
+        <img src="assets.LNPG/c364c6a1-8435-4395-a662-c4b1288b5ca1.jpg" alt="DaisyMo Creative Hub" loading="lazy">
+        <div>
+          <h3 id="studio-title">DaisyMo Creative — Creative Hub</h3>
+          <p class="text-sm text-gray-600">
+            A flexible, community-first space for creators — content creators, podcasters, photographers, and small teams. Book workspace, host workshops, record podcasts or run collaborative shoots. Bring your ideas; we provide the space, power and reliable internet.
+          </p>
+          <div class="mt-3 flex gap-3">
+            <a href="https://bablo247.github.io/daisycollective/" class="cta-secondary">Book the Creative Space</a>
+            <a href="mailto:inquiries@daisymocollective.com" class="text-sm" style="color:var(--muted)">Enquire</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="service-card reveal-up" aria-labelledby="self-title">
+        <img src="assets.LNPG/WhatsApp Image 2025-11-21 at 09.27.46_84f86004.jpg" alt="Self by DMC — Self Portrait Studio" loading="lazy">
+        <div>
+          <h3 id="self-title">Self by DMC — Self-Portrait Studio</h3>
+          <p class="text-sm text-gray-600">
+            A walk-in, fully-configured self-portrait experience. Pre-set lighting, curated backdrops, tethered previews and simple controls let you create professional-grade photos without a photographer — perfect for portfolios, socials and quick personal shoots.
+          </p>
+          <div class="mt-3 flex gap-3">
+            <a href="https://bablo247.github.io/daisysolo/" class="cta-primary">Reserve a Self Session</a>
+            <a href="#gallery" class="text-sm" style="color:var(--muted)">See examples</a>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- Amenities -->
+    <section class="max-w-6xl mx-auto px-6 py-12">
+      <div class="mb-8 text-center">
+        <h2 class="text-2xl font-semibold text-gray-900">What you get</h2>
+        <p class="text-gray-600 mt-2 max-w-2xl mx-auto">Everything you need to make professional images — we provide the space, lighting, and know-how.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="p-6 bg-white rounded-xl shadow-sm border">
+          <h4 class="font-semibold mb-2">Equipment</h4>
+          <ul class="text-sm text-gray-600 list-disc list-inside space-y-1">
+            <li>Full lighting kit & modifiers</li>
+            <li>Tethering & live previews</li>
+            <li>Backdrops & props</li>
+          </ul>
+        </div>
+
+        <div class="p-6 bg-white rounded-xl shadow-sm border">
+          <h4 class="font-semibold mb-2">Support</h4>
+          <ul class="text-sm text-gray-600 list-disc list-inside space-y-1">
+            <li>On-site assistant (optional)</li>
+            <li>Booking & scheduling</li>
+            <li>File delivery & storage</li>
+          </ul>
+        </div>
+
+        <div class="p-6 bg-white rounded-xl shadow-sm border">
+          <h4 class="font-semibold mb-2">Comfort & Community</h4>
+          <ul class="text-sm text-gray-600 list-disc list-inside space-y-1">
+            <li>Vanity & changing area</li>
+            <li>Snacks & drinks</li>
+            <li>Free Wi-Fi and workshop-friendly layout</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- open house / event card -->
+    <section class="max-w-6xl mx-auto px-6 py-8">
+      <div class="bg-gradient-to-r from-white to-gray-50 rounded-xl p-6 md:p-8 border shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
+        <div>
+          <div class="text-sm text-gray-500">Next event</div>
+          <div class="text-xl font-semibold mt-1">Creative Hub Open House — 29 Nov 2025</div>
+          <div class="text-sm text-gray-600 mt-1">Drop by to tour the creative hub & try a self session in our Self by DMC studio.</div>
+        </div>
+        <div class="flex gap-3">
+          <a id="openHouseMapBtn" class="cta-secondary" href="#map">View map</a>
+          <button id="addToCalBtn" class="cta-primary">Add to calendar</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAP -->
+    <div id="map" class="hidden max-w-6xl mx-auto px-6 py-8">
+      <div class="bg-white border rounded-xl p-4">
+        <iframe width="100%" height="300" frameborder="0" style="border:0" loading="lazy"
+          src="https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_EMBED_KEY&q=10650+County+Rd+81+Ste+U+Maple+Grove+MN+55369"
+          aria-label="Studio location map"></iframe>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer id="contact" class="px-6 py-10">
+    <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-8">
       <div>
-        <h2>A creative playground in Maple Grove</h2>
-        <p>Rent inspiring studio space for content creation, and capture timeless portraits in our fully set up self-portrait studio. Book, show up, create—your vision, your vibe.</p>
-        <div class="hero-actions">
-          <a href="#rentals"><button class="cta">Explore studio rentals</button></a>
-          <a href="#self"><button class="cta-outline">Discover Self By DMC</button></a>
-        </div>
+        <img src="assets.LNPG/logo-removebg-preview (1).png" alt="DaisyMo" class="brand-logo mb-3">
+        <p class="text-sm text-gray-600">One house — two experiences. A creative hub for makers and a self-portrait studio for doers.</p>
       </div>
-
-      <div class="video-card" aria-label="Studio preview">
-        <span class="badge">Studio walkthrough</span>
-        <!-- Replace with your image/video -->
-        <div class="card-text">Modern lighting, flexible layouts, and props ready for creators.</div>
+      <div>
+        <h4 class="font-semibold mb-3">Spaces</h4>
+        <ul class="text-sm text-gray-600 space-y-2">
+          <li><a href="https://bablo247.github.io/daisycollective/" class="hover:underline">DaisyMo Creative</a></li>
+          <li><a href="https://bablo247.github.io/daisysolo/" class="hover:underline">Self by DMC</a></li>
+        </ul>
       </div>
-    </div>
-  </section>
-
-  <!-- Studio Rentals -->
-  <section id="rentals">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <h3 class="section-title">Studio rentals</h3>
-          <p class="section-sub">Use DaisyMo Creatives for professional photo and video shoots, podcasting, and content production. Come as a creator with your own gear—or tap into our equipment and setups on-site.</p>
-        </div>
-        <a href="#booking"><button class="cta">Reserve a slot</button></a>
+      <div>
+        <h4 class="font-semibold mb-3">Contact</h4>
+        <ul class="text-sm text-gray-600 space-y-2">
+          <li><a href="mailto:admin@daisymocollective.com" class="hover:underline">admin@daisymocollective.com</a></li>
+          <li><a href="https://wa.me/17632098807" target="_blank" rel="noopener" class="hover:underline">WhatsApp</a></li>
+        </ul>
       </div>
-
-      <div class="grid-3">
-        <div class="card">
-          <h3>Flexible layouts</h3>
-          <p>Modular backdrops, movable furniture, and zones for set-building, interviews, and product shoots.</p>
-        </div>
-        <div class="card">
-          <h3>Pro lighting</h3>
-          <p>Softboxes, LED panels, and practicals positioned for flattering, consistent light.</p>
-        </div>
-        <div class="card">
-          <h3>Creator-friendly</h3>
-          <p>Power access, sound-treated corners, and a cozy lounge for planning and resets.</p>
-        </div>
-      </div>
-
-      <div class="grid-2" style="margin-top: 24px;">
-        <div class="feature">
-          <span class="dot" aria-hidden="true"></span>
-          <div>
-            <strong>Hourly & daily rentals</strong>
-            <p class="section-sub">Book the time you need—simple, transparent pricing. Add-ons available for gear and assistance.</p>
-          </div>
-        </div>
-        <div class="feature">
-          <span class="dot" aria-hidden="true"></span>
-          <div>
-            <strong>Bring your team</strong>
-            <p class="section-sub">Photographers, videographers, and clients are all welcome. The space supports collaborative work.</p>
-          </div>
+      <div>
+        <h4 class="font-semibold mb-3">Follow</h4>
+        <div class="flex items-center gap-3">
+          <a href="#" aria-label="Instagram" class="text-gray-700">IG</a>
+          <a href="#" aria-label="TikTok" class="text-gray-700">TT</a>
+          <a href="#" aria-label="Facebook" class="text-gray-700">FB</a>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- Self By DMC -->
-  <section id="self">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <h3 class="section-title">Self By DMC</h3>
-          <p class="section-sub">Enjoy professional portraits without a photographer. The camera and lighting are fully set up—use the remote, strike your pose, and receive your images by email.</p>
-        </div>
-        <a href="#booking"><button class="cta">Book a portrait session</button></a>
-      </div>
-
-      <div class="steps">
-        <div class="step">
-          <div class="num">1 · Book</div>
-          <p>Select your date and time online. Add optional backdrops or props.</p>
-        </div>
-        <div class="step">
-          <div class="num">2 · Shoot</div>
-          <p>Walk in, tap the remote, and capture a series of portraits in perfect light.</p>
-        </div>
-        <div class="step">
-          <div class="num">3 · Receive</div>
-          <p>Your portraits are delivered to your email. Share, download, or print.</p>
-        </div>
-      </div>
-
-      <div class="grid-2" style="margin-top: 24px;">
-        <div class="image-card" aria-label="Self portrait setup">
-          <span class="badge">Portrait setup</span>
-          <!-- Replace with a sample portrait image -->
-          <div class="card-text">Styled backdrop + guided lighting + remote shutter. Effortless, empowering.</div>
-        </div>
-        <div class="aside">
-          <h4>Session notes</h4>
-          <p>Arrive 10 minutes early. A studio assistant can help with simple adjustments.</p>
-          <div class="notice">
-            <div style="width:10px;height:10px;border-radius:999px;background:var(--accent);margin-top:4px;"></div>
-            <div>
-              <strong>Instant delivery</strong>
-              <p class="section-sub">Images are sent to your email after the session. If you prefer edits, add retouching at checkout.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Gallery -->
-  <section id="gallery">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <h3 class="section-title">Gallery</h3>
-          <p class="section-sub">See the space in action: portraits, set builds, product shoots, and behind-the-scenes moments.</p>
-        </div>
-        <a href="#booking"><button class="cta-outline">View availability</button></a>
-      </div>
-
-      <div class="masonry">
-        <!-- Replace divs with <img> tags or background images -->
-        <div class="shot"></div>
-        <div class="shot"></div>
-        <div class="shot"></div>
-        <div class="shot"></div>
-        <div class="shot"></div>
-        <div class="shot"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Booking -->
-  <section id="booking">
-    <div class="container booking">
-      <div class="form">
-        <h3 class="section-title" style="margin-bottom: 8px;">Book your session</h3>
-        <p class="section-sub">Choose studio rentals or Self By DMC, then select your date and time.</p>
-
-        <form onsubmit="event.preventDefault(); alert('Thanks! We will confirm your booking by email.');">
-          <div class="field">
-            <label class="label" for="name">Full name</label>
-            <input class="input" id="name" name="name" type="text" placeholder="Your name" required />
-          </div>
-          <div class="field">
-            <label class="label" for="email">Email</label>
-            <input class="input" id="email" name="email" type="email" placeholder="you@example.com" required />
-          </div>
-          <div class="field">
-            <label class="label" for="service">Service</label>
-            <select class="select" id="service" name="service" required>
-              <option value="">Select a service</option>
-              <option value="rental">Studio rental</option>
-              <option value="self">Self By DMC — Self-portrait</option>
-            </select>
-          </div>
-          <div class="grid-2">
-            <div class="field">
-              <label class="label" for="date">Date</label>
-              <input class="date" id="date" name="date" type="date" required />
-            </div>
-            <div class="field">
-              <label class="label" for="time">Time</label>
-              <input class="time" id="time" name="time" type="time" required />
-            </div>
-          </div>
-          <div class="field">
-            <label class="label" for="notes">Notes</label>
-            <textarea class="input" id="notes" name="notes" rows="4" placeholder="Share any details or add-ons you need"></textarea>
-          </div>
-          <button class="cta" type="submit">Request booking</button>
-          <p class="muted-note">You’ll receive a confirmation email with details and optional add-ons.</p>
-        </form>
-      </div>
-
-      <div class="aside">
-        <h4>Location</h4>
-        <p>Maple Grove, Minnesota</p>
-        <div class="notice" style="margin-top: 8px;">
-          <div style="width:10px;height:10px;border-radius:999px;background:var(--accent-2);margin-top:4px;"></div>
-          <div>
-            <strong>Parking</strong>
-            <p class="section-sub">On-site parking available. Please arrive a few minutes early for check-in.</p>
-          </div>
-        </div>
-
-        <h4 style="margin-top: 18px;">Hours</h4>
-        <p>Mon–Sat: 9:00 AM – 8:00 PM · Sun: 10:00 AM – 6:00 PM</p>
-
-        <h4 style="margin-top: 18px;">Contact</h4>
-        <p>hello@daisymo.studio · @daisymocreatives</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="container footer-grid">
-      <div class="foot">
-        <h5>DaisyMo Creatives</h5>
-        <p class="section-sub">A modern studio for content creators and self-portrait sessions in Maple Grove, Minnesota.</p>
-      </div>
-      <div class="foot">
-        <h5>Explore</h5>
-        <a href="#rentals">Studio rentals</a><br/>
-        <a href="#self">Self By DMC</a><br/>
-        <a href="#gallery">Gallery</a><br/>
-        <a href="#booking">Book now</a>
-      </div>
-      <div class="foot">
-        <h5>Policies</h5>
-        <a href="#">Studio rules</a><br/>
-        <a href="#">Rescheduling</a><br/>
-        <a href="#">Privacy</a>
-      </div>
-    </div>
-    <div class="container" style="margin-top: 24px; border-top: 1px solid var(--border); padding-top: 16px;">
-      <p class="section-sub">© <span id="year"></span> DaisyMo Creatives. All rights reserved.</p>
+    <div class="max-w-7xl mx-auto mt-8 text-center small text-gray-600">
+      © <span id="year"></span> DaisyMo. All rights reserved.
     </div>
   </footer>
 
+  <!-- Cookie consent -->
+  <div id="consentBanner" class="hidden fixed bottom-6 left-6 right-6 max-w-4xl mx-auto z-50">
+    <div class="bg-white p-4 rounded-xl shadow-lg flex items-center justify-between gap-4">
+      <div>
+        <div class="font-semibold">Analytics & cookies</div>
+        <div class="text-sm text-gray-600">We use analytics to improve the site. You can accept or manage settings.</div>
+      </div>
+      <div class="flex gap-2">
+        <button id="rejectGA" class="px-4 py-2 rounded-lg border">Reject</button>
+        <button id="acceptGA" class="px-4 py-2 rounded-lg bg-blue-600 text-white">Accept</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox placeholder -->
+  <div id="lightbox" class="hidden" aria-hidden="true"></div>
+
+  <!-- Booking modal -->
+  <div id="bookingModal" class="hidden" role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle">
+    <div class="modal-backdrop" tabindex="-1">
+      <div class="modal-card">
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px;">
+          <h3 id="bookingModalTitle" class="text-lg font-semibold">Book a Session</h3>
+          <button id="closeBooking" aria-label="Close booking">✕</button>
+        </div>
+
+        <form id="bookingForm" class="mt-4 grid gap-3">
+          <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:8px;">
+            <input name="name" placeholder="Your name" required class="border rounded px-3 py-2" />
+            <input name="email" type="email" placeholder="Email address" required class="border rounded px-3 py-2" />
+          </div>
+          <input name="phone" placeholder="Phone (optional)" class="border rounded px-3 py-2" />
+          <label class="text-sm text-gray-600">Preferred date & time</label>
+          <input name="datetime" type="datetime-local" class="border rounded px-3 py-2" />
+          <textarea name="notes" placeholder="Any notes or requests (optional)" rows="4" class="border rounded px-3 py-2"></textarea>
+
+          <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:8px;">
+            <button type="button" id="bookingCancel" class="px-4 py-2 rounded border">Cancel</button>
+            <button type="submit" class="px-4 py-2 rounded bg-blue-600 text-white">Send Request</button>
+          </div>
+        </form>
+
+        <div class="text-xs text-gray-500" style="margin-top:12px;">This form will open an email draft with your request (quick fallback). If you use Calendly, the Calendly widget will be used first.</div>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // Year
+    // set year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Optional: Smooth scroll for internal links
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        const id = a.getAttribute('href').slice(1);
-        const el = document.getElementById(id);
-        if (el) {
-          e.preventDefault();
-          window.scrollTo({ top: el.offsetTop - 64, behavior: 'smooth' });
-        }
+    // reveal on scroll
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
       });
+    }, { threshold: 0.16 });
+    document.querySelectorAll('.reveal-up').forEach(el => io.observe(el));
+
+    // gallery parallax & lightbox
+    const gallery = document.getElementById('gallery');
+    if(gallery) {
+      const tiles = gallery.querySelectorAll('.parallax');
+      function handlePointer(e){
+        const rect = gallery.getBoundingClientRect();
+        const cx = rect.left + rect.width/2;
+        const cy = rect.top + rect.height/2;
+        tiles.forEach((tile,i)=>{
+          const depth = (i % 3) * 0.8 + 0.6;
+          const dx = ((e.clientX || (rect.left + rect.width/2)) - cx) / rect.width;
+          const dy = ((e.clientY || (rect.top + rect.height/2)) - cy) / rect.height;
+          const tx = dx * depth * 6;
+          const ty = dy * depth * 6;
+          tile.style.transform = `translate3d(${tx}px, ${ty}px, 0) scale(${1 + depth*0.002})`;
+        });
+      }
+      if(window.matchMedia("(pointer: fine) and (min-width: 900px)").matches){
+        gallery.addEventListener('mousemove', handlePointer);
+        gallery.addEventListener('mouseleave', ()=> tiles.forEach(t=> t.style.transform = 'translate3d(0,0,0) scale(1)'));
+      } else {
+        window.addEventListener('scroll', ()=> {
+          const rect = gallery.getBoundingClientRect();
+          tiles.forEach((tile, i)=>{
+            const offset = (rect.top * ( (i % 4) - 1.5 )) * 0.02;
+            tile.style.transform = `translateY(${offset}px)`;
+          });
+        });
+      }
+
+      // lightbox
+      const lightbox = document.getElementById('lightbox');
+      gallery.addEventListener('click', (e) => {
+        const tile = e.target.closest('.tile');
+        if(!tile) return;
+        const src = tile.getAttribute('data-src');
+        if(!src) return;
+        lightbox.innerHTML = '';
+        const wrapper = document.createElement('div');
+        wrapper.className = 'lightbox';
+        wrapper.tabIndex = 0;
+        wrapper.innerHTML = `<img src="${src}" alt="Gallery image" loading="eager">`;
+        wrapper.addEventListener('click', ()=> { lightbox.innerHTML=''; lightbox.classList.add('hidden'); document.body.style.overflow=''; });
+        lightbox.appendChild(wrapper);
+        lightbox.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      });
+    }
+
+    // Booking (Calendly primary, modal fallback)
+    const primaryBookBtn = document.getElementById('primaryBookBtn');
+    const openBooking = document.getElementById('openBooking');
+    const bookingModal = document.getElementById('bookingModal');
+    const closeBooking = document.getElementById('closeBooking');
+    const bookingCancel = document.getElementById('bookingCancel');
+    const mobileBookBtn = document.getElementById('mobileBookBtn');
+
+    function openModal(){
+      bookingModal.classList.remove('hidden');
+      bookingModal.querySelector('.modal-backdrop').focus();
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(){
+      bookingModal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+    function openCalendly(link){
+      if(!link) return false;
+      try {
+        Calendly.initPopupWidget({ url: link });
+        return true;
+      } catch(err){
+        return false;
+      }
+    }
+    function handlePrimaryClick(e){
+      e.preventDefault();
+      const link = e.currentTarget.getAttribute('data-calendly');
+      const ok = openCalendly(link);
+      if(!ok) openModal();
+    }
+    primaryBookBtn?.addEventListener('click', handlePrimaryClick);
+    openBooking?.addEventListener('click', handlePrimaryClick);
+    mobileBookBtn?.addEventListener('click', function(e){ e.preventDefault(); openModal(); });
+    closeBooking?.addEventListener('click', closeModal);
+    bookingCancel?.addEventListener('click', closeModal);
+
+    const bookingForm = document.getElementById('bookingForm');
+    bookingForm?.addEventListener('submit', function(e){
+      e.preventDefault();
+      const fd = new FormData(bookingForm);
+      const name = fd.get('name') || 'No name';
+      const email = fd.get('email') || '';
+      const phone = fd.get('phone') || '';
+      const datetime = fd.get('datetime') || '';
+      const notes = fd.get('notes') || '';
+      const subject = encodeURIComponent('Booking request — ' + name);
+      const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nPreferred date/time: ${datetime}\nNotes: ${notes}`);
+      window.location.href = `mailto:inquiries@daisymocollective.com?subject=${subject}&body=${body}`;
+      closeModal();
     });
+
+    // consent banner
+    const consentBanner = document.getElementById('consentBanner');
+    const acceptBtn = document.getElementById('acceptGA');
+    const rejectBtn = document.getElementById('rejectGA');
+    function showConsent(){ const seen = localStorage.getItem('daisymo_ga_consent'); if(seen === null){ consentBanner.classList.remove('hidden'); } else if(seen === 'granted'){ } }
+    acceptBtn?.addEventListener('click', ()=>{ localStorage.setItem('daisymo_ga_consent','granted'); consentBanner.classList.add('hidden'); });
+    rejectBtn?.addEventListener('click', ()=>{ localStorage.setItem('daisymo_ga_consent','denied'); consentBanner.classList.add('hidden'); });
+    showConsent();
+
+    // map toggle & ICS
+    document.getElementById('openHouseMapBtn')?.addEventListener('click', (e)=>{ e.preventDefault(); document.getElementById('map').classList.toggle('hidden'); location.hash = '#map'; });
+    document.getElementById('addToCalBtn')?.addEventListener('click', function(){
+      const eventISO = '2025-11-29T13:00:00-06:00';
+      const eventEndISO = '2025-11-29T17:00:00-06:00';
+      const eventTitle = 'DaisyMo Creative — Open House';
+      const eventDesc = 'Open House at DaisyMo Creative — tour the hub and try a self session.';
+      const eventLocation = '10650 County Rd 81, Ste U, Maple Grove, MN 55369';
+      function toICSDate(dt){ return dt.toISOString().replace(/[-:]/g,'').split('.')[0] + 'Z'; }
+      const start = new Date(eventISO); const end = new Date(eventEndISO);
+      const icsLines = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//DaisyMo//OpenHouse//EN','CALSCALE:GREGORIAN','METHOD:REQUEST','BEGIN:VEVENT',
+        `DTSTART:${toICSDate(start)}`, `DTEND:${toICSDate(end)}`, `DTSTAMP:${toICSDate(new Date())}`, `SUMMARY:${eventTitle}`,
+        `DESCRIPTION:${eventDesc}`, `LOCATION:${eventLocation}`,'END:VEVENT','END:VCALENDAR'];
+      const blob = new Blob([icsLines.join('\n')], { type: 'text/calendar;charset=utf-8' });
+      const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'daisymo-open-house.ics'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),1000);
+    });
+
+    // accessibility: close on Escape
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape'){ const lightbox = document.getElementById('lightbox'); if(lightbox) { lightbox.innerHTML=''; lightbox.classList.add('hidden'); document.body.style.overflow=''; } closeModal(); } });
+
+    // small screens: disable heavy transforms
+    if(window.matchMedia("(max-width: 768px)").matches){
+      document.querySelectorAll('.tile').forEach(t => t.style.transition = 'none');
+    }
   </script>
+
 </body>
 </html>
