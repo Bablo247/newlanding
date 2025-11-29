@@ -214,18 +214,41 @@
     .social-links a svg { width:18px; height:18px; display:block; }
     .social-links a:hover { background: rgba(255,255,255,0.12); transform: translateY(-3px); }
 
-    /* Mobile behavior */
+    /* Mobile behavior - UPDATED: logos larger on mobile/tablet with safe caps */
     @media (max-width:900px){
       .header-right .cta-primary,
       .header-right .cta-secondary { display:none !important; }
       .nav { display:none; }
       .mobile-toggle { display:inline-flex; }
-      .brand-logo.large { transform: scale(1.15); margin-right:8px; max-width: 220px; }
+
+      /* Make the large logo bigger on tablets / large phones but cap width */
+      .brand-logo.large {
+        transform: scale(1.45);    /* larger on tablet / large phone */
+        margin-right: 12px;
+        max-width: 260px;          /* prevent pushing other items off */
+      }
+
+      /* Slightly increase regular logo height on these widths */
+      .brand-logo {
+        height: clamp(38px, 9vw, 86px);
+        max-width: 260px;
+      }
+
+      /* keep header-left spacing comfortable */
+      .header-left { gap: 28px; }
     }
 
     @media (max-width:520px){
-      .brand-logo.large { transform: scale(1.0); }
-      .header-left { gap: 12px; }
+      /* Phone portrait — still larger but conservative */
+      .brand-logo.large {
+        transform: scale(1.30);    /* increase on small phones but less aggressive */
+        max-width: 220px;
+        margin-right:10px;
+      }
+      .brand-logo {
+        height: clamp(40px, 11vw, 92px);
+      }
+      .header-left { gap: 14px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -533,4 +556,3 @@
   </script>
 </body>
 </html>
-
