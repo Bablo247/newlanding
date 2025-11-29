@@ -127,7 +127,7 @@
     .lightbox-wrap{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:12000; background:rgba(3,7,18,0.86); padding:20px; }
     .lightbox-wrap img{ max-width:96%; max-height:92vh; border-radius:10px; box-shadow:0 30px 80px rgba(2,6,23,0.6); }
 
-    /* Footer — restored to original structure/content */
+    /* Footer — restored */
     footer { background: var(--footer-bg); color: #cfe1ff; padding: 40px 16px; }
     footer a { color: #cfe1ff; text-decoration:none; }
     footer a:hover { text-decoration:underline; color: var(--footer-accent); }
@@ -154,7 +154,7 @@
   </style>
 </head>
 <body>
-  <!-- background video (now visible on mobile too) -->
+  <!-- background video -->
   <video class="background-video" autoplay muted loop playsinline aria-hidden="true">
     <source src="assets.LNPG/231685.mp4" type="video/mp4" />
     Your browser does not support the video tag.
@@ -167,17 +167,16 @@
     <div class="header-inner">
       <div class="header-left">
         <a href="#top" aria-label="Self by DMC" style="display:flex; align-items:center; margin-left:8px;">
-          <img src="assets.LNPG/logo-removebg-preview (1).png" alt="Self by DMC" class="brand-logo large" style="filter: drop-shadow(0 6px 18px rgba(15,23,42,0.06));"/>
+          <img src="assets.LNPG/logo-removebg-preview%20(1).png" alt="Self by DMC" class="brand-logo large" style="filter: drop-shadow(0 6px 18px rgba(15,23,42,0.06));"/>
         </a>
-        <a href="#top" aria-label="DaisyMo home" class="flex items-center gap-5" style="text-decoration:none;">
+        <a href="#top" aria-label="DaisyMo home" style="text-decoration:none;">
           <img src="assets.LNPG/WhatsApp_Image_2025-10-31_at_23.48.33_4e0b2b6-removebg-preview.png" alt="DaisyMo logo" class="brand-logo" />
         </a>
       </div>
 
-      <!-- right-aligned nav & CTAs -->
       <div class="header-right">
         <nav class="nav" role="navigation" aria-label="Main navigation">
-          <a href="#branches" class="">Spaces</a>
+          <a href="#branches">Spaces</a>
           <a href="#gallery" class="small-ghost">Gallery</a>
           <a href="#contact" class="small-ghost">Contact</a>
         </nav>
@@ -185,13 +184,13 @@
         <div style="display:flex; gap:12px; align-items:center;">
           <!-- Desktop CTAs (hidden on mobile via CSS) -->
           <a id="primaryBookBtn" class="cta-primary" href="YOUR_ACUITY_BOOKING_LINK_HERE" target="_blank" rel="noopener noreferrer" aria-label="Book a Session">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden class="inline-block"><rect x="3" y="5" width="18" height="16" rx="2" stroke="white" stroke-width="1.6"/><path d="M16 3v4M8 3v4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2" stroke="white" stroke-width="1.6"/><path d="M16 3v4M8 3v4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             Book a Session
           </a>
 
           <a href="https://bablo247.github.io/daisycollective/" class="cta-secondary">Creative Space</a>
 
-          <!-- mobile menu toggle (visible on small screens only) -->
+          <!-- mobile menu toggle -->
           <button id="mobileBtn" aria-expanded="false" aria-controls="mobileNav" aria-label="Open menu" class="mobile-toggle" title="Open menu">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"/>
@@ -262,14 +261,14 @@
             <div class="tile tall parallax reveal-up" tabindex="0" role="button" data-src="assets.LNPG/a8a63ff5-3ed2-44f1-a124-7430ced43885.jpg">
               <img src="assets.LNPG/a8a63ff5-3ed2-44f1-a124-7430ced43885.jpg" alt="Creative portrait 1" loading="lazy" decoding="async">
             </div>
-            <div class="tile tall parallax reveal-up" tabindex="0" role="button" data-src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.32_9fe16f1e.jpg">
-              <img src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.32_9fe16f1e.jpg" alt="Studio scene 2" loading="lazy" decoding="async">
+            <div class="tile tall parallax reveal-up" tabindex="0" role="button" data-src="assets.LNPG/WhatsApp%20Image%202025-11-19%20at%2017.34.32_9fe16f1e.jpg">
+              <img src="assets.LNPG/WhatsApp%20Image%202025-11-19%20at%2017.34.32_9fe16f1e.jpg" alt="Studio scene 2" loading="lazy" decoding="async">
             </div>
-            <div class="tile wide parallax reveal-up" tabindex="0" role="button" data-src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.33_a5cc0da1.jpg">
-              <img src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.33_a5cc0da1.jpg" alt="Group shoot wide" loading="lazy" decoding="async">
+            <div class="tile wide parallax reveal-up" tabindex="0" role="button" data-src="assets.LNPG/WhatsApp%20Image%202025-11-19%20at%2017.34.33_a5cc0da1.jpg">
+              <img src="assets.LNPG/WhatsApp%20Image%202025-11-19%20at%2017.34.33_a5cc0da1.jpg" alt="Group shoot wide" loading="lazy" decoding="async">
             </div>
-            <div class="tile parallax reveal-up" tabindex="0" role="button" data-src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.35_344561ca.jpg">
-              <img src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.35_344561ca.jpg" alt="Portrait close-up" loading="lazy" decoding="async">
+            <div class="tile parallax reveal-up" tabindex="0" role="button" data-src="assets.LNPG/WhatsApp%20Image%202025-11-19%20at%2017.34.35_344561ca.jpg">
+              <img src="assets.LNPG/WhatsApp%20Image%202025-11-19%20at%2017.34.35_344561ca.jpg" alt="Portrait close-up" loading="lazy" decoding="async">
             </div>
             <div class="tile tall parallax reveal-up" tabindex="0" role="button" data-src="assets.LNPG/2dff7f6f-9a87-445b-beb9-707355642fd3.jpg">
               <img src="assets.LNPG/2dff7f6f-9a87-445b-beb9-707355642fd3.jpg" alt="Backdrop example" loading="lazy" decoding="async">
@@ -299,7 +298,7 @@
       </article>
 
       <article class="service-card reveal-up" aria-labelledby="self-title">
-        <img src="assets.LNPG/WhatsApp Image 2025-11-21 at 09.27.46_84f86004.jpg" alt="Self by DMC — Self Portrait Studio" loading="lazy" class="service-img">
+        <img src="assets.LNPG/WhatsApp%20Image%202025-11-21%20at%2009.27.46_84f86004.jpg" alt="Self by DMC — Self Portrait Studio" loading="lazy" class="service-img">
         <div>
           <h3 id="self-title">Self by DMC — Self-Portrait Studio</h3>
           <p class="text-sm" style="color:var(--muted)">
@@ -327,7 +326,7 @@
   <!-- LIGHTBOX container (keeps DOM clean) -->
   <div id="lightbox" aria-hidden="true"></div>
 
-  <!-- FOOTER (restored to original content exactly) -->
+  <!-- FOOTER (restored exactly) -->
   <footer id="contact">
     <div class="footer-grid">
       <div class="footer-brand">
@@ -348,7 +347,7 @@
         <h4 class="font-semibold mb-3" style="color:#e6f0ff">Contact</h4>
         <ul style="list-style:none; padding:0; margin:0; color:rgba(255,255,255,0.82);">
           <li style="margin-bottom:8px;"><a href="mailto:inquiry@daisymocollective.com">inquiry@daisymocollective.com</a></li>
-          <li style="margin-bottom:8px;">📍<a href="https://maps.app.goo.gl/ZraPwQjFs9WjtXud6" target="_blank" rel="noopener noreferrer">10650 County Rd 81, Suite U, Maple Grove, MN 55369</a></li>
+          <li style="margin-bottom:8px;">�📍<a href="https://maps.app.goo.gl/ZraPwQjFs9WjtXud6" target="_blank" rel="noopener noreferrer">10650 County Rd 81, Suite U, Maple Grove, MN 55369</a></li>
         </ul>
       </div>
 
@@ -475,7 +474,7 @@
       document.addEventListener('keydown', (e) => { if(e.key === 'Escape'){ lightbox.innerHTML=''; lightbox.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }});
     })();
 
-    // Mobile nav toggle (simple show/hide and accessible ARIA)
+    // Mobile nav toggle
     (function(){
       const mobileBtn = document.getElementById('mobileBtn');
       const mobileNav = document.getElementById('mobileNav');
@@ -496,12 +495,10 @@
         if(mobileNav.style.display === 'block') closeMobileNav(); else openMobileNav();
       });
 
-      // close when clicking a link inside drawer
       mobileNav.addEventListener('click', function(e){
         if(e.target.closest('a')) closeMobileNav();
       });
 
-      // close on Escape or outside click
       document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeMobileNav(); });
       document.addEventListener('click', function(e){
         if(!mobileNav || !mobileBtn) return;
