@@ -99,15 +99,66 @@
     .hero-h1{ font-size:clamp(32px,4.5vw,48px); line-height:1.02; letter-spacing:-0.02em; margin-bottom:14px; color:#07133a; }
     .hero-p{ color:rgba(7,19,58,0.75); max-width:54ch; margin-bottom:22px; font-size:16px; }
 
-    .hero-right { position:relative; border-radius:14px; overflow:hidden; box-shadow: 0 18px 50px rgba(2,6,23,0.06); background:linear-gradient(180deg,#0000,#0000); }
-    .grid-masonry{ display:grid; grid-template-columns: repeat(2,1fr); gap:8px; padding:12px; }
-    .tile{ position:relative; background-size:cover; background-position:center; border-radius:10px; min-height:120px; cursor:pointer; overflow:hidden; will-change:transform; transform-origin:center; transition: transform .36s cubic-bezier(.2,.9,.24,1); }
-    .tile::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0.06), rgba(0,0,0,0.20)); transition:transform .36s ease; }
-    .tile:hover{ transform: translateY(-6px) scale(1.02); }
-    .tile.tall{ grid-row: span 2; min-height:260px; }
-    .tile.wide{ grid-column: span 2; min-height:160px; }
-    .parallax { transform: translateZ(0); }
+    /* HERO RIGHT image wrapper */
+    .hero-media {
+      width:100%;
+      height:100%;
+      border-radius:14px;
+      overflow:hidden;
+      box-shadow: 0 18px 50px rgba(2,6,23,0.06);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:320px;
+      background: linear-gradient(180deg,#0000,#0000);
+    }
+    .hero-media img {
+      width:100%;
+      height:100%;
+      object-fit:cover; /* default: fill and crop elegantly */
+      object-position:center;
+      display:block;
+    }
 
+    /* GRID / GALLERY */
+    .grid-masonry{ display:grid; grid-template-columns: repeat(2,1fr); gap:8px; padding:6px; }
+    @media (max-width:900px){ .grid-masonry{ grid-template-columns:1fr; gap:12px; } }
+
+    .tile{
+      position:relative;
+      border-radius:10px;
+      overflow:hidden;
+      cursor:pointer;
+      will-change:transform;
+      transform-origin:center;
+      transition: transform .36s cubic-bezier(.2,.9,.24,1);
+      min-height:120px;
+      background: #f3f4f6; /* neutral background if using object-fit:contain */
+      display:block;
+    }
+
+    /* Orientation helpers - aspect ratios */
+    .tile.tall{ aspect-ratio: 3 / 4; }   /* taller portrait */
+    .tile.wide{ aspect-ratio: 16 / 9; }  /* wide landscape */
+    .tile.medium{ aspect-ratio: 4 / 3; } /* default-ish */
+
+    /* The actual image */
+    .tile-img{
+      width:100%;
+      height:100%;
+      display:block;
+      object-fit:cover; /* default */
+      object-position:center;
+    }
+
+    /* If you want a tile to show the whole image (no cropping), add data-fit="contain" to the .tile element.
+       That will flip the object's fit to 'contain' and add subtle letterbox background. */
+    .tile[data-fit="contain"] .tile-img { object-fit: contain; background: linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.06)); }
+
+    .tile::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.06)); pointer-events:none; transition:opacity .3s ease; }
+    .tile:hover{ transform: translateY(-6px) scale(1.02); }
+
+    /* services */
     .services { max-width:1200px; margin:36px auto; display:grid; grid-template-columns:repeat(2,1fr); gap:18px; padding:0 20px; }
     @media (max-width:900px){ .services{ grid-template-columns:1fr; } }
     .service-card { background: linear-gradient(180deg,#fff,#fbfbff); border-radius:14px; padding:22px; box-shadow: 0 12px 30px rgba(3,10,27,0.06); display:flex; gap:18px; align-items:center; border:1px solid rgba(2,6,23,0.04); }
@@ -210,9 +261,10 @@
       <div class="hero-inner">
         <div>
           <div style="display:flex; flex-direction:column; margin-left:6px;">
-          <div class="brand-strap">DaisyMo Creative</div>
-          <div class="brand-sub">Creative hub & Self Portrait Studio</div>
-        </div>
+            <div class="brand-strap">DaisyMo Creative</div>
+            <div class="brand-sub">Creative hub & Self Portrait Studio</div>
+          </div>
+
           <span class="kicker reveal-up">A Creative House</span>
           <h1 id="hero-title" class="hero-h1 text-display reveal-up">A creative hub for makers. A self-portrait studio for doers.</h1>
           <p class="hero-p reveal-up">DaisyMo Creative is a flexible creative hub for content creators, podcasters, photographers and small teams — rent workspace, host workshops, record podcasts or run collaborative shoots. <strong>Self by DMC</strong> is our walk-in, fully-equipped self-portrait studio: preset lighting, curated backdrops and simple controls so you can produce professional-grade images without a photographer.</p>
@@ -244,16 +296,43 @@
           </div>
         </div>
 
+        <!-- HERO MEDIA: use an <img> so the browser preserves the original aspect ratio and object-fit works correctly -->
         <aside class="hero-right" aria-hidden="true">
-          <div class="grid-masonry" id="gallery">
-            <div class="tile tall parallax reveal-up" role="button" data-src="assets.LNPG/a8a63ff5-3ed2-44f1-a124-7430ced43885.jpg" style="background-image:url('assets.LNPG/a8a63ff5-3ed2-44f1-a124-7430ced43885.jpg');"></div>
-            <div class="tile parallax reveal-up" role="button" data-src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.32_9fe16f1e.jpg" style="background-image:url('assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.32_9fe16f1e.jpg');"></div>
-            <div class="tile wide parallax reveal-up" role="button" data-src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.33_a5cc0da1.jpg" style="background-image:url('assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.33_a5cc0da1.jpg');"></div>
-            <div class="tile parallax reveal-up" role="button" data-src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.35_344561ca.jpg" style="background-image:url('assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.35_344561ca.jpg');"></div>
-            <div class="tile tall parallax reveal-up" role="button" data-src="assets.LNPG/2dff7f6f-9a87-445b-beb9-707355642fd3.jpg" style="background-image:url('assets.LNPG/2dff7f6f-9a87-445b-beb9-707355642fd3.jpg');"></div>
-            <div class="tile parallax reveal-up" role="button" data-src="assets.LNPG/c364c6a1-8435-4395-a662-c4b1288b5ca1.jpg" style="background-image:url('assets.LNPG/c364c6a1-8435-4395-a662-c4b1288b5ca1.jpg');"></div>
+          <div class="hero-media">
+            <!-- replace with an optimized hero JPG/WEBP when ready; object-fit:cover gives a polished result -->
+            <img src="assets.LNPG/hero-photo.jpg" alt="Studio hero" loading="eager" />
           </div>
         </aside>
+      </div>
+    </section>
+
+    <!-- Gallery / grid -->
+    <section aria-label="Gallery" style="max-width:1200px; margin:28px auto; padding:0 20px;">
+      <div class="grid-masonry" id="gallery">
+        <!-- For images you'd like fully visible (no cropping), add data-fit="contain" to the tile. -->
+        <div class="tile tall reveal-up parallax" role="button" data-src="assets.LNPG/a8a63ff5-3ed2-44f1-a124-7430ced43885.jpg" data-fit="cover">
+          <img class="tile-img" src="assets.LNPG/a8a63ff5-3ed2-44f1-a124-7430ced43885.jpg" alt="Gallery image 1" loading="lazy">
+        </div>
+
+        <div class="tile medium reveal-up parallax" role="button" data-src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.32_9fe16f1e.jpg" data-fit="contain">
+          <img class="tile-img" src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.32_9fe16f1e.jpg" alt="Gallery image 2" loading="lazy">
+        </div>
+
+        <div class="tile wide reveal-up parallax" role="button" data-src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.33_a5cc0da1.jpg" data-fit="cover">
+          <img class="tile-img" src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.33_a5cc0da1.jpg" alt="Gallery image 3" loading="lazy">
+        </div>
+
+        <div class="tile medium reveal-up parallax" role="button" data-src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.35_344561ca.jpg" data-fit="cover">
+          <img class="tile-img" src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.35_344561ca.jpg" alt="Gallery image 4" loading="lazy">
+        </div>
+
+        <div class="tile tall reveal-up parallax" role="button" data-src="assets.LNPG/2dff7f6f-9a87-445b-beb9-707355642fd3.jpg" data-fit="contain">
+          <img class="tile-img" src="assets.LNPG/2dff7f6f-9a87-445b-beb9-707355642fd3.jpg" alt="Gallery image 5" loading="lazy">
+        </div>
+
+        <div class="tile medium reveal-up parallax" role="button" data-src="assets.LNPG/c364c6a1-8435-4395-a662-c4b1288b5ca1.jpg" data-fit="cover">
+          <img class="tile-img" src="assets.LNPG/c364c6a1-8435-4395-a662-c4b1288b5ca1.jpg" alt="Gallery image 6" loading="lazy">
+        </div>
       </div>
     </section>
 
@@ -300,7 +379,7 @@
   <!-- LIGHTBOX container (keeps DOM clean) -->
   <div id="lightbox" aria-hidden="true"></div>
 
-  <!-- FOOTER -->
+  <!-- FOOTER (unchanged from previous) -->
   <footer id="contact">
     <div class="footer-grid">
       <div class="footer-brand">
@@ -371,7 +450,7 @@
     }, { threshold: 0.16 });
     document.querySelectorAll('.reveal-up').forEach(el => io.observe(el));
 
-    // gallery parallax & lightbox
+    // gallery parallax & lightbox (updated to work with <img> elements)
     (function(){
       const gallery = document.getElementById('gallery');
       if(!gallery) return;
@@ -404,18 +483,19 @@
         });
       }
 
-      // lightbox
+      // lightbox: now reads <img> inside the tile
       const lightbox = document.getElementById('lightbox');
       gallery.addEventListener('click', (e) => {
         const tile = e.target.closest('.tile');
         if(!tile) return;
-        const src = tile.getAttribute('data-src');
+        const img = tile.querySelector('img.tile-img');
+        const src = img ? img.getAttribute('src') : tile.getAttribute('data-src');
         if(!src) return;
         lightbox.innerHTML = '';
         const wrapper = document.createElement('div');
         wrapper.className = 'lightbox-wrap';
         wrapper.tabIndex = 0;
-        wrapper.innerHTML = `<img src="${src}" alt="Gallery image" loading="eager">`;
+        wrapper.innerHTML = `<img src="${src}" alt="${img ? img.alt : 'Gallery image'}" loading="eager">`;
         wrapper.addEventListener('click', ()=> { lightbox.innerHTML=''; lightbox.setAttribute('aria-hidden','true'); document.body.style.overflow=''; });
         lightbox.appendChild(wrapper);
         lightbox.setAttribute('aria-hidden','false');
@@ -423,25 +503,22 @@
       });
     })();
 
-    // Simplified booking: open Acuity link (replace placeholder in HTML with your link)
+    // Simplified booking: (links are anchors; JS not required, but kept for compatibility)
     (function(){
       const primary = document.getElementById('primaryBookBtn');
       const openBooking = document.getElementById('openBooking');
       const mobileBookBtn = document.getElementById('mobileBookBtn');
 
-      // nothing fancy — links already point to the booking URL; this ensures any button (if changed to button) will open link
       function openBookingLink(e){
         const href = e && e.currentTarget && (e.currentTarget.getAttribute('href') || e.currentTarget.dataset.href);
         if(!href) return;
-        // open in new tab
         window.open(href, '_blank', 'noopener,noreferrer');
       }
 
       primary?.addEventListener('click', function(e){ /* default anchor behavior will open */ });
       openBooking?.addEventListener('click', function(e){ /* default anchor behavior will open */ });
       if(mobileBookBtn){
-        // mobileBookBtn is an anchor already - no JS required; fallback:
-        mobileBookBtn.addEventListener('click', function(e){ /* allow default anchor */ });
+        mobileBookBtn.addEventListener('click', function(e){ /* default anchor behavior */ });
       }
     })();
 
@@ -485,15 +562,13 @@
       });
     })();
 
-    // accessibility: close lightbox on Escape (also handled above)
+    // accessibility: close lightbox on Escape
     document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape'){ const lightbox = document.getElementById('lightbox'); if(lightbox) { lightbox.innerHTML=''; lightbox.setAttribute('aria-hidden','true'); document.body.style.overflow=''; } } });
 
-    // small screens: disable heavy transforms
+    // small screens: disable heavy transforms for performance
     if(window.matchMedia("(max-width: 768px)").matches){
       document.querySelectorAll('.tile').forEach(t => t.style.transition = 'none');
     }
   </script>
 </body>
 </html>
-
-
