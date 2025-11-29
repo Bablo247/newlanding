@@ -40,12 +40,12 @@
       transition: height .25s ease, transform .18s ease;
       flex-shrink: 0;
     }
-    /* Large logo: reduced from the previous scale to a slightly smaller increase */
+    /* Large logo */
     .brand-logo.large {
       height: clamp(64px, 8vw, 130px);
-      transform: scale(1.35);            /* reduced a bit from 1.55 */
+      transform: scale(1.35);
       transform-origin: left center;
-      margin-right: 10px;
+      margin-right: 16px; /* extra breathing room between logos */
       z-index: 10001;
       max-width: 300px;
     }
@@ -53,7 +53,7 @@
     /* Header */
     header{ backdrop-filter: blur(6px); background: rgba(255,255,255,0.18); border-bottom:1px solid rgba(15,23,42,0.04); z-index:9999; position:sticky; top:0; }
     .header-inner { max-width:1300px; margin:0 auto; padding:12px 20px; display:flex; gap:18px; align-items:center; }
-    .header-left { display:flex; align-items:center; gap:22px; flex-wrap:nowrap; min-width:0; }
+    .header-left { display:flex; align-items:center; gap:36px; flex-wrap:nowrap; min-width:0; } /* increased gap between logos */
     .header-right { margin-left:auto; display:flex; align-items:center; gap:25px; justify-content:flex-end; }
 
     .nav { display:flex; gap:18px; align-items:center; }
@@ -92,28 +92,27 @@
     header { position: sticky; z-index: 9999; }
 
     /* HERO */
-    /* use Playfair Display as the hero font */
     .hero { position:relative; overflow:visible; font-family: 'Playfair Display', Georgia, serif; }
 
     /* make hero-right stretch full column height so image fills column */
     .hero-inner{ max-width:1200px; margin:0 auto; padding:56px 20px; display:grid; grid-template-columns: 1fr minmax(320px,560px); gap:28px; align-items:stretch; }
-    .hero-left { display:block; min-width:0; }
+    .hero-left { display:block; min-width:0; text-align:left; padding-left:14px; } /* left align + indent container */
     .hero-right {
       justify-self:stretch;
       position:relative;
-      border-radius:0;        /* removed card rounding */
-      overflow:hidden;        /* crop image cleanly */
-      box-shadow:none;        /* removed card shadow */
+      border-radius:0;
+      overflow:hidden;
+      box-shadow:none;
       width:100%;
-      max-width:none;         /* allow it to occupy full column */
-      background:transparent; /* remove background card */
+      max-width:none;
+      background:transparent;
       display:flex;
       align-items:stretch;
     }
 
     @media (max-width:1000px){
       .hero-inner{ grid-template-columns:1fr; padding:36px 18px; }
-      .hero-left{ order:1; }
+      .hero-left{ order:1; padding-left:8px; }
       .hero-right{ order:2; justify-self:stretch; max-width:100%; margin-top:18px; min-height:260px; }
     }
 
@@ -143,7 +142,14 @@
     }
 
     .hero-h1{ font-size:clamp(32px,4.5vw,48px); line-height:1.02; letter-spacing:-0.02em; margin-bottom:14px; color:#07133a; }
-    .hero-p{ color:rgba(7,19,58,0.75); max-width:54ch; margin-bottom:22px; font-size:16px; }
+    .hero-p{
+      color:rgba(7,19,58,0.75);
+      max-width:54ch;
+      margin-bottom:22px;
+      font-size:16px;
+      text-align:left;      /* ensure left alignment */
+      text-indent: 1.1rem;  /* indent first line for a neat block look */
+    }
 
     /* list bullets in hero */
     .hero ul {
@@ -219,7 +225,7 @@
 
     @media (max-width:520px){
       .brand-logo.large { transform: scale(1.0); }
-      .header-left { gap: 10px; }
+      .header-left { gap: 12px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -240,7 +246,7 @@
   <header>
     <div class="header-inner">
       <div class="header-left">
-        <a href="#top" aria-label="Self by DMC" style="display:flex; align-items:center; margin-left:8px;">
+        <a href="#top" aria-label="Self by DMC" style="display:flex; align-items:center;">
           <img src="assets.LNPG/logo-removebg-preview%20(1).png" alt="Self by DMC" class="brand-logo large" style="filter: drop-shadow(0 6px 18px rgba(15,23,42,0.06));"/>
         </a>
         <a href="#top" aria-label="DaisyMo home" style="text-decoration:none;">
@@ -287,7 +293,7 @@
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="hero-inner">
         <div class="hero-left">
-          <div style="display:flex; flex-direction:column; margin-left:4px;">
+          <div style="display:flex; flex-direction:column;">
             <span class="kicker reveal-up">DaisyMo Collective</span>
             <p class="hero-p reveal-up">A creative space built for people who want options, flexibility, and room to make something great.
             <ul>
@@ -456,7 +462,7 @@
         wrapper.tabIndex = 0;
         wrapper.innerHTML = `<img src="${src}" alt="${alt||'Gallery image'}" loading="eager">`;
         wrapper.addEventListener('click', ()=> { lightbox.innerHTML=''; lightbox.setAttribute('aria-hidden','true'); document.body.style.overflow=''; });
-        wrapper.addEventListener('keydown', (e)=> { if(e.key === 'Escape') { lightbox.innerHTML=''; lightbox.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }});
+        wrapper.addEventListener('keydown', (e)=> { if(e.key === 'Escape') { lightbox.innerHTML=''; lightbox.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }}); 
         lightbox.appendChild(wrapper);
         lightbox.setAttribute('aria-hidden','false');
         document.body.style.overflow = 'hidden';
@@ -527,5 +533,3 @@
   </script>
 </body>
 </html>
-
-
