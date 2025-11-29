@@ -23,47 +23,16 @@
     html,body{height:100%;}
     body{font-family:'Inter',system-ui,Roboto,Arial,'Helvetica Neue',sans-serif;background:#fafafa;color:#0f172a; -webkit-font-smoothing:antialiased; margin:0;}
     a{transition:all .18s ease;}
-    .brand-logo { height:64px; width:auto; transition:height .25s ease; display:block; max-width:220px; }
-    .brand-logo.large { height:78px; }
-    @media (min-width:1200px){
-      .brand-logo { height:88px; }
-      .brand-logo.large { height:110px; }
-    }
 
-    /* ensure logos don't disappear or overflow on small screens */
-    .header-left img { display:block; max-height:78px; width:auto; }
-    @media (max-width:900px){
-      .brand-logo { height:56px; max-width:160px; }
-      .brand-logo.large { height:64px; }
-      .header-left img { max-height:64px; }
-    }
-
-    .background-video {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -2;
-    }
-
-    .brand-strap {
-      font-family: 'Playfair Display', serif;
-      font-weight: 800;
-      color: #07133a;
-      letter-spacing: -0.01em;
-      margin: 0;
-      line-height: 1;
-      font-size: clamp(18px, 2.1vw, 34px);
-    }
-    .brand-sub { font-size: 13px; color:var(--muted); margin-top:4px; }
+    /* responsive logos */
+    .brand-logo { height: clamp(36px, 6vw, 88px); width:auto; display:block; max-width:220px; transition:height .25s ease; }
+    .brand-logo.large { height: clamp(44px, 8vw, 110px); }
 
     header{ backdrop-filter: blur(6px); background:rgba(255,255,255,0.96); border-bottom:1px solid rgba(15,23,42,0.06); z-index:999; position:sticky; top:0; }
     .header-inner { max-width:1300px; margin:0 auto; padding:12px 20px; display:flex; gap:18px; align-items:center; }
     .header-left { display:flex; align-items:center; gap:14px; }
     .header-right { margin-left:auto; display:flex; align-items:center; gap:18px; justify-content:flex-end; }
 
-    /* Desktop nav */
     .nav { display:flex; gap:18px; align-items:center; }
     .nav a { color: rgba(15,23,42,0.85); font-weight:600; text-decoration:none; font-size:15px; }
     .small-ghost { color:var(--muted); font-weight:500; }
@@ -71,98 +40,98 @@
     .cta-primary{ background:linear-gradient(90deg,var(--accent),#0050d4); color:white; padding:10px 16px; border-radius:999px; font-weight:700; box-shadow:0 10px 30px rgba(15,98,254,0.12); display:inline-flex; align-items:center; gap:10px; border:0; cursor:pointer; text-decoration:none;}
     .cta-secondary{ padding:9px 12px; border-radius:10px; border:1px solid rgba(2,6,23,0.06); color:var(--muted); font-weight:600; background:white; text-decoration:none; display:inline-flex; align-items:center; }
 
-    /* Mobile toggle button - hidden on desktop */
     .mobile-toggle { display:none; border-radius:8px; padding:8px; border:1px solid rgba(15,23,42,0.06); background:white; }
     @media (max-width:900px) {
       .nav { display:none; }
       .mobile-toggle { display:inline-flex; }
       .header-inner { padding:10px 16px; }
-      .brand-strap { font-size: clamp(16px, 3.6vw, 26px); }
     }
 
-    /* mobile nav drawer */
-    #mobileNav {
-      position: fixed;
-      top: 72px; /* header height — sticky */
-      right: 12px;
-      left: 12px;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 18px 50px rgba(2,6,23,0.12);
-      z-index: 1200;
-      padding: 12px;
-      display: none;
-    }
-    #mobileNav.open { display:block; }
-    #mobileNav a { display:block; padding:10px 8px; color:#07133a; text-decoration:none; font-weight:600; border-radius:8px; }
-    #mobileNav .mobile-actions { display:flex; gap:8px; margin-top:8px; }
-
-    /* HERO */
+    /* HERO layout: two columns on desktop, stacked on mobile */
     .hero { position:relative; overflow:visible; }
-    /* change: use minmax for the right column so it behaves better on different screens */
     .hero-inner{ max-width:1200px; margin:0 auto; padding:56px 20px; display:grid; grid-template-columns: 1fr minmax(320px,560px); gap:28px; align-items:center; }
-    /* ensure the right column hugs the right side on wide screens */
-    .hero-right { justify-self:end; position:relative; border-radius:14px; overflow:hidden; box-shadow: 0 18px 50px rgba(2,6,23,0.06); background:linear-gradient(180deg,#0000,#0000); width:100%; max-width:560px; }
+    .hero-left { padding-right:6px; }
+    .hero-right { justify-self:end; position:relative; border-radius:14px; overflow:visible; box-shadow: 0 18px 50px rgba(2,6,23,0.06); width:100%; max-width:560px; }
+
     @media (max-width:1000px){
       .hero-inner{ grid-template-columns:1fr; padding:36px 18px; }
-      /* ensure text appears first and the image sits beneath on mobile */
-      .hero-inner > div:first-child { order: 1; }
+      .hero-left { order: 1; }
       .hero-right { order: 2; justify-self:stretch; max-width:100%; margin-top:18px; }
     }
 
-    .kicker{ display:inline-block; background: linear-gradient(90deg, rgba(15,98,254,0.08), rgba(15,98,254,0.06)); color:var(--accent); font-weight:700; padding:6px 12px; border-radius:999px; font-size:13px; }
+    .brand-strap { font-family: 'Playfair Display', serif; font-weight:800; color:#07133a; margin:0; font-size:clamp(20px,3.2vw,36px); line-height:1; }
+    .brand-sub { font-size:14px; color:var(--muted); margin-top:6px; }
+    .kicker{ display:inline-block; background: linear-gradient(90deg, rgba(15,98,254,0.08), rgba(15,98,254,0.06)); color:var(--accent); font-weight:700; padding:6px 12px; border-radius:999px; font-size:13px; margin-top:12px; }
 
-    .hero-h1{ font-size:clamp(32px,4.5vw,48px); line-height:1.02; letter-spacing:-0.02em; margin-bottom:14px; color:#07133a; }
-    .hero-p{ color:rgba(7,19,58,0.75); max-width:54ch; margin-bottom:22px; font-size:16px; }
+    .hero-h1{ font-size:clamp(32px,4.5vw,48px); line-height:1.02; letter-spacing:-0.02em; margin:14px 0; color:#07133a; }
+    .hero-p{ color:rgba(7,19,58,0.85); max-width:60ch; margin-bottom:18px; font-size:17px; }
 
-    .grid-masonry{ display:grid; grid-template-columns: repeat(2,1fr); gap:8px; padding:12px; }
-    .tile{ position:relative; background-size:cover; background-position:center; border-radius:10px; min-height:120px; cursor:pointer; overflow:hidden; will-change:transform; transform-origin:center; transition: transform .36s cubic-bezier(.2,.9,.24,1); }
-    .tile::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0.06), rgba(0,0,0,0.20)); transition:transform .36s ease; }
+    /* GRID MASONRY: adaptive tiles using aspect-ratio */
+    .grid-masonry{
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap:8px;
+      padding:12px;
+      align-items:start;
+    }
+
+    .tile{
+      position:relative;
+      background-size:cover;
+      background-position:center;
+      border-radius:10px;
+      overflow:hidden;
+      cursor:pointer;
+      display:block;
+      outline: none;
+      /* sensible default aspect ratio for tiles */
+      aspect-ratio: 4 / 3;
+      transition: transform .36s cubic-bezier(.2,.9,.24,1), box-shadow .2s;
+      box-shadow: 0 6px 18px rgba(2,6,23,0.06);
+    }
+    .tile:focus { box-shadow: 0 8px 22px rgba(2,6,23,0.12); transform: translateY(-4px); }
+    .tile::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0.06), rgba(0,0,0,0.20)); transition:opacity .3s; pointer-events:none; }
     .tile:hover{ transform: translateY(-6px) scale(1.02); }
-    .tile.tall{ grid-row: span 2; min-height:260px; }
-    .tile.wide{ grid-column: span 2; min-height:160px; }
-    .parallax { transform: translateZ(0); }
 
+    .tile.tall{ aspect-ratio: 3 / 4; }
+    .tile.wide{ grid-column: span 2; aspect-ratio: 16 / 9; }
+
+    /* small-screen gallery behavior */
+    @media (max-width:600px){
+      .grid-masonry { grid-template-columns: 1fr; gap:10px; padding:8px; }
+      .tile.wide{ grid-column: auto; aspect-ratio: 4 / 3; }
+      .tile.tall{ aspect-ratio: 4 / 3; }
+    }
+
+    /* keep things accessible on reduced-motion */
+    @media (prefers-reduced-motion: reduce) {
+      .tile, .cta-primary { transition: none !important; transform: none !important; }
+    }
+
+    /* service card */
     .services { max-width:1200px; margin:36px auto; display:grid; grid-template-columns:repeat(2,1fr); gap:18px; padding:0 20px; }
     @media (max-width:900px){ .services{ grid-template-columns:1fr; } }
     .service-card { background: linear-gradient(180deg,#fff,#fbfbff); border-radius:14px; padding:22px; box-shadow: 0 12px 30px rgba(3,10,27,0.06); display:flex; gap:18px; align-items:center; border:1px solid rgba(2,6,23,0.04); }
-    /* larger image for the studio card (service-img) */
-    .service-card img{ width:90px; height:90px; object-fit:cover; border-radius:10px; flex-shrink:0; }
     .service-img { width:160px; height:120px; object-fit:cover; border-radius:10px; flex-shrink:0; }
     @media (max-width:900px){ .service-img { width:120px; height:92px; } }
-    .service-card h3{ font-size:18px; margin-bottom:6px; color:#07133a; }
 
     /* lightbox */
     .lightbox-wrap{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:1200; background:rgba(3,7,18,0.86); padding:20px; }
     .lightbox-wrap img{ max-width:96%; max-height:92vh; border-radius:10px; box-shadow:0 30px 80px rgba(2,6,23,0.6); }
 
-    .reveal-up{ transform: translateY(18px); opacity:0; transition: transform .6s cubic-bezier(.2,.9,.24,1), opacity .6s ease; will-change:transform,opacity; }
-    .reveal-up.in{ transform:none; opacity:1; }
-
-    .sr-only{ position:absolute; left:-10000px; width:1px; height:1px; top:auto; overflow:hidden; }
-
-    @media (prefers-reduced-motion: reduce) {
-      .tile, .cta-primary, .reveal-up { transition: none !important; transform: none !important; }
-    }
-
-    /* FOOTER */
     footer { background: var(--footer-bg); color: #cfe1ff; padding: 40px 16px; }
-    footer a { color: #cfe1ff; text-decoration:none; }
-    footer a:hover { text-decoration:underline; color: var(--footer-accent); }
     .footer-grid { max-width:1100px; margin:0 auto; display:grid; grid-template-columns: repeat(4,1fr); gap:28px; align-items:start; }
     @media (max-width:900px){ .footer-grid { grid-template-columns:1fr 1fr; } }
     @media (max-width:520px){ .footer-grid { grid-template-columns:1fr; } }
-    .footer-brand .brand-strap { color: white; margin-bottom:6px; }
-    .footer-small { margin-top:20px; text-align:center; color:rgba(255,255,255,0.72); font-size:13px; }
-    .social-links a { display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; background:rgba(255,255,255,0.06); border-radius:8px; color:white; text-decoration:none; }
-    .social-links a svg { width:18px; height:18px; display:block; }
-    .social-links a:hover { background: rgba(255,255,255,0.12); transform: translateY(-3px); }
+
+    /* small helper: ensure background video doesn't cover content in older phones */
+    @media (max-width:420px){ .background-video{ display:none; } }
   </style>
 </head>
 <body>
-  <video class="background-video" autoplay muted loop playsinline>
+  <!-- background video -->
+  <video class="background-video" autoplay muted loop playsinline aria-hidden="true">
     <source src="assets.LNPG/231685.mp4" type="video/mp4" />
-    Your browser does not support the video tag.
   </video>
 
   <a class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-white px-3 py-2 rounded shadow" href="#main">Skip to content</a>
@@ -174,29 +143,26 @@
         <a href="#top" aria-label="Self by DMC" style="display:flex; align-items:center; margin-left:8px;">
           <img src="assets.LNPG/logo-removebg-preview (1).png" alt="Self by DMC" class="brand-logo large" style="filter: drop-shadow(0 6px 18px rgba(15,23,42,0.06));"/>
         </a>
-        <a href="#top" aria-label="DaisyMo home" class="flex items-center gap-5" style="text-decoration:none;">
+        <a href="#top" aria-label="DaisyMo home" style="text-decoration:none;">
           <img src="assets.LNPG/WhatsApp_Image_2025-10-31_at_23.48.33_4e0b2b6-removebg-preview.png" alt="DaisyMo logo" class="brand-logo" />
         </a>
       </div>
 
-      <!-- right-aligned nav & CTAs -->
       <div class="header-right">
         <nav class="nav" role="navigation" aria-label="Main navigation">
-          <a href="#branches" class="">Spaces</a>
+          <a href="#branches">Spaces</a>
           <a href="#gallery" class="small-ghost">Gallery</a>
           <a href="#contact" class="small-ghost">Contact</a>
         </nav>
 
         <div style="display:flex; gap:12px; align-items:center;">
-          <!-- Primary booking buttons now open Acuity link in new tab (replace placeholder) -->
           <a id="primaryBookBtn" class="cta-primary" href="YOUR_ACUITY_BOOKING_LINK_HERE" target="_blank" rel="noopener noreferrer" aria-label="Book a Session">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden class="inline-block"><rect x="3" y="5" width="18" height="16" rx="2" stroke="white" stroke-width="1.6"/><path d="M16 3v4M8 3v4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2" stroke="white" stroke-width="1.6"/><path d="M16 3v4M8 3v4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             Book a Session
           </a>
 
           <a href="https://bablo247.github.io/daisycollective/" class="cta-secondary">Creative Space</a>
 
-          <!-- mobile menu toggle (visible on small screens only) -->
           <button id="mobileBtn" aria-expanded="false" aria-label="Open menu" class="mobile-toggle" title="Open menu">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"/>
@@ -225,49 +191,63 @@
     <!-- HERO -->
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="hero-inner">
-        <div>
-          <div style="display:flex; flex-direction:column; margin-left:4px;">
-              <div class="brand-strap">DaisyMo Creative</div>
-              <div class="brand-sub">Creative hub & Self Portrait Studio</div>
-          <span class="kicker reveal-up">A Creative House</span>
-          <h1 id="hero-title" class="hero-h1 text-display reveal-up">A creative hub for makers. A self-portrait studio for doers.</h1>
-          <p class="hero-p reveal-up">DaisyMo Creative is a flexible creative hub for content creators, podcasters, photographers and small teams — rent workspace, host workshops, record podcasts or run collaborative shoots. <strong>Self by DMC</strong> is our walk-in, fully-equipped self-portrait studio: preset lighting, curated backdrops and simple controls so you can produce professional-grade images without a photographer.</p>
+        <!-- LEFT: textual content -->
+        <div class="hero-left">
+          <div style="display:flex; flex-direction:column;">
+            <div class="brand-strap">DaisyMo Creative</div>
+            <div class="brand-sub">Creative hub & Self Portrait Studio</div>
+            <span class="kicker reveal-up">A Creative House</span>
 
-          <div class="flex items-center gap-3 mt-6 reveal-up">
-            <a id="openBooking" class="cta-primary" href="YOUR_ACUITY_BOOKING_LINK_HERE" target="_blank" rel="noopener noreferrer">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden class="inline-block"><rect x="3" y="5" width="18" height="16" rx="2" stroke="white" stroke-width="1.6"/><path d="M16 3v4M8 3v4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Book a Session
-            </a>
-            <a href="https://bablo247.github.io/daisycollective/" class="cta-secondary">Book the Creative Space</a>
-          </div>
+            <h1 id="hero-title" class="hero-h1 reveal-up">A creative hub for makers. A self-portrait studio for doers.</h1>
 
-          <div class="mt-8 flex items-center gap-6 text-sm" style="color:var(--muted);">
-            <div class="flex items-center gap-3">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="text-blue-600"><path d="M12 20v-6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <div>
-                <div class="font-semibold">Flexible bookings</div>
-                <div class="text-xs">Hourly & daily options for creators and teams</div>
-              </div>
+            <p class="hero-p reveal-up">
+              DaisyMo Creative is a flexible creative hub for content creators, podcasters, photographers and small teams — rent workspace, host workshops, record podcasts or run collaborative shoots.
+              <strong>Self by DMC</strong> is our walk-in, fully-equipped self-portrait studio: preset lighting, curated backdrops and simple controls so you can produce professional-grade images without a photographer.
+            </p>
+
+            <div class="flex items-center gap-3 mt-6 reveal-up">
+              <a id="openBooking" class="cta-primary" href="YOUR_ACUITY_BOOKING_LINK_HERE" target="_blank" rel="noopener noreferrer">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2" stroke="white" stroke-width="1.6"/><path d="M16 3v4M8 3v4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Book a Session
+              </a>
+              <a href="https://bablo247.github.io/daisycollective/" class="cta-secondary">Book the Creative Space</a>
             </div>
 
-            <div class="flex items-center gap-3">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="text-blue-600"><circle cx="12" cy="12" r="9" stroke-width="1.6"/></svg>
-              <div>
-                <div class="font-semibold">Self sessions</div>
-                <div class="text-xs">Pre-set lighting, curated backdrops, instant previews</div>
+            <div class="mt-8 flex items-center gap-6 text-sm" style="color:var(--muted);">
+              <div class="flex items-center gap-3">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 20v-6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <div>
+                  <div class="font-semibold">Flexible bookings</div>
+                  <div class="text-xs">Hourly & daily options for creators and teams</div>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9" stroke-width="1.6"/></svg>
+                <div>
+                  <div class="font-semibold">Self sessions</div>
+                  <div class="text-xs">Pre-set lighting, curated backdrops, instant previews</div>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <aside class="hero-right" aria-hidden="true">
-          <div class="grid-masonry" id="gallery">
-            <div class="tile tall parallax reveal-up" data-src="assets.LNPG/a8a63ff5-3ed2-44f1-a124-7430ced43885.jpg" style="background-image:url('assets.LNPG/a8a63ff5-3ed2-44f1-a124-7430ced43885.jpg');"></div>
-            <div class="tile tall parallax reveal-up" data-src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.32_9fe16f1e.jpg" style="background-image:url('assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.32_9fe16f1e.jpg');"></div>
-            <div class="tile wide parallax reveal-up" data-src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.33_a5cc0da1.jpg" style="background-image:url('assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.33_a5cc0da1.jpg');"></div>
-            <div class="tile parallax reveal-up"  data-src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.35_344561ca.jpg" style="background-image:url('assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.35_344561ca.jpg');"></div>
-            <div class="tile tall parallax reveal-up"  data-src="assets.LNPG/2dff7f6f-9a87-445b-beb9-707355642fd3.jpg" style="background-image:url('assets.LNPG/2dff7f6f-9a87-445b-beb9-707355642fd3.jpg');"></div>
-            <div class="tile parallax reveal-up" data-src="assets.LNPG/c364c6a1-8435-4395-a662-c4b1288b5ca1.jpg" style="background-image:url('assets.LNPG/c364c6a1-8435-4395-a662-c4b1288b5ca1.jpg');"></div>
+        <!-- RIGHT: gallery (tiles) -->
+        <aside class="hero-right" aria-hidden="false">
+          <div class="grid-masonry" id="gallery" aria-label="Hero gallery">
+            <!-- Each tile uses data-src (lightbox), data-alt (accessibility), and inline background-image -->
+            <div tabindex="0" role="button" class="tile tall parallax reveal-up" data-src="assets.LNPG/a8a63ff5-3ed2-44f1-a124-7430ced43885.jpg" data-alt="Creative portrait 1" style="background-image: url('assets.LNPG/a8a63ff5-3ed2-44f1-a124-7430ced43885.jpg');"></div>
+
+            <div tabindex="0" role="button" class="tile tall parallax reveal-up" data-src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.32_9fe16f1e.jpg" data-alt="Studio scene 2" style="background-image: url('assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.32_9fe16f1e.jpg');"></div>
+
+            <div tabindex="0" role="button" class="tile wide parallax reveal-up" data-src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.33_a5cc0da1.jpg" data-alt="Group shoot wide" style="background-image: url('assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.33_a5cc0da1.jpg');"></div>
+
+            <div tabindex="0" role="button" class="tile parallax reveal-up" data-src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.35_344561ca.jpg" data-alt="Portrait close-up" style="background-image: url('assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.35_344561ca.jpg');"></div>
+
+            <div tabindex="0" role="button" class="tile tall parallax reveal-up" data-src="assets.LNPG/2dff7f6f-9a87-445b-beb9-707355642fd3.jpg" data-alt="Backdrop example" style="background-image: url('assets.LNPG/2dff7f6f-9a87-445b-beb9-707355642fd3.jpg');"></div>
+
+            <div tabindex="0" role="button" class="tile parallax reveal-up" data-src="assets.LNPG/c364c6a1-8435-4395-a662-c4b1288b5ca1.jpg" data-alt="Studio workspace" style="background-image: url('assets.LNPG/c364c6a1-8435-4395-a662-c4b1288b5ca1.jpg');"></div>
           </div>
         </aside>
       </div>
@@ -279,26 +259,26 @@
         <img src="assets.LNPG/c364c6a1-8435-4395-a662-c4b1288b5ca1.jpg" alt="photography studio" class="service-img" loading="lazy">
         <div>
           <h3 id="studio-title">DaisyMo Creative — Creative Hub</h3>
-          <p class="text-sm text-gray-600">
+          <p class="text-sm" style="color:var(--muted)">
             A flexible, community-first space for creators — content creators, podcasters, photographers, and small teams. Book workspace, host workshops, record podcasts or run collaborative shoots. Bring your ideas; we provide the space, power and reliable internet.
           </p>
-          <div class="mt-3 flex gap-3">
+          <div class="mt-3" style="display:flex;gap:12px;">
             <a href="https://bablo247.github.io/daisycollective/" class="cta-secondary">Book the Creative Space</a>
-            <a href="mailto:inquiries@daisymocollective.com" class="text-sm" style="color:var(--muted)">Enquire</a>
+            <a href="mailto:inquiries@daisymocollective.com" class="small-ghost">Enquire</a>
           </div>
         </div>
       </article>
 
       <article class="service-card reveal-up" aria-labelledby="self-title">
-        <img src="assets.LNPG/WhatsApp Image 2025-11-21 at 09.27.46_84f86004.jpg" alt="Self by DMC — Self Portrait Studio" loading="lazy">
+        <img src="assets.LNPG/WhatsApp Image 2025-11-21 at 09.27.46_84f86004.jpg" alt="Self by DMC — Self Portrait Studio" loading="lazy" class="service-img">
         <div>
           <h3 id="self-title">Self by DMC — Self-Portrait Studio</h3>
-          <p class="text-sm text-gray-600">
-            A walk-in, fully-configured self-portrait experience. Pre-set lighting, curated backdrops, tethered previews and simple controls let you create professional-grade photos without a photographer — perfect for portfolios, socials and quick personal shoots.
+          <p class="text-sm" style="color:var(--muted)">
+            A walk-in, fully-configured self-portrait experience. Pre-set lighting, curated backdrops, tethered previews and simple controls let you create professional-grade photos without a photographer—perfect for portfolios, socials and quick personal shoots.
           </p>
-          <div class="mt-3 flex gap-3">
+          <div class="mt-3" style="display:flex;gap:12px;">
             <a href="YOUR_ACUITY_BOOKING_LINK_HERE" class="cta-primary" target="_blank" rel="noopener noreferrer">Reserve a Self Session</a>
-            <a href="#gallery" class="text-sm" style="color:var(--muted)">See examples</a>
+            <a href="#gallery" class="small-ghost">See examples</a>
           </div>
         </div>
       </article>
@@ -312,10 +292,9 @@
           aria-label="Studio location map"></iframe>
       </div>
     </div>
-
   </main>
 
-  <!-- LIGHTBOX container (keeps DOM clean) -->
+  <!-- LIGHTBOX container -->
   <div id="lightbox" aria-hidden="true"></div>
 
   <!-- FOOTER -->
@@ -346,41 +325,25 @@
       <div>
         <h4 class="font-semibold mb-3" style="color:#e6f0ff">Follow</h4>
         <div class="flex items-center gap-3 social-links" style="margin-top:6px;">
-          <!-- Facebook -->
+          <!-- social icons unchanged -->
           <a href="https://www.facebook.com/profile.php?id=61576836301594" aria-label="Facebook" target="_blank" rel="noopener noreferrer" title="Facebook">
-            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M22 12.072C22 6.477 17.523 2 11.928 2S1.856 6.477 1.856 12.072C1.856 17.087 5.827 21.166 10.69 21.98v-6.96H8.218v-2.96h2.472V9.845c0-2.444 1.462-3.79 3.7-3.79 1.073 0 2.195.193 2.195.193v2.416h-1.237c-1.219 0-1.597.755-1.597 1.53v1.835h2.716l-.434 2.96h-2.282V22C18.173 21.166 22 17.087 22 12.072z"/>
-            </svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M22 12.072C22 6.477 17.523 2 11.928 2S1.856 6.477 1.856 12.072C1.856 17.087 5.827 21.166 10.69 21.98v-6.96H8.218v-2.96h2.472V9.845c0-2.444 1.462-3.79 3.7-3.79 1.073 0 2.195.193 2.195.193v2.416h-1.237c-1.219 0-1.597.755-1.597 1.53v1.835h2.716l-.434 2.96h-2.282V22C18.173 21.166 22 17.087 22 12.072z"/></svg>
           </a>
-
-          <!-- TikTok -->
           <a href="https://www.tiktok.com/@daisymo_collective" aria-label="TikTok" target="_blank" rel="noopener noreferrer" title="TikTok">
-            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M16.5 3.75a4.25 4.25 0 0 0 4.25 4.25v2.06a6.31 6.31 0 0 1-6.31-6.31H16.5zM9.75 7.5a4.5 4.5 0 1 0 4.5 4.5V5.25h-1.5v6.75a3 3 0 1 1-3-3V7.5z"/>
-            </svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16.5 3.75a4.25 4.25 0 0 0 4.25 4.25v2.06a6.31 6.31 0 0 1-6.31-6.31H16.5zM9.75 7.5a4.5 4.5 0 1 0 4.5 4.5V5.25h-1.5v6.75a3 3 0 1 1-3-3V7.5z"/></svg>
           </a>
-
-          <!-- Instagram -->
           <a href="https://www.instagram.com/daisymo_collective/?hl=en" aria-label="Instagram" target="_blank" rel="noopener noreferrer" title="Instagram">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <rect x="3" y="3" width="18" height="18" rx="5" ry="5" />
-              <path d="M16 11.37A4 4 0 1 1 12.63 8" />
-              <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
-            </svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8" /><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
           </a>
-
-          <!-- WhatsApp -->
           <a href="https://wa.me/17632098807" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer" title="WhatsApp">
-            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M20.52 3.48A11.9 11.9 0 0 0 12 0C5.373 0 .027 5.346 0 12c0 2.116.553 4.174 1.6 6.02L0 24l6.32-1.58A11.94 11.94 0 0 0 12 24c6.627 0 11.973-5.346 12-12 0-.88-.082-1.74-.48-2.52zM12 21.49c-1.6 0-3.16-.43-4.53-1.25l-.32-.2-3.76.94.95-3.66-.21-.33A8.86 8.86 0 0 1 3.1 12 8.9 8.9 0 0 1 12 3.1c4.92 0 8.9 3.98 8.9 8.9S16.92 21.49 12 21.49zM17.15 14.3c-.25-.12-1.47-.73-1.7-.81-.23-.08-.4-.12-.57.12-.17.25-.66.81-.81.98-.15.17-.31.19-.57.06-.25-.12-1.05-.39-2-1.24-.74-.66-1.24-1.48-1.39-1.73-.15-.25-.02-.38.11-.5.11-.11.25-.31.36-.47.12-.16.16-.27.25-.45.08-.17.04-.32-.02-.45-.06-.12-.57-1.37-.78-1.87-.2-.5-.4-.43-.57-.44-.15-.01-.32-.01-.49-.01-.17 0-.45.06-.69.32-.23.26-.88.86-.88 2.09s.9 2.43 1.03 2.6c.12.17 1.78 2.72 4.32 3.81 2.54 1.09 2.54.73 3 2.17.46 1.44 1.05 1.6 1.2 1.7.15.11.93.38 1.06.23.12-.15.5-1.71.57-1.96.07-.25.12-.21.05-.36-.06-.15-.23-.25-.48-.37z"/>
-            </svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20.52 3.48A11.9 11.9 0 0 0 12 0C5.373 0 .027 5.346 0 12c0 2.116.553 4.174 1.6 6.02L0 24l6.32-1.58A11.94 11.94 0 0 0 12 24c6.627 0 11.973-5.346 12-12 0-.88-.082-1.74-.48-2.52zM12 21.49c-1.6 0-3.16-.43-4.53-1.25l-.32-.2-3.76.94.95-3.66-.21-.33A8.86 8.86 0 0 1 3.1 12 8.9 8.9 0 0 1 12 3.1c4.92 0 8.9 3.98 8.9 8.9S16.92 21.49 12 21.49zM17.15 14.3c-.25-.12-1.47-.73-1.7-.81-.23-.08-.4-.12-.57.12-.17.25-.66.81-.81.98-.15.17-.31.19-.57.06-.25-.12-1.05-.39-2-1.24-.74-.66-1.24-1.48-1.39-1.73-.15-.25-.02-.38.11-.5.11-.11.25-.31.36-.47.12-.16.16-.27.25-.45.08-.17.04-.32-.02-.45-.06-.12-.57-1.37-.78-1.87-.2-.5-.4-.43-.57-.44-.15-.01-.32-.01-.49-.01-.17 0-.45.06-.69.32-.23.26-.88.86-.88 2.09s.9 2.43 1.03 2.6c.12.17 1.78 2.72 4.32 3.81 2.54 1.09 2.54.73 3 2.17.46 1.44 1.05 1.6 1.2 1.7.15.11.93.38 1.06.23.12-.15.5-1.71.57-1.96.07-.25.12-.21.05-.36-.06-.15-.23-.25-.48-.37z"/></svg>
           </a>
         </div>
       </div>
-    </div>
 
-    <div class="footer-small">
-      © <span id="year"></span> DaisyMo. All rights reserved.
+      <div class="footer-small" style="width:100%; text-align:center; margin-top:18px;">
+        © <span id="year"></span> DaisyMo. All rights reserved.
+      </div>
     </div>
   </footer>
 
@@ -393,14 +356,14 @@
       entries.forEach(e=>{
         if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
       });
-    }, { threshold: 0.16 });
+    }, { threshold: 0.12 });
     document.querySelectorAll('.reveal-up').forEach(el => io.observe(el));
 
-    // gallery parallax & lightbox
+    // gallery parallax, keyboard support & lightbox
     (function(){
       const gallery = document.getElementById('gallery');
       if(!gallery) return;
-      const tiles = gallery.querySelectorAll('.parallax');
+      const tiles = Array.from(gallery.querySelectorAll('.parallax'));
 
       function handlePointer(e){
         const rect = gallery.getBoundingClientRect();
@@ -429,42 +392,73 @@
         });
       }
 
-      // lightbox
+      // Open lightbox helper
       const lightbox = document.getElementById('lightbox');
-      gallery.addEventListener('click', (e) => {
-        const tile = e.target.closest('.tile');
-        if(!tile) return;
-        const src = tile.getAttribute('data-src');
-        if(!src) return;
+      function openLightbox(src, alt){
         lightbox.innerHTML = '';
         const wrapper = document.createElement('div');
         wrapper.className = 'lightbox-wrap';
         wrapper.tabIndex = 0;
-        wrapper.innerHTML = `<img src="${src}" alt="Gallery image" loading="eager">`;
-        wrapper.addEventListener('click', ()=> { lightbox.innerHTML=''; lightbox.setAttribute('aria-hidden','true'); document.body.style.overflow=''; });
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = alt || 'Gallery image';
+        img.loading = 'eager';
+        wrapper.appendChild(img);
+        wrapper.addEventListener('click', ()=> { closeLightbox(); });
+        wrapper.addEventListener('keydown', (e)=> { if(e.key === 'Escape') closeLightbox(); });
         lightbox.appendChild(wrapper);
         lightbox.setAttribute('aria-hidden','false');
         document.body.style.overflow = 'hidden';
+        wrapper.focus();
+      }
+      function closeLightbox(){
+        lightbox.innerHTML = '';
+        lightbox.setAttribute('aria-hidden','true');
+        document.body.style.overflow = '';
+      }
+
+      gallery.addEventListener('click', (e) => {
+        const tile = e.target.closest('.tile');
+        if(!tile) return;
+        const src = tile.getAttribute('data-src');
+        const alt = tile.getAttribute('data-alt') || '';
+        if(!src) return;
+        openLightbox(src, alt);
+      });
+
+      // keyboard activation on tiles (Enter opens)
+      tiles.forEach(tile=>{
+        tile.addEventListener('keydown', (e)=>{
+          if(e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            const src = tile.getAttribute('data-src');
+            const alt = tile.getAttribute('data-alt') || '';
+            if(src) openLightbox(src, alt);
+          }
+        });
+      });
+
+      // close on Escape (global)
+      document.addEventListener('keydown', (e)=>{
+        if(e.key === 'Escape') closeLightbox();
       });
     })();
 
-    // Simplified booking: open Acuity link (replace placeholder in HTML with your link)
+    // Simplified booking: anchors already have URLs
     (function(){
       const primary = document.getElementById('primaryBookBtn');
       const openBooking = document.getElementById('openBooking');
       const mobileBookBtn = document.getElementById('mobileBookBtn');
-
       primary?.addEventListener('click', function(e){ /* default anchor behavior will open */ });
       openBooking?.addEventListener('click', function(e){ /* default anchor behavior will open */ });
-      if(mobileBookBtn){
-        mobileBookBtn.addEventListener('click', function(e){ /* allow default anchor */ });
-      }
+      if(mobileBookBtn) mobileBookBtn.addEventListener('click', function(e){ /* default anchor behavior will open */ });
     })();
 
     // Mobile nav toggle
     (function(){
       const mobileBtn = document.getElementById('mobileBtn');
       const mobileNav = document.getElementById('mobileNav');
+      if(!mobileBtn || !mobileNav) return;
 
       function closeMobileNav(){
         mobileNav.classList.remove('open');
@@ -477,32 +471,26 @@
         mobileBtn.setAttribute('aria-expanded','true');
       }
 
-      mobileBtn?.addEventListener('click', function(e){
+      mobileBtn.addEventListener('click', function(){
         const isOpen = mobileNav.classList.contains('open');
         if(isOpen) closeMobileNav(); else openMobileNav();
       });
 
-      // close when clicking a link in the mobile nav
-      mobileNav?.addEventListener('click', function(e){
+      mobileNav.addEventListener('click', function(e){
         const a = e.target.closest('a');
         if(a) closeMobileNav();
       });
 
-      // close on Escape or outside click
       document.addEventListener('keydown', function(e){
         if(e.key === 'Escape') closeMobileNav();
       });
       document.addEventListener('click', function(e){
         const target = e.target;
-        if(!mobileNav || !mobileBtn) return;
         if(mobileNav.classList.contains('open') && !mobileNav.contains(target) && !mobileBtn.contains(target)){
           closeMobileNav();
         }
       });
     })();
-
-    // accessibility: close lightbox on Escape (also handled above)
-    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape'){ const lightbox = document.getElementById('lightbox'); if(lightbox) { lightbox.innerHTML=''; lightbox.setAttribute('aria-hidden','true'); document.body.style.overflow=''; } } });
 
     // small screens: disable heavy transforms
     if(window.matchMedia("(max-width: 768px)").matches){
