@@ -120,105 +120,63 @@
       display:block;
     }
 
-    /* CAROUSEL (new) */
-    .carousel {
-      max-width:1200px;
-      margin: 28px auto;
-      padding: 0 20px;
-      position: relative;
-      user-select: none;
-    }
+    /* GRID / GALLERY */
+    .grid-masonry{ display:grid; grid-template-columns: repeat(2,1fr); gap:8px; padding:6px; }
+    @media (max-width:900px){ .grid-masonry{ grid-template-columns:1fr; gap:12px; } }
 
-    .carousel-viewport {
-      overflow: hidden;
-      border-radius: 12px;
-      background: #111827; /* neutral base while images load */
-      position: relative;
-    }
-
-    .carousel-track {
-      display: flex;
-      transition: transform 600ms cubic-bezier(.22,.9,.12,1);
-      will-change: transform;
-      touch-action: pan-y;
-    }
-
-    .slide {
-      min-width: 100%;
-      flex: 0 0 100%;
-      display: block;
-      position: relative;
-      overflow: hidden;
-      background: #f3f4f6;
-    }
-
-    .slide img {
-      width: 100%;
-      height: 62vh; /* tall enough on desktop; mobile will adapt */
-      max-height: 80vh;
-      object-fit: cover; /* will be overridden to contain for portraits by JS */
-      object-position: center;
+    .tile{
+      position:relative;
+      border-radius:10px;
+      overflow:hidden;
+      cursor:pointer;
+      will-change:transform;
+      transform-origin:center;
+      transition: transform .36s cubic-bezier(.2,.9,.24,1);
+      min-height:120px;
+      background: #f3f4f6; /* neutral background if using object-fit:contain */
       display:block;
     }
 
-    @media (max-width:900px){
-      .slide img { height: 56vw; } /* roughly maintain size on phones */
+    /* Orientation helpers - aspect ratios */
+    .tile.tall{ aspect-ratio: 3 / 4; }   /* taller portrait */
+    .tile.wide{ aspect-ratio: 16 / 9; }  /* wide landscape */
+    .tile.medium{ aspect-ratio: 4 / 3; } /* default-ish */
+
+    /* The actual image */
+    .tile-img{
+      width:100%;
+      height:100%;
+      display:block;
+      object-fit:cover; /* default */
+      object-position:center;
     }
 
-    .carousel-controls {
-      position: absolute;
-      left: 12px;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      display:flex;
-      justify-content: space-between;
-      pointer-events: none;
-    }
+    /* If you want a tile to show the whole image (no cropping), add data-fit="contain" to the .tile element.
+       That will flip the object's fit to 'contain' and add subtle letterbox background. */
+    .tile[data-fit="contain"] .tile-img { object-fit: contain; background: linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.06)); }
 
-    .carousel-button {
-      pointer-events: auto;
-      background: rgba(0,0,0,0.5);
-      border: 0;
-      color: white;
-      width:44px;
-      height:44px;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      border-radius:999px;
-      backdrop-filter: blur(6px);
-      transition: transform .18s ease, background .18s ease;
-    }
-    .carousel-button:hover { transform: translateY(-2px); background: rgba(0,0,0,0.65); }
+    .tile::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.06)); pointer-events:none; transition:opacity .3s ease; }
+    .tile:hover{ transform: translateY(-6px) scale(1.02); }
 
-    .carousel-pagination {
-      display:flex;
-      gap:8px;
-      justify-content:center;
-      margin-top:12px;
-    }
-    .dot {
-      width:10px; height:10px; border-radius:50%;
-      background: rgba(255,255,255,0.5);
-      transition: transform .18s ease, background .18s ease;
-      cursor:pointer;
-    }
-    .dot.active { background: var(--accent); transform: scale(1.15); }
+    /* services */
+    .services { max-width:1200px; margin:36px auto; display:grid; grid-template-columns:repeat(2,1fr); gap:18px; padding:0 20px; }
+    @media (max-width:900px){ .services{ grid-template-columns:1fr; } }
+    .service-card { background: linear-gradient(180deg,#fff,#fbfbff); border-radius:14px; padding:22px; box-shadow: 0 12px 30px rgba(3,10,27,0.06); display:flex; gap:18px; align-items:center; border:1px solid rgba(2,6,23,0.04); }
+    .service-card img{ width:90px; height:90px; object-fit:cover; border-radius:10px; flex-shrink:0; }
+    .service-card h3{ font-size:18px; margin-bottom:6px; color:#07133a; }
 
-    .carousel-caption {
-      position: absolute;
-      left: 16px;
-      bottom: 18px;
-      color: white;
-      text-shadow: 0 6px 18px rgba(0,0,0,0.6);
-      font-weight:600;
-      pointer-events: none;
-      max-width: 70%;
-    }
+    /* lightbox */
+    .lightbox-wrap{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:1200; background:rgba(3,7,18,0.86); padding:20px; }
+    .lightbox-wrap img{ max-width:96%; max-height:92vh; border-radius:10px; box-shadow:0 30px 80px rgba(2,6,23,0.6); }
 
-    /* small accessibility helper */
+    .reveal-up{ transform: translateY(18px); opacity:0; transition: transform .6s cubic-bezier(.2,.9,.24,1), opacity .6s ease; will-change:transform,opacity; }
+    .reveal-up.in{ transform:none; opacity:1; }
+
     .sr-only{ position:absolute; left:-10000px; width:1px; height:1px; top:auto; overflow:hidden; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .tile, .cta-primary, .reveal-up { transition: none !important; transform: none !important; }
+    }
 
     /* FOOTER */
     footer { background: var(--footer-bg); color: #cfe1ff; padding: 40px 16px; }
@@ -348,54 +306,34 @@
       </div>
     </section>
 
-    <!-- CAROUSEL SECTION (replaces masonry grid) -->
-    <section class="carousel" aria-labelledby="gallery-heading">
-      <h2 id="gallery-heading" class="sr-only">Gallery</h2>
-
-      <div class="carousel-viewport" aria-roledescription="carousel" aria-label="DaisyMo gallery">
-        <div class="carousel-track" id="carouselTrack">
-          <!-- Slides: replace src with your images. Add data-caption="..." if you want captions. -->
-          <div class="slide" role="group" aria-roledescription="slide" aria-label="1 of 6" data-src="assets.LNPG/a8a63ff5-3ed2-44f1-a124-7430ced43885.jpg" data-caption="Self Portrait Room">
-            <img data-src="assets.LNPG/a8a63ff5-3ed2-44f1-a124-7430ced43885.jpg" alt="Self Portrait Room" class="lazy-img" loading="lazy">
-          </div>
-
-          <div class="slide" role="group" aria-roledescription="slide" aria-label="2 of 6" data-src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.32_9fe16f1e.jpg" data-caption="Studio Setup">
-            <img data-src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.32_9fe16f1e.jpg" alt="Studio Setup" class="lazy-img" loading="lazy">
-          </div>
-
-          <div class="slide" role="group" aria-roledescription="slide" aria-label="3 of 6" data-src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.33_a5cc0da1.jpg" data-caption="Production Studio">
-            <img data-src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.33_a5cc0da1.jpg" alt="Production Studio" class="lazy-img" loading="lazy">
-          </div>
-
-          <div class="slide" role="group" aria-roledescription="slide" aria-label="4 of 6" data-src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.35_344561ca.jpg" data-caption="Workshop">
-            <img data-src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.35_344561ca.jpg" alt="Workshop" class="lazy-img" loading="lazy">
-          </div>
-
-          <div class="slide" role="group" aria-roledescription="slide" aria-label="5 of 6" data-src="assets.LNPG/2dff7f6f-9a87-445b-beb9-707355642fd3.jpg" data-caption="Portrait Example">
-            <img data-src="assets.LNPG/2dff7f6f-9a87-445b-beb9-707355642fd3.jpg" alt="Portrait Example" class="lazy-img" loading="lazy">
-          </div>
-
-          <div class="slide" role="group" aria-roledescription="slide" aria-label="6 of 6" data-src="assets.LNPG/c364c6a1-8435-4395-a662-c4b1288b5ca1.jpg" data-caption="Community Event">
-            <img data-src="assets.LNPG/c364c6a1-8435-4395-a662-c4b1288b5ca1.jpg" alt="Community Event" class="lazy-img" loading="lazy">
-          </div>
+    <!-- Gallery / grid -->
+    <section aria-label="Gallery" style="max-width:1200px; margin:28px auto; padding:0 20px;">
+      <div class="grid-masonry" id="gallery">
+        <!-- For images you'd like fully visible (no cropping), add data-fit="contain" to the tile. -->
+        <div class="tile tall reveal-up parallax" role="button" data-src="assets.LNPG/a8a63ff5-3ed2-44f1-a124-7430ced43885.jpg" data-fit="cover">
+          <img class="tile-img" src="assets.LNPG/a8a63ff5-3ed2-44f1-a124-7430ced43885.jpg" alt="Gallery image 1" loading="lazy">
         </div>
 
-        <!-- controls -->
-        <div class="carousel-controls" aria-hidden="false">
-          <button class="carousel-button" id="prevBtn" aria-label="Previous slide" title="Previous">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-          </button>
-          <button class="carousel-button" id="nextBtn" aria-label="Next slide" title="Next">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
+        <div class="tile medium reveal-up parallax" role="button" data-src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.32_9fe16f1e.jpg" data-fit="contain">
+          <img class="tile-img" src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.32_9fe16f1e.jpg" alt="Gallery image 2" loading="lazy">
+        </div>
+
+        <div class="tile wide reveal-up parallax" role="button" data-src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.33_a5cc0da1.jpg" data-fit="cover">
+          <img class="tile-img" src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.33_a5cc0da1.jpg" alt="Gallery image 3" loading="lazy">
+        </div>
+
+        <div class="tile medium reveal-up parallax" role="button" data-src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.35_344561ca.jpg" data-fit="cover">
+          <img class="tile-img" src="assets.LNPG/WhatsApp Image 2025-11-19 at 17.34.35_344561ca.jpg" alt="Gallery image 4" loading="lazy">
+        </div>
+
+        <div class="tile tall reveal-up parallax" role="button" data-src="assets.LNPG/2dff7f6f-9a87-445b-beb9-707355642fd3.jpg" data-fit="contain">
+          <img class="tile-img" src="assets.LNPG/2dff7f6f-9a87-445b-beb9-707355642fd3.jpg" alt="Gallery image 5" loading="lazy">
+        </div>
+
+        <div class="tile medium reveal-up parallax" role="button" data-src="assets.LNPG/c364c6a1-8435-4395-a662-c4b1288b5ca1.jpg" data-fit="cover">
+          <img class="tile-img" src="assets.LNPG/c364c6a1-8435-4395-a662-c4b1288b5ca1.jpg" alt="Gallery image 6" loading="lazy">
         </div>
       </div>
-
-      <!-- dots -->
-      <div class="carousel-pagination" id="carouselDots" role="tablist" aria-label="Select slide"></div>
-
-      <!-- optional caption area -->
-      <div class="carousel-caption" id="carouselCaption" aria-live="polite"></div>
     </section>
 
     <!-- Services / Spaces -->
@@ -441,7 +379,7 @@
   <!-- LIGHTBOX container (keeps DOM clean) -->
   <div id="lightbox" aria-hidden="true"></div>
 
-  <!-- FOOTER -->
+  <!-- FOOTER (unchanged from previous) -->
   <footer id="contact">
     <div class="footer-grid">
       <div class="footer-brand">
@@ -504,7 +442,7 @@
     // set year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Reveal on scroll (unchanged)
+    // reveal on scroll
     const io = new IntersectionObserver((entries)=>{
       entries.forEach(e=>{
         if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
@@ -512,187 +450,79 @@
     }, { threshold: 0.16 });
     document.querySelectorAll('.reveal-up').forEach(el => io.observe(el));
 
-    /* =========================
-       CAROUSEL - Vanilla JS
-       ========================= */
+    // gallery parallax & lightbox (updated to work with <img> elements)
     (function(){
-      const track = document.getElementById('carouselTrack');
-      const slides = Array.from(track.children);
-      const prevBtn = document.getElementById('prevBtn');
-      const nextBtn = document.getElementById('nextBtn');
-      const dotsContainer = document.getElementById('carouselDots');
-      const captionEl = document.getElementById('carouselCaption');
-      const autoplayInterval = 4000; // ms
-      let current = 0;
-      let isAnimating = false;
-      let autoplayTimer = null;
+      const gallery = document.getElementById('gallery');
+      if(!gallery) return;
+      const tiles = gallery.querySelectorAll('.parallax');
 
-      // create dots
-      slides.forEach((s, i) => {
-        const dot = document.createElement('button');
-        dot.className = 'dot';
-        dot.setAttribute('aria-label', `Go to slide ${i+1}`);
-        dot.setAttribute('role', 'tab');
-        dot.dataset.index = i;
-        if(i === 0) dot.classList.add('active');
-        dotsContainer.appendChild(dot);
-        dot.addEventListener('click', ()=> goTo(i));
-      });
-
-      function updateUI(){
-        // set aria labels
-        slides.forEach((s, i) => s.setAttribute('aria-label', `${i+1} of ${slides.length}`));
-        // caption
-        const caption = slides[current].dataset.caption || '';
-        captionEl.textContent = caption;
-        // dots
-        dotsContainer.querySelectorAll('.dot').forEach((d, idx) => {
-          d.classList.toggle('active', idx === current);
-          d.setAttribute('aria-selected', idx === current ? 'true' : 'false');
-          d.setAttribute('tabindex', idx === current ? '0' : '-1');
+      function handlePointer(e){
+        const rect = gallery.getBoundingClientRect();
+        const cx = rect.left + rect.width/2;
+        const cy = rect.top + rect.height/2;
+        tiles.forEach((tile,i)=>{
+          const depth = (i % 3) * 0.8 + 0.6;
+          const dx = ((e.clientX || (rect.left + rect.width/2)) - cx) / rect.width;
+          const dy = ((e.clientY || (rect.top + rect.height/2)) - cy) / rect.height;
+          const tx = dx * depth * 6;
+          const ty = dy * depth * 6;
+          tile.style.transform = `translate3d(${tx}px, ${ty}px, 0) scale(${1 + depth*0.002})`;
         });
       }
 
-      function goTo(index, instant=false){
-        if(isAnimating) return;
-        index = (index + slides.length) % slides.length;
-        current = index;
-        const offset = -index * track.clientWidth;
-        // use transform in px to avoid sub-pixel issues
-        track.style.transition = instant ? 'none' : 'transform 600ms cubic-bezier(.22,.9,.12,1)';
-        track.style.transform = `translateX(${offset}px)`;
-        if(!instant){
-          isAnimating = true;
-          setTimeout(()=> isAnimating = false, 650);
-        }
-        updateUI();
-        loadImageFor(index); // lazy load visible
-        preloadNeighbors(index);
-      }
-
-      function next(){
-        goTo(current + 1);
-      }
-      function prev(){
-        goTo(current - 1);
-      }
-
-      // lazy load helpers: images use data-src attribute
-      function loadImageFor(idx){
-        const slide = slides[idx];
-        if(!slide) return;
-        const img = slide.querySelector('img.lazy-img');
-        if(!img) return;
-        if(img.dataset.loaded) return;
-        const src = img.dataset.src || slide.dataset.src;
-        if(src){
-          img.src = src;
-          img.addEventListener('load', function onLoad(){
-            img.dataset.loaded = '1';
-            // auto-detect orientation and set object-fit
-            try {
-              const w = img.naturalWidth || img.width;
-              const h = img.naturalHeight || img.height;
-              if(h > w){
-                img.style.objectFit = 'contain';
-                slide.style.background = 'linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.06))';
-              } else {
-                img.style.objectFit = 'cover';
-              }
-            } catch(e){}
-            img.removeEventListener('load', onLoad);
+      if(window.matchMedia("(pointer: fine) and (min-width: 900px)").matches){
+        gallery.addEventListener('mousemove', handlePointer);
+        gallery.addEventListener('mouseleave', ()=> tiles.forEach(t=> t.style.transform = 'translate3d(0,0,0) scale(1)'));
+      } else {
+        window.addEventListener('scroll', ()=> {
+          const rect = gallery.getBoundingClientRect();
+          tiles.forEach((tile, i)=>{
+            const offset = (rect.top * ( (i % 4) - 1.5 )) * 0.02;
+            tile.style.transform = `translateY(${offset}px)`;
           });
-        }
-      }
-
-      function preloadNeighbors(idx){
-        [idx-1, idx+1].forEach(i => {
-          const k = (i + slides.length) % slides.length;
-          const s = slides[k];
-          const img = s && s.querySelector('img.lazy-img');
-          if(img && !img.dataset.loaded){
-            const src = img.dataset.src || s.dataset.src;
-            if(src) img.src = src;
-          }
         });
       }
 
-      // autoplay
-      function startAutoplay(){
-        stopAutoplay();
-        autoplayTimer = setInterval(()=> next(), autoplayInterval);
-      }
-      function stopAutoplay(){
-        if(autoplayTimer){ clearInterval(autoplayTimer); autoplayTimer = null; }
-      }
-
-      // touch / swipe support
-      (function addTouch(){
-        let startX = 0, currentX = 0, dragging = false;
-        const threshold = 50;
-
-        track.addEventListener('pointerdown', (e) => {
-          dragging = true;
-          startX = e.clientX;
-          track.style.transition = 'none';
-          stopAutoplay();
-          track.setPointerCapture(e.pointerId);
-        });
-        track.addEventListener('pointermove', (e) => {
-          if(!dragging) return;
-          currentX = e.clientX;
-          const dx = currentX - startX;
-          track.style.transform = `translateX(${ -current * track.clientWidth + dx }px)`;
-        });
-        track.addEventListener('pointerup', (e) => {
-          if(!dragging) return;
-          dragging = false;
-          const dx = e.clientX - startX;
-          if(Math.abs(dx) > threshold){
-            if(dx < 0) next(); else prev();
-          } else {
-            goTo(current); // snap back
-          }
-          startAutoplay();
-        });
-        track.addEventListener('pointercancel', () => {
-          dragging = false; goTo(current); startAutoplay();
-        });
-      })();
-
-      // keyboard navigation
-      document.addEventListener('keydown', (e) => {
-        if(e.key === 'ArrowLeft') prev();
-        if(e.key === 'ArrowRight') next();
+      // lightbox: now reads <img> inside the tile
+      const lightbox = document.getElementById('lightbox');
+      gallery.addEventListener('click', (e) => {
+        const tile = e.target.closest('.tile');
+        if(!tile) return;
+        const img = tile.querySelector('img.tile-img');
+        const src = img ? img.getAttribute('src') : tile.getAttribute('data-src');
+        if(!src) return;
+        lightbox.innerHTML = '';
+        const wrapper = document.createElement('div');
+        wrapper.className = 'lightbox-wrap';
+        wrapper.tabIndex = 0;
+        wrapper.innerHTML = `<img src="${src}" alt="${img ? img.alt : 'Gallery image'}" loading="eager">`;
+        wrapper.addEventListener('click', ()=> { lightbox.innerHTML=''; lightbox.setAttribute('aria-hidden','true'); document.body.style.overflow=''; });
+        lightbox.appendChild(wrapper);
+        lightbox.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
       });
-
-      // pause on hover / focus
-      const viewport = document.querySelector('.carousel-viewport');
-      viewport.addEventListener('mouseenter', stopAutoplay);
-      viewport.addEventListener('mouseleave', startAutoplay);
-      viewport.addEventListener('focusin', stopAutoplay);
-      viewport.addEventListener('focusout', startAutoplay);
-
-      // prev/next events
-      prevBtn.addEventListener('click', prev);
-      nextBtn.addEventListener('click', next);
-
-      // responsive: when the viewport resizes, recalc transform to keep correct slide in view
-      window.addEventListener('resize', ()=> goTo(current, true));
-
-      // initial setup
-      // set width of track children to viewport width for pixel-perfect transform (done via CSS flex; translateX uses track.clientWidth)
-      // load initial images
-      loadImageFor(0);
-      preloadNeighbors(0);
-      updateUI();
-      // start autoplay
-      startAutoplay();
-
-      // accessibility: create labelled slide elements as necessary (aria-live updated via caption)
     })();
 
-    // Mobile nav toggle (unchanged)
+    // Simplified booking: (links are anchors; JS not required, but kept for compatibility)
+    (function(){
+      const primary = document.getElementById('primaryBookBtn');
+      const openBooking = document.getElementById('openBooking');
+      const mobileBookBtn = document.getElementById('mobileBookBtn');
+
+      function openBookingLink(e){
+        const href = e && e.currentTarget && (e.currentTarget.getAttribute('href') || e.currentTarget.dataset.href);
+        if(!href) return;
+        window.open(href, '_blank', 'noopener,noreferrer');
+      }
+
+      primary?.addEventListener('click', function(e){ /* default anchor behavior will open */ });
+      openBooking?.addEventListener('click', function(e){ /* default anchor behavior will open */ });
+      if(mobileBookBtn){
+        mobileBookBtn.addEventListener('click', function(e){ /* default anchor behavior */ });
+      }
+    })();
+
+    // Mobile nav toggle
     (function(){
       const mobileBtn = document.getElementById('mobileBtn');
       const mobileNav = document.getElementById('mobileNav');
@@ -732,12 +562,12 @@
       });
     })();
 
-    // accessibility: close lightbox on Escape (unchanged)
+    // accessibility: close lightbox on Escape
     document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape'){ const lightbox = document.getElementById('lightbox'); if(lightbox) { lightbox.innerHTML=''; lightbox.setAttribute('aria-hidden','true'); document.body.style.overflow=''; } } });
 
-    // small screens: reduce transforms (performance)
+    // small screens: disable heavy transforms for performance
     if(window.matchMedia("(max-width: 768px)").matches){
-      document.querySelectorAll('.slide').forEach(t => t.style.transition = 'none');
+      document.querySelectorAll('.tile').forEach(t => t.style.transition = 'none');
     }
   </script>
 </body>
