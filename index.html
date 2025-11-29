@@ -31,7 +31,6 @@
     a{transition:all .18s ease;}
 
     /* Responsive logos */
-    /* keep a sensible max so scaled logo doesn't push into other items */
     .brand-logo {
       height: clamp(33px, 6vw, 66px);
       width: auto;
@@ -41,21 +40,19 @@
       transition: height .25s ease, transform .18s ease;
       flex-shrink: 0;
     }
-    /* Large logo: visually increased by ~155% but constrained */
+    /* Large logo: reduced from the previous scale to a slightly smaller increase */
     .brand-logo.large {
       height: clamp(64px, 8vw, 130px);
-      transform: scale(1.55);
+      transform: scale(1.35);            /* reduced a bit from 1.55 */
       transform-origin: left center;
-      margin-right: 12px;           /* extra breathing room */
-      z-index: 10001;              /* sit above other content to avoid overlap artifacts */
-      max-width: 340px;           /* prevent excessive width */
+      margin-right: 10px;
+      z-index: 10001;
+      max-width: 300px;
     }
 
     /* Header */
-    /* kept translucent so the background video shows through while keeping blur */
     header{ backdrop-filter: blur(6px); background: rgba(255,255,255,0.18); border-bottom:1px solid rgba(15,23,42,0.04); z-index:9999; position:sticky; top:0; }
     .header-inner { max-width:1300px; margin:0 auto; padding:12px 20px; display:flex; gap:18px; align-items:center; }
-    /* increased gap and prevented wrapping to avoid logos overlapping */
     .header-left { display:flex; align-items:center; gap:22px; flex-wrap:nowrap; min-width:0; }
     .header-right { margin-left:auto; display:flex; align-items:center; gap:18px; justify-content:flex-end; }
 
@@ -63,9 +60,8 @@
     .nav a { color: rgba(15,23,42,0.85); font-weight:600; text-decoration:none; font-size:13px; }
     .small-ghost { color:var(--muted); font-weight:500; }
 
-    /* primary button changed to solid black */
     .cta-primary{
-      background: #000000; /* changed from blue gradient to black */
+      background: #000000;
       color: white;
       padding:10px 16px;
       border-radius:999px;
@@ -78,36 +74,47 @@
       cursor:pointer;
       text-decoration:none;
     }
-    .cta-primary svg * { stroke: white; fill: none; } /* ensure icon contrasts on black */
+    .cta-primary svg * { stroke: white; fill: none; }
     .cta-secondary{ padding:9px 12px; border-radius:10px; border:1px solid rgba(153,153,153,0.06); color:var(--muted); font-weight:600; background:white; text-decoration:none; display:inline-flex; align-items:center; }
 
     .mobile-toggle { display:none; border-radius:8px; padding:8px; border:1px solid rgba(15,23,42,0.06); background:white; }
 
-    /* background video: fixed, behind content */
+    /* background video */
     .background-video{
       position: fixed;
       inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      z-index: -2; /* behind everything */
+      z-index: -2;
       pointer-events: none;
     }
-    /* If any browser creates a stacking context, ensure header stays above */
     header { position: sticky; z-index: 9999; }
 
     /* HERO */
-    /* apply a more "professional" display font to the hero region */
+    /* use Playfair Display as the hero font */
     .hero { position:relative; overflow:visible; font-family: 'Playfair Display', Georgia, serif; }
 
-    .hero-inner{ max-width:1200px; margin:0 auto; padding:56px 20px; display:grid; grid-template-columns: 1fr minmax(320px,560px); gap:28px; align-items:start; }
+    /* make hero-right stretch full column height so image fills column */
+    .hero-inner{ max-width:1200px; margin:0 auto; padding:56px 20px; display:grid; grid-template-columns: 1fr minmax(320px,560px); gap:28px; align-items:stretch; }
     .hero-left { display:block; min-width:0; }
-    .hero-right { justify-self:end; position:relative; border-radius:14px; overflow:visible; box-shadow: 0 18px 50px rgba(2,6,23,0.06); width:100%; max-width:560px; }
+    .hero-right {
+      justify-self:stretch;
+      position:relative;
+      border-radius:0;        /* removed card rounding */
+      overflow:hidden;        /* crop image cleanly */
+      box-shadow:none;        /* removed card shadow */
+      width:100%;
+      max-width:none;         /* allow it to occupy full column */
+      background:transparent; /* remove background card */
+      display:flex;
+      align-items:stretch;
+    }
 
     @media (max-width:1000px){
       .hero-inner{ grid-template-columns:1fr; padding:36px 18px; }
       .hero-left{ order:1; }
-      .hero-right{ order:2; justify-self:stretch; max-width:100%; margin-top:18px; }
+      .hero-right{ order:2; justify-self:stretch; max-width:100%; margin-top:18px; min-height:260px; }
     }
 
     .brand-strap {
@@ -118,20 +125,19 @@
       margin: 0;
       line-height: 1;
       font-size: clamp(18px, 2.1vw, 34px);
-      transform: scale(1.15); /* increased by roughly 15% visually as requested */
+      transform: scale(1.15);
       transform-origin: left center;
     }
     .brand-sub { font-size: 13px; color:var(--muted); margin-top:4px; }
 
-    /* kicker spans: changed to black and increased ~300% */
     .kicker{
       display:inline-block;
       background: linear-gradient(90deg, rgba(238,238,238,0.08), rgba(238,238,238,0.06));
-      color: #000000; /* changed from blue to black */
+      color: #000000;
       font-weight:700;
       padding:6px 12px;
       border-radius:999px;
-      font-size: 39px; /* ~300% of 13px */
+      font-size: 39px;
       line-height: 1;
       margin-top:8px;
     }
@@ -139,7 +145,7 @@
     .hero-h1{ font-size:clamp(32px,4.5vw,48px); line-height:1.02; letter-spacing:-0.02em; margin-bottom:14px; color:#07133a; }
     .hero-p{ color:rgba(7,19,58,0.75); max-width:54ch; margin-bottom:22px; font-size:16px; }
 
-    /* show bullets for lists inside hero */
+    /* list bullets in hero */
     .hero ul {
       list-style: disc;
       margin-left: 1.1rem;
@@ -149,25 +155,27 @@
       margin-bottom: 8px;
     }
 
-    /* Hide hero CTAs on small screens (mobile) */
     .hero-ctas { display:inline-flex; gap:12px; align-items:center; }
     @media (max-width:900px){
       .hero-ctas { display:none !important; }
-      .kicker { font-size: clamp(20px, 8vw, 39px); } /* keep kicker responsive on small screens */
+      .kicker { font-size: clamp(20px, 8vw, 39px); }
     }
 
-    /* gallery tiles with <img> */
-    .grid-masonry{ display:grid; grid-template-columns: repeat(2,1fr); gap:8px; padding:12px; }
-    .tile{ position:relative; border-radius:10px; overflow:hidden; cursor:pointer; display:block; outline:none; aspect-ratio:4/3; transition: transform .36s cubic-bezier(.2,.9,.24,1); box-shadow:0 6px 18px rgba(2,6,23,0.06); background:#f3f4f6; }
-    /* ensure tile images always fill container and maintain aspect ratio */
+    /* gallery tiles with <img> - make images fill fully */
+    .grid-masonry{ display:grid; grid-template-columns: repeat(1,1fr); gap:0; padding:0; width:100%; height:100%; }
+    .tile{ position:relative; border-radius:0; overflow:hidden; cursor:pointer; display:block; outline:none; transition: transform .36s cubic-bezier(.2,.9,.24,1); box-shadow:none; background:transparent; width:100%; height:100%; }
     .tile img, .hero-right img { width:100%; height:100%; object-fit:cover; display:block; }
-    .tile::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0.06), rgba(0,0,0,0.20)); pointer-events:none; }
-    .tile:hover{ transform: translateY(-6px) scale(1.02); }
+    .tile::after{ content:""; position:absolute; inset:0; pointer-events:none; } /* removed dark gradient overlay */
+    .tile:hover{ transform: none; }
     .tile.tall{ aspect-ratio:3/4; }
-    .tile.wide{ grid-column: span 2; aspect-ratio:16/9; }
+    .tile.wide{ grid-column: span 1; aspect-ratio:16/9; }
+
+    @media (min-width:601px){
+      .grid-masonry{ grid-template-columns: repeat(1,1fr); }
+    }
 
     @media (max-width:600px){
-      .grid-masonry{ grid-template-columns:1fr; gap:10px; padding:8px; }
+      .grid-masonry{ grid-template-columns:1fr; gap:0; padding:0; }
       .tile.wide{ grid-column:auto; aspect-ratio:4/3; }
       .tile.tall{ aspect-ratio:4/3; }
     }
@@ -187,7 +195,7 @@
     .lightbox-wrap{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:12000; background:rgba(3,7,18,0.86); padding:20px; }
     .lightbox-wrap img{ max-width:96%; max-height:92vh; border-radius:10px; box-shadow:0 30px 80px rgba(2,6,23,0.6); }
 
-    /* Footer — restored */
+    /* Footer */
     footer { background: var(--footer-bg); color: #cfe1ff; padding: 40px 16px; }
     footer a { color: #cfe1ff; text-decoration:none; }
     footer a:hover { text-decoration:underline; color: var(--footer-accent); }
@@ -200,18 +208,17 @@
     .social-links a svg { width:18px; height:18px; display:block; }
     .social-links a:hover { background: rgba(255,255,255,0.12); transform: translateY(-3px); }
 
-    /* Mobile behavior: hide desktop CTAs (they appear in drawer). show mobile toggle */
+    /* Mobile behavior */
     @media (max-width:900px){
       .header-right .cta-primary,
       .header-right .cta-secondary { display:none !important; }
       .nav { display:none; }
       .mobile-toggle { display:inline-flex; }
-      /* reduce large logo scale on smaller screens to avoid collisions */
-      .brand-logo.large { transform: scale(1.25); margin-right:8px; max-width: 220px; }
+      .brand-logo.large { transform: scale(1.15); margin-right:8px; max-width: 220px; }
     }
 
     @media (max-width:520px){
-      .brand-logo.large { transform: scale(1.05); }
+      .brand-logo.large { transform: scale(1.0); }
       .header-left { gap: 10px; }
     }
 
@@ -268,7 +275,6 @@
         <a href="#contact" class="block py-2">Contact Us</a>
 
         <div class="mobile-actions" style="padding-top:8px; display:flex; gap:8px;">
-          <!-- Mobile drawer contains booking CTAs -->
           <a href="https://daisymocollective.as.me/" id="mobileBookBtn" class="cta-primary" style="flex:1; text-align:center;" target="_blank" rel="noopener noreferrer">Book</a>
           <a href="https://daisymocollective.as.me/" class="cta-secondary" style="flex:1; text-align:center;">Studio</a>
         </div>
@@ -282,51 +288,53 @@
       <div class="hero-inner">
         <div class="hero-left">
           <div style="display:flex; flex-direction:column; margin-left:4px;">
-          <span class="kicker reveal-up">DaisyMo Collective</span>
-          <p class="hero-p reveal-up">A creative space built for people who want options, flexibility, and room to make something great.
-<ul>Use the studio for photo shoots, podcasting, small trainings, content creation, meetings, or intimate events.
-Bring your own team or come solo.</ul>
-</p>
-<span class="kicker reveal-up">Self by DMC</span>
-          <p class="hero-p reveal-up">A self-portrait studio made for people who want high-quality photos without hiring a photographer.
+            <span class="kicker reveal-up">DaisyMo Collective</span>
+            <p class="hero-p reveal-up">A creative space built for people who want options, flexibility, and room to make something great.
+            <ul>
+              <li>Use the studio for photo shoots, podcasting, small trainings, content creation, meetings, or intimate events.</li>
+              <li>Bring your own team or come solo.</li>
+            </ul>
+            </p>
 
-<ul>
-  <li>The camera and lighting are fully set up for you.</li>
-  <li>You take the shots yourself using a remote and move at your own pace.</li>
-  <li>Perfect for birthdays, branding, couples, or anyone who just wants good photos without the pressure.</li>
-</ul>
-</p>
+            <span class="kicker reveal-up">Self by DMC</span>
+            <p class="hero-p reveal-up">A self-portrait studio made for people who want high-quality photos without hiring a photographer.
+            <ul>
+              <li>The camera and lighting are fully set up for you.</li>
+              <li>You take the shots yourself using a remote and move at your own pace.</li>
+              <li>Perfect for birthdays, branding, couples, or anyone who just wants good photos without the pressure.</li>
+            </ul>
+            </p>
 
-          <div class="hero-ctas mt-6 reveal-up" style="display:flex; align-items:center;">
-            <a id="openBooking" class="cta-primary" href="https://daisymocollective.as.me/" target="_blank" rel="noopener noreferrer">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden class="inline-block"><rect x="3" y="5" width="18" height="16" rx="2" stroke="white" stroke-width="1.6"/><path d="M16 3v4M8 3v4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Book the Studio
-            </a>
-          </div>
-
-          <div class="mt-8 flex items-center gap-6 text-sm" style="color:var(--muted);">
-            <div class="flex items-center gap-3">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="text-blue-600"><path d="M12 20v-6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <div>
-                <div class="font-semibold">Flexible bookings</div>
-                <div class="text-xs">Hourly & daily options for creators and teams</div>
-              </div>
+            <div class="hero-ctas mt-6 reveal-up" style="display:flex; align-items:center;">
+              <a id="openBooking" class="cta-primary" href="https://daisymocollective.as.me/" target="_blank" rel="noopener noreferrer">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden class="inline-block"><rect x="3" y="5" width="18" height="16" rx="2" stroke="white" stroke-width="1.6"/><path d="M16 3v4M8 3v4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Book the Studio
+              </a>
             </div>
 
-            <div class="flex items-center gap-3">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="text-blue-600"><circle cx="12" cy="12" r="9" stroke-width="1.6"/></svg>
-              <div>
-                <div class="font-semibold">Self sessions</div>
-                <div class="text-xs">Pre-set lighting, curated backdrops, instant previews</div>
+            <div class="mt-8 flex items-center gap-6 text-sm" style="color:var(--muted);">
+              <div class="flex items-center gap-3">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="text-blue-600"><path d="M12 20v-6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <div>
+                  <div class="font-semibold">Flexible bookings</div>
+                  <div class="text-xs">Hourly & daily options for creators and teams</div>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="text-blue-600"><circle cx="12" cy="12" r="9" stroke-width="1.6"/></svg>
+                <div>
+                  <div class="font-semibold">Self sessions</div>
+                  <div class="text-xs">Pre-set lighting, curated backdrops, instant previews</div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
         </div>
 
         <aside class="hero-right" aria-hidden="true">
           <div class="grid-masonry" id="gallery">
-            <div class="tile tall parallax reveal-up" tabindex="0" role="button" data-src="assets.LNPG/a8a63ff5-3ed2-44f1-a124-7430ced43885.jpg">
+            <div class="tile parallax reveal-up" tabindex="0" role="button" data-src="assets.LNPG/a8a63ff5-3ed2-44f1-a124-7430ced43885.jpg">
               <img src="assets.LNPG/WhatsApp Image 2025-11-21 at 09.27.46_84f86004.jpg" alt="Creative portrait 1" loading="lazy" decoding="async">
             </div>
           </div>
@@ -335,10 +343,10 @@ Bring your own team or come solo.</ul>
     </section>
   </main>
 
-  <!-- LIGHTBOX container (keeps DOM clean) -->
+  <!-- LIGHTBOX container -->
   <div id="lightbox" aria-hidden="true"></div>
 
-  <!-- FOOTER (restored exactly) -->
+  <!-- FOOTER -->
   <footer id="contact">
     <div class="footer-grid">
       <div class="footer-brand">
@@ -366,21 +374,18 @@ Bring your own team or come solo.</ul>
       <div>
         <h4 class="font-semibold mb-3" style="color:#e6f0ff">Follow</h4>
         <div class="flex items-center gap-3 social-links" style="margin-top:6px;">
-          <!-- Facebook -->
           <a href="https://www.facebook.com/profile.php?id=61576836301594" aria-label="Facebook" target="_blank" rel="noopener noreferrer" title="Facebook">
             <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <path d="M22 12.072C22 6.477 17.523 2 11.928 2S1.856 6.477 1.856 12.072C1.856 17.087 5.827 21.166 10.69 21.98v-6.96H8.218v-2.96h2.472V9.845c0-2.444 1.462-3.79 3.7-3.79 1.073 0 2.195.193 2.195.193v2.416h-1.237c-1.219 0-1.597.755-1.597 1.53v1.835h2.716l-.434 2.96h-2.282V22C18.173 21.166 22 17.087 22 12.072z"/>
             </svg>
           </a>
 
-          <!-- TikTok -->
           <a href="https://www.tiktok.com/@daisymo_collective" aria-label="TikTok" target="_blank" rel="noopener noreferrer" title="TikTok">
             <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <path d="M16.5 3.75a4.25 4.25 0 0 0 4.25 4.25v2.06a6.31 6.31 0 0 1-6.31-6.31H16.5zM9.75 7.5a4.5 4.5 0 1 0 4.5 4.5V5.25h-1.5v6.75a3 3 0 1 1-3-3V7.5z"/>
             </svg>
           </a>
 
-          <!-- Instagram -->
           <a href="https://www.instagram.com/daisymo_collective/?hl=en" aria-label="Instagram" target="_blank" rel="noopener noreferrer" title="Instagram">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <rect x="3" y="3" width="18" height="18" rx="5" ry="5" />
