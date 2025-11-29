@@ -31,15 +31,32 @@
     a{transition:all .18s ease;}
 
     /* Responsive logos */
-    .brand-logo { height: clamp(33px, 6vw, 66px); width:auto; display:block; max-width:220px; transition:height .25s ease; }
-    .brand-logo.large { height: clamp(64px, 8vw, 130px); transform: scale(1.55); transform-origin: left center; }
-    .header-left img { display:block; max-height:78px; width:auto; }
+    /* keep a sensible max so scaled logo doesn't push into other items */
+    .brand-logo {
+      height: clamp(33px, 6vw, 66px);
+      width: auto;
+      display: block;
+      max-width: 220px;
+      max-height: 130px;
+      transition: height .25s ease, transform .18s ease;
+      flex-shrink: 0;
+    }
+    /* Large logo: visually increased by ~155% but constrained */
+    .brand-logo.large {
+      height: clamp(64px, 8vw, 130px);
+      transform: scale(1.55);
+      transform-origin: left center;
+      margin-right: 12px;           /* extra breathing room */
+      z-index: 10001;              /* sit above other content to avoid overlap artifacts */
+      max-width: 340px;           /* prevent excessive width */
+    }
 
     /* Header */
-    /* made header more translucent so background video shows through while keeping blur */
+    /* kept translucent so the background video shows through while keeping blur */
     header{ backdrop-filter: blur(6px); background: rgba(255,255,255,0.18); border-bottom:1px solid rgba(15,23,42,0.04); z-index:9999; position:sticky; top:0; }
     .header-inner { max-width:1300px; margin:0 auto; padding:12px 20px; display:flex; gap:18px; align-items:center; }
-    .header-left { display:flex; align-items:center; gap:14px; }
+    /* increased gap and prevented wrapping to avoid logos overlapping */
+    .header-left { display:flex; align-items:center; gap:22px; flex-wrap:nowrap; min-width:0; }
     .header-right { margin-left:auto; display:flex; align-items:center; gap:18px; justify-content:flex-end; }
 
     .nav { display:flex; gap:18px; align-items:center; }
@@ -84,7 +101,7 @@
     .hero { position:relative; overflow:visible; font-family: 'Playfair Display', Georgia, serif; }
 
     .hero-inner{ max-width:1200px; margin:0 auto; padding:56px 20px; display:grid; grid-template-columns: 1fr minmax(320px,560px); gap:28px; align-items:start; }
-    .hero-left { display:block; }
+    .hero-left { display:block; min-width:0; }
     .hero-right { justify-self:end; position:relative; border-radius:14px; overflow:visible; box-shadow: 0 18px 50px rgba(2,6,23,0.06); width:100%; max-width:560px; }
 
     @media (max-width:1000px){
@@ -189,6 +206,13 @@
       .header-right .cta-secondary { display:none !important; }
       .nav { display:none; }
       .mobile-toggle { display:inline-flex; }
+      /* reduce large logo scale on smaller screens to avoid collisions */
+      .brand-logo.large { transform: scale(1.25); margin-right:8px; max-width: 220px; }
+    }
+
+    @media (max-width:520px){
+      .brand-logo.large { transform: scale(1.05); }
+      .header-left { gap: 10px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -219,8 +243,6 @@
 
       <div class="header-right">
         <nav class="nav" role="navigation" aria-label="Main navigation">
-         <!-- <a href="#branches">Spaces</a>
-          <a href="#gallery" class="small-ghost">Gallery</a> -->
           <a href="#contact" class="small-ghost">Contact Us</a>
         </nav>
 
@@ -243,8 +265,6 @@
     <!-- mobile nav drawer (hidden by default) -->
     <nav id="mobileNav" aria-hidden="true" style="display:none;">
       <div style="padding:12px;">
-        <!--<a href="#branches" class="block py-2">Spaces</a>
-        <a href="#gallery" class="block py-2">Gallery</a>-->
         <a href="#contact" class="block py-2">Contact Us</a>
 
         <div class="mobile-actions" style="padding-top:8px; display:flex; gap:8px;">
@@ -262,8 +282,6 @@
       <div class="hero-inner">
         <div class="hero-left">
           <div style="display:flex; flex-direction:column; margin-left:4px;">
-              <!--<div class="brand-strap">DaisyMo Creative</div>
-              <div class="brand-sub">Creative hub & Self Portrait Studio</div>-->
           <span class="kicker reveal-up">DaisyMo Collective</span>
           <p class="hero-p reveal-up">A creative space built for people who want options, flexibility, and room to make something great.
 <ul>Use the studio for photo shoots, podcasting, small trainings, content creation, meetings, or intimate events.
@@ -274,8 +292,8 @@ Bring your own team or come solo.</ul>
 
 <ul>
   <li>The camera and lighting are fully set up for you.</li>
-<li>You take the shots yourself using a remote and move at your own pace.</li>
-<li>Perfect for birthdays, branding, couples, or anyone who just wants good photos without the pressure.</li>
+  <li>You take the shots yourself using a remote and move at your own pace.</li>
+  <li>Perfect for birthdays, branding, couples, or anyone who just wants good photos without the pressure.</li>
 </ul>
 </p>
 
@@ -284,7 +302,6 @@ Bring your own team or come solo.</ul>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden class="inline-block"><rect x="3" y="5" width="18" height="16" rx="2" stroke="white" stroke-width="1.6"/><path d="M16 3v4M8 3v4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
               Book the Studio
             </a>
-           <!-- <a href="https://bablo247.github.io/daisycollective/" class="cta-secondary" style="margin-left:12px;">Book the Creative Space</a> -->
           </div>
 
           <div class="mt-8 flex items-center gap-6 text-sm" style="color:var(--muted);">
@@ -312,65 +329,10 @@ Bring your own team or come solo.</ul>
             <div class="tile tall parallax reveal-up" tabindex="0" role="button" data-src="assets.LNPG/a8a63ff5-3ed2-44f1-a124-7430ced43885.jpg">
               <img src="assets.LNPG/WhatsApp Image 2025-11-21 at 09.27.46_84f86004.jpg" alt="Creative portrait 1" loading="lazy" decoding="async">
             </div>
-           <!-- <div class="tile tall parallax reveal-up" tabindex="0" role="button" data-src="assets.LNPG/WhatsApp%20Image%202025-11-19%20at%2017.34.32_9fe16f1e.jpg">
-              <img src="assets.LNPG/WhatsApp%20Image%202025-11-19%20at%2017.34.32_9fe16f1e.jpg" alt="Studio scene 2" loading="lazy" decoding="async">
-            </div>
-            <div class="tile wide parallax reveal-up" tabindex="0" role="button" data-src="assets.LNPG/WhatsApp%20Image%202025-11-19%20at%2017.34.33_a5cc0da1.jpg">
-              <img src="assets.LNPG/WhatsApp%20Image%202025-11-19%20at%2017.34.33_a5cc0da1.jpg" alt="Group shoot wide" loading="lazy" decoding="async">
-            </div>
-            <div class="tile parallax reveal-up" tabindex="0" role="button" data-src="assets.LNPG/WhatsApp%20Image%202025-11-19%20at%2017.34.35_344561ca.jpg">
-              <img src="assets.LNPG/WhatsApp%20Image%202025-11-19%20at%2017.34.35_344561ca.jpg" alt="Portrait close-up" loading="lazy" decoding="async">
-            </div>
-            <div class="tile tall parallax reveal-up" tabindex="0" role="button" data-src="assets.LNPG/2dff7f6f-9a87-445b-beb9-707355642fd3.jpg">
-              <img src="assets.LNPG/2dff7f6f-9a87-445b-beb9-707355642fd3.jpg" alt="Backdrop example" loading="lazy" decoding="async">
-            </div>
-            <div class="tile parallax reveal-up" tabindex="0" role="button" data-src="assets.LNPG/c364c6a1-8435-4395-a662-c4b1288b5ca1.jpg">
-              <img src="assets.LNPG/c364c6a1-8435-4395-a662-c4b1288b5ca1.jpg" alt="Studio workspace" loading="lazy" decoding="async">
-            </div>
           </div>
         </aside>
       </div>
-    </section> -->
-<!--
-    <!-- Services / Spaces
-    <section id="branches" class="services" aria-label="Studio spaces">
-      <article class="service-card reveal-up" aria-labelledby="studio-title">
-        <img src="assets.LNPG/c364c6a1-8435-4395-a662-c4b1288b5ca1.jpg" alt="photography studio" class="service-img" loading="lazy">
-        <div>
-          <h3 id="studio-title">DaisyMo Creative — Creative Hub</h3>
-          <p class="text-sm" style="color:var(--muted)">
-            A flexible, community-first space for creators — content creators, podcasters, photographers, and small teams. Book workspace, host workshops, record podcasts or run collaborative shoots. Bring your ideas; we provide the space, power and reliable internet.
-          </p>
-          <div class="mt-3 flex gap-3">
-            <a href="https://bablo247.github.io/daisycollective/" class="cta-secondary">Book the Creative Space</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="service-card reveal-up" aria-labelledby="self-title">
-        <img src="assets.LNPG/WhatsApp%20Image%202025-11-21%20at%2009.27.46_84f86004.jpg" alt="Self by DMC — Self Portrait Studio" loading="lazy" class="service-img"> -->
-     <!-- <div>
-          <h3 id="self-title">Self by DMC — Self-Portrait Studio</h3>
-          <p class="text-sm" style="color:var(--muted)">
-            A walk-in, fully-configured self-portrait experience. Pre-set lighting, curated backdrops, tethered previews and simple controls let you create professional-grade photos without a photographer — perfect for portfolios, socials and quick personal shoots.
-          </p>
-          <div class="mt-3 flex gap-3">
-            <a href="https://bablo247.github.io/daisysolo/" class="cta-primary" target="_blank" rel="noopener noreferrer">Reserve a Self Session</a>
-          </div>
-        </div>
-      </article>
-    </section> 
-    -->
-
-    <!-- MAP (hidden by default) -->
-    <div id="map" class="hidden max-w-6xl mx-auto px-6 py-8">
-      <div class="bg-white border rounded-xl p-4">
-        <iframe width="100%" height="300" frameborder="0" style="border:0" loading="lazy"
-          src="https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_EMBED_KEY&q=10650+County+Rd+81+Ste+U+Maple+Grove+MN+55369"
-          aria-label="Studio location map"></iframe>
-      </div>
-    </div>
-
+    </section>
   </main>
 
   <!-- LIGHTBOX container (keeps DOM clean) -->
@@ -426,15 +388,9 @@ Bring your own team or come solo.</ul>
               <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
             </svg>
           </a>
-
-          <!-- WhatsApp 
-          <a href="https://wa.me/17632098807" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer" title="WhatsApp">
-            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M20.52 3.48A11.9 11.9 0 0 0 12 0C5.373 0 .027 5.346 0 12c0 2.116.553 4.174 1.6 6.02L0 24l6.32-1.58A11.94 11.94 0 0 0 12 24c6.627 0 11.973-5.346 12-12 0-.88-.082-1.74-.48-2.52zM12 21.49c-1.6 0-3.16-.43-4.53-1.25l-.32-.2-3.76.94.95-3.66-.21-.33A8.86 8.86 0 0 1 3.1 12 8.9 8.9 0 0 1 12 3.1c4.92 0 8.9 3.98 8.9 8.9S16.92 21.49 12 21.49zM17.15 14.3c-.25-.12-1.47-.73-1.7-.81-.23-.08-.4-.12-.57.12-.17.25-.66.81-.81.98-.15.17-.31.19-.57.06-.25-.12-1.05-.39-2-1.24-.74-.66-1.24-1.48-1.39-1.73-.15-.25-.02-.38.11-.5.11-.11.25-.31.36-.47.12-.16.16-.27.25-.45.08-.17.04-.32-.02-.45-.06-.12-.57-1.37-.78-1.87-.2-.5-.4-.43-.57-.44-.15-.01-.32-.01-.49-.01-.17 0-.45.06-.69.32-.23.26-.88.86-.88 2.09s.9 2.43 1.03 2.6c.12.17 1.78 2.72 4.32 3.81 2.54 1.09 2.54.73 3 2.17.46 1.44 1.05 1.6 1.2 1.7.15.11.93.38 1.06.23.12-.15.5-1.71.57-1.96.07-.25.12-.21.05-.36-.06-.15-.23-.25-.48-.37z"/>
-            </svg>
-          </a>
         </div>
-      </div> -->
+      </div>
+    </div>
 
     <div class="footer-small">
       © <span id="year"></span> DaisyMo. All rights reserved.
