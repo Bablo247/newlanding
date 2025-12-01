@@ -90,7 +90,6 @@
       z-index: -2;
       pointer-events: none;
     }
-    header { position: sticky; z-index: 9999; }
 
     /* HERO */
     .hero { position:relative; overflow:visible; font-family: 'Playfair Display', Georgia, serif; }
@@ -137,7 +136,7 @@
       font-weight:700;
       padding:6px 12px;
       border-radius:999px;
-      font-size: 39px;
+      font-size: 28px;
       line-height: 1;
       margin-top:8px;
     }
@@ -149,7 +148,6 @@
       margin-bottom:22px;
       font-size:16px;
       text-align:left;      /* ensure left alignment */
-      text-indent: 1.1rem;  /* indent first line for a neat block look */
     }
 
     /* list bullets in hero */
@@ -157,6 +155,8 @@
       list-style: disc;
       margin-left: 1.1rem;
       padding-left: 1rem;
+      margin-top:8px;
+      margin-bottom:8px;
     }
     .hero li {
       margin-bottom: 8px;
@@ -274,7 +274,7 @@
           <img src="assets.LNPG/logo-removebg-preview%20(1).png" alt="Self by DMC" class="brand-logo large" style="filter: drop-shadow(0 6px 18px rgba(15,23,42,0.06));"/>
         </a>
         <a href="#top" aria-label="DaisyMo home" style="text-decoration:none;">
-          <img src="assets.LNPG/WhatsApp_Image_2025-10-31_at_23.48.33_4e0b2b6-removebg-preview.png" alt="DaisyMo logo" class="brand-logo" />
+          <img src="assets.LNPG/WhatsApp_Image_2025-11-21_at_09.27.46_84f86004.jpg" alt="DaisyMo logo" class="brand-logo" />
         </a>
       </div>
 
@@ -320,21 +320,19 @@
         <div class="hero-left">
           <div style="display:flex; flex-direction:column;">
             <span class="kicker reveal-up">DaisyMo Collective</span>
-            <p class="hero-p reveal-up">A creative space built for people who want options, flexibility, and room to make something great.
-            <ul>
+            <p class="hero-p reveal-up">A creative space built for people who want options, flexibility, and room to make something great.</p>
+            <ul class="reveal-up">
               <li>Use the studio for photo shoots, podcasting, small trainings, content creation, meetings, or intimate events.</li>
               <li>Bring your own team or come solo.</li>
             </ul>
-            </p>
 
             <span class="kicker reveal-up">Self by DMC</span>
-            <p class="hero-p reveal-up">A self-portrait studio made for people who want high-quality photos without hiring a photographer.
-            <ul>
+            <p class="hero-p reveal-up">A self-portrait studio made for people who want high-quality photos without hiring a photographer.</p>
+            <ul class="reveal-up">
               <li>The camera and lighting are fully set up for you.</li>
               <li>You take the shots yourself using a remote and move at your own pace.</li>
               <li>Perfect for birthdays, branding, couples, or anyone who just wants good photos without the pressure.</li>
             </ul>
-            </p>
 
             <div class="hero-ctas mt-6 reveal-up" style="display:flex; align-items:center;">
               <a id="openBooking" class="cta-primary" href="https://daisymocollective.as.me/" target="_blank" rel="noopener noreferrer">
@@ -557,9 +555,9 @@
     if(window.matchMedia("(max-width: 768px)").matches){
       document.querySelectorAll('.tile').forEach(t => t.style.transition = 'none');
     }
-    <script src="https://embed.acuityscheduling.com/embed/button/37261287.js" async></script>
   </script>
+
+  <!-- Acuity embed script (moved outside inline script to avoid parser errors) -->
+  <script src="https://embed.acuityscheduling.com/embed/button/37261287.js" async></script>
 </body>
 </html>
-
-
