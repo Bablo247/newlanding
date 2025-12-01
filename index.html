@@ -76,6 +76,7 @@
       cursor:pointer;
       text-decoration:none;
       box-shadow: 0 6px 18px rgba(95,184,185,0.14);
+      position:relative;
     }
     .cta-primary svg * { stroke: white; fill: none; }
     .cta-primary:focus { outline: 3px solid rgba(95,184,185,0.22); outline-offset: 3px; }
@@ -84,6 +85,35 @@
     .cta-secondary{ padding:9px 12px; border-radius:10px; border:1px solid rgba(153,153,153,0.06); color:var(--muted); font-weight:600; background:white; text-decoration:none; display:inline-flex; align-items:center; }
 
     .mobile-toggle { display:none; border-radius:8px; padding:8px; border:1px solid rgba(15,23,42,0.06); background:white; }
+
+    /* dropdown for Book menu */
+    .book-menu {
+      position:absolute;
+      right:0;
+      top:calc(100% + 10px);
+      background:white;
+      border-radius:10px;
+      box-shadow: 0 10px 30px rgba(2,6,23,0.12);
+      min-width:220px;
+      padding:8px;
+      display:none;
+      z-index:10002;
+      border:1px solid rgba(10,10,10,0.04);
+    }
+    .book-menu a {
+      display:block;
+      padding:10px 12px;
+      border-radius:8px;
+      color: #07133a;
+      text-decoration:none;
+      font-weight:600;
+      background:transparent;
+      margin:4px 0;
+    }
+    .book-menu a:hover, .book-menu a:focus { background: rgba(11,18,30,0.04); outline:none; }
+
+    /* when open */
+    .book-menu[aria-hidden="false"] { display:block; }
 
     /* background video */
     .background-video{
@@ -257,11 +287,6 @@
         <a href="#top" aria-label="Self by DMC" style="display:flex; align-items:center;">
           <img src="assets.LNPG/Untitled__700_x_200_px_-removebg-preview.png" alt="Self by DMC" class="brand-logo large" style="filter: drop-shadow(0 6px 18px rgba(15,23,42,0.06));"/>
         </a>
-       <!-- second logo intentionally commented out (uncomment if needed)
-        <a href="#top" aria-label="DaisyMo home" style="text-decoration:none;">
-          <img src="assets.LNPG/WhatsApp_Image_2025-10-31_at_23.48.33_4e0b2b6-removebg-preview.png" alt="DaisyMo logo" class="brand-logo" />
-        </a>
-        -->
       </div>
 
       <div class="header-right">
@@ -269,10 +294,23 @@
           <a href="#contact" class="small-ghost">Contact Us</a>
         </nav>
 
-        <div style="display:flex; gap:12px; align-items:center;">
-          <!-- keep Acuity blue embed button in header (matches cta-primary color) -->
+        <div style="display:flex; gap:12px; align-items:center; position:relative;">
+          <!-- Book the Studio (opens menu with 2 choices) -->
+          <div style="position:relative;">
+            <button id="bookMenuBtn" class="cta-primary" aria-haspopup="menu" aria-expanded="false" aria-controls="bookMenu">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2" stroke="white" stroke-width="1.6"/><path d="M16 3v4M8 3v4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Book the Studio
+            </button>
+
+            <div id="bookMenu" class="book-menu" role="menu" aria-hidden="true" aria-labelledby="bookMenuBtn">
+              <a href="https://daisymocollective.as.me/" role="menuitem" id="menu-daisy" target="_blank" rel="noopener noreferrer">Book — DaisyMo Collective</a>
+              <a href="https://app.acuityscheduling.com/schedule.php?owner=37261287&appointmentType=category:Self%20by%20DMC" role="menuitem" id="menu-self" target="_blank" rel="noopener noreferrer">Book — Self by DMC</a>
+            </div>
+          </div>
+
+          <!-- keep Acuity embed button (small and matching blue) -->
           <a href="https://app.acuityscheduling.com/schedule.php?owner=37261287&appointmentType=category:Self%20by%20DMC"
-             target="_blank" class="acuity-embed-button" style="background: var(--cta-blue); color: #fff; padding: 8px 12px; border: 0px; box-shadow: 0 6px 18px rgba(95,184,185,0.14); border-radius: 8px; text-decoration: none; display: inline-block;">Schedule Appointment</a>
+             target="_blank" class="acuity-embed-button" style="background: var(--cta-blue); color: #fff; padding: 8px 12px; border: 0px; box-shadow: 0 6px 18px rgba(95,184,185,0.14); border-radius: 8px; text-decoration: none; display: inline-block;">Schedule</a>
 
           <!-- mobile menu toggle -->
           <button id="mobileBtn" aria-expanded="false" aria-controls="mobileNav" aria-label="Open menu" class="mobile-toggle" title="Open menu">
@@ -310,16 +348,12 @@
               <li>Bring your own team or come solo.</li>
             </ul>
 
-            <!-- MOVED booking button, placed under DaisyMo Collective write-up -->
+            <!-- MOVED booking button, now only Book the Studio for DaisyMo -->
             <div class="reveal-up" style="margin-top:14px;">
-              <a id="bookStudioHero" class="cta-primary" href="https://daisymocollective.as.me/" target="_blank" rel="noopener noreferrer" aria-label="Book the Studio">
+              <a id="bookStudioHero" class="cta-primary" href="https://daisymocollective.as.me/" target="_blank" rel="noopener noreferrer" aria-label="Book DaisyMo Collective">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2" stroke="white" stroke-width="1.6"/><path d="M16 3v4M8 3v4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                Book the Studio
+                Book DaisyMo
               </a>
-
-              <!-- keep schedule appointment (Acuity) next to it for users who prefer that flow -->
-              <a href="https://app.acuityscheduling.com/schedule.php?owner=37261287&appointmentType=category:Self%20by%20DMC"
-                 target="_blank" class="acuity-embed-button" style="background: #ffffff10; color: #fff; padding: 8px 12px; border: 0px; border-radius: 8px; text-decoration: none; display: inline-block; margin-left:10px;">Schedule Appointment</a>
             </div>
 
             <!-- second section -->
@@ -330,6 +364,14 @@
               <li>You take the shots yourself using a remote and move at your own pace.</li>
               <li>Perfect for birthdays, branding, couples, or anyone who just wants good photos without the pressure.</li>
             </ul>
+
+            <!-- SCHEDULE APPOINTMENT moved here under Self by DMC -->
+            <div class="reveal-up" style="margin-top:14px;">
+              <a href="https://app.acuityscheduling.com/schedule.php?owner=37261287&appointmentType=category:Self%20by%20DMC" target="_blank" rel="noopener noreferrer" class="cta-primary" aria-label="Schedule Self by DMC Appointment">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2" stroke="white" stroke-width="1.6"/><path d="M16 3v4M8 3v4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Schedule Appointment
+              </a>
+            </div>
 
             <div class="mt-8 flex items-center gap-6 text-sm" style="color:var(--muted);">
               <div class="flex items-center gap-3">
@@ -432,6 +474,53 @@
       });
     }, { threshold: 0.16 });
     document.querySelectorAll('.reveal-up').forEach(el => io.observe(el));
+
+    // Book menu toggle (accessible)
+    (function(){
+      const btn = document.getElementById('bookMenuBtn');
+      const menu = document.getElementById('bookMenu');
+      if(!btn || !menu) return;
+
+      function openMenu(){
+        btn.setAttribute('aria-expanded','true');
+        menu.setAttribute('aria-hidden','false');
+        // focus first menu item
+        const first = menu.querySelector('[role="menuitem"]');
+        if(first) first.focus();
+      }
+      function closeMenu(){
+        btn.setAttribute('aria-expanded','false');
+        menu.setAttribute('aria-hidden','true');
+      }
+
+      btn.addEventListener('click', (e) => {
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        if(expanded) closeMenu(); else openMenu();
+      });
+
+      // close when clicking outside
+      document.addEventListener('click', (e) => {
+        if(!menu.contains(e.target) && !btn.contains(e.target)){
+          closeMenu();
+        }
+      });
+
+      // keyboard support
+      btn.addEventListener('keydown', (e) => {
+        if(e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openMenu();
+        }
+        if(e.key === 'Escape') closeMenu();
+      });
+      menu.addEventListener('keydown', (e) => {
+        const items = Array.from(menu.querySelectorAll('[role="menuitem"]'));
+        const idx = items.indexOf(document.activeElement);
+        if(e.key === 'ArrowDown'){ e.preventDefault(); const next = items[(idx+1) % items.length]; if(next) next.focus(); }
+        if(e.key === 'ArrowUp'){ e.preventDefault(); const prev = items[(idx-1 + items.length) % items.length]; if(prev) prev.focus(); }
+        if(e.key === 'Escape'){ closeMenu(); btn.focus(); }
+      });
+    })();
 
     // gallery parallax & lightbox (uses <img> inside each .tile)
     (function(){
