@@ -74,7 +74,7 @@
     /* background video */
     .background-video{ position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; pointer-events: none; }
 
-    /* HERO - new 2x2 grid layout */
+    /* HERO - updated row proportions so top row is larger (makes top images visually bigger) */
     .hero { position:relative; overflow:visible; font-family: 'Playfair Display', Georgia, serif; }
     .hero-inner {
       max-width:1200px;
@@ -82,17 +82,17 @@
       padding:56px 20px;
       display:grid;
       grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto auto;
+      /* TOP ROW is taller than bottom row — this increases top images' vertical presence */
+      grid-template-rows: 1.4fr 0.9fr; /* <-- key change */
       gap:28px;
       align-items:stretch;
-      min-height: 420px; /* baseline height; adjust if needed */
+      min-height: 420px;
     }
 
-    /* Make sure left wrapper stretches to match right */
-    .hero-left { grid-column: 1 / -1; display:none; } /* not used in new layout but kept in case */
     /* cells */
     .hero-cell { border-radius:10px; overflow:hidden; display:flex; align-items:stretch; background:transparent; }
-    .cell-image { position:relative; min-height:220px; }
+    /* larger min-height for image cells so they hold stronger visual weight */
+    .cell-image { position:relative; min-height:320px; } /* increased from 220 -> 320 */
     .cell-image img { width:100%; height:100%; object-fit:cover; object-position:center; display:block; }
 
     .cell-text { padding:24px; display:flex; flex-direction:column; justify-content:center; background:transparent; }
@@ -105,7 +105,7 @@
     .cell-bl { grid-column: 1 / 2; grid-row: 2 / 3; }
     .cell-br { grid-column: 2 / 3; grid-row: 2 / 3; }
 
-    /* Responsive: stacked on small screens */
+    /* stacked mobile */
     @media (max-width:1000px){
       .hero-inner {
         grid-template-columns: 1fr;
@@ -117,10 +117,9 @@
       .cell-image { min-height:200px; }
       .cell-text { padding:18px; }
       .mobile-toggle { display:inline-flex; }
-      .header-right .cta-primary, .header-right .acuity-embed-button { display:none !important; } /* keep header tidy on small */
+      .header-right .cta-primary, .header-right .acuity-embed-button { display:none !important; }
     }
 
-    /* keep hero visuals neat on very small screens */
     @media (max-width:520px){
       .hero-inner { padding:20px 12px; gap:12px; min-height:0; }
       .cell-text .kicker { font-size:16px; padding:5px 10px; }
@@ -176,7 +175,7 @@
 
             <div id="bookMenu" class="book-menu" role="menu" aria-hidden="true" aria-labelledby="bookMenuBtn">
               <a href="https://daisymocollective.as.me/" role="menuitem" id="menu-daisy" target="_blank" rel="noopener noreferrer">Book the Studio  — DaisyMo Collective</a>
-              <a href="https://app.acuityscheduling.com/schedule.php?owner=37261287&appointmentType=category:Self%20by%20DMC" role="menuitem" id="menu-self" target="_blank" rel="noopener noreferrer">Schedule a Self Portait Session — Self by DMC</a>
+              <a href="https://app.acuityscheduling.com/schedule.php?owner=37261287&appointmentType=category:Self%20by%20DMC" role="menuitem" id="menu-self" target="_blank" rel="noopener noreferrer">Schedule a Self Portrait Session — Self by DMC</a>
             </div>
           </div>
 
@@ -206,12 +205,12 @@
     <!-- HERO -->
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="hero-inner">
-        <!-- TOP LEFT: IMAGE -->
+        <!-- TOP LEFT: IMAGE (now sits in larger top row) -->
         <div class="hero-cell cell-image cell-tl reveal-up" role="img" aria-label="Studio preview top-left">
           <img src="assets.LNPG/WhatsApp Image 2025-11-21 at 09.27.46_84f86004.jpg" alt="Studio preview 1">
         </div>
 
-        <!-- TOP RIGHT: TEXT -->
+        <!-- TOP RIGHT: TEXT (top row is taller now so this block is larger) -->
         <div class="hero-cell cell-text cell-tr reveal-up">
           <div>
             <span class="kicker">DaisyMo Collective</span>
@@ -439,4 +438,3 @@
   <script src="https://embed.acuityscheduling.com/embed/button/37261287.js" async></script>
 </body>
 </html>
-
