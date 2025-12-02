@@ -11,15 +11,15 @@
   <link rel="stylesheet" href="https://embed.acuityscheduling.com/embed/button/37261287.css" id="acuity-button-styles" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
 
-  <!-- Tailwind CDN (keeps your utility classes available) -->
+  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
     :root{
       --accent: #0f62fe;
       --muted: #6b7280;
-      --footer-bg: #071226; /* dark navy */
-      --footer-accent: #5fb8b9; /* blue used for booking */
+      --footer-bg: #071226;
+      --footer-accent: #5fb8b9;
       --cta-blue: #5fb8b9;
     }
     html,body{height:100%;}
@@ -32,37 +32,19 @@
     }
     a{transition:all .18s ease;}
 
-    /* Responsive logos (fixed: preserve aspect ratio and avoid transform scale) */
-    .brand-logo {
-      width: auto;
-      height: auto;
-      max-height: clamp(30px, 6vw, 60px); /* keeps small logo comfortable */
-      display: block;
-      max-width: 220px;
-      transition: max-height .25s ease;
-      flex-shrink: 0;
-    }
-    /* Large logo - removed transform: scale which caused visual stretching */
-    .brand-logo.large {
-      max-height: clamp(48px, 8vw, 110px);
-      width: auto;
-      margin-right: 16px; /* breathing room */
-      z-index: 10001;
-      max-width: 300px;
-      height: auto;
-    }
+    /* header / logos */
+    .brand-logo { width:auto; max-width:220px; display:block; flex-shrink:0; max-height: clamp(30px,6vw,60px); transition:max-height .25s ease;}
+    .brand-logo.large { max-height: clamp(48px,8vw,110px); margin-right:16px; max-width:300px; height:auto; }
 
-    /* Header */
     header{ backdrop-filter: blur(6px); background: rgba(255,255,255,0.18); border-bottom:1px solid rgba(15,23,42,0.04); z-index:9999; position:sticky; top:0; }
     .header-inner { max-width:1300px; margin:0 auto; padding:12px 20px; display:flex; gap:18px; align-items:center; }
-    .header-left { display:flex; align-items:center; gap:18px; flex-wrap:nowrap; min-width:0; } /* tightened gap */
+    .header-left { display:flex; align-items:center; gap:18px; flex-wrap:nowrap; min-width:0; }
     .header-right { margin-left:auto; display:flex; align-items:center; gap:12px; justify-content:flex-end; }
 
     .nav { display:flex; gap:18px; align-items:center; }
     .nav a { color: rgba(15,23,42,0.85); font-weight:600; text-decoration:none; font-size:13px; }
     .small-ghost { color:var(--muted); font-weight:500; }
 
-    /* CTA (blue to match Acuity) */
     .cta-primary{
       background: var(--cta-blue);
       color: white;
@@ -82,245 +64,81 @@
     .cta-primary:focus { outline: 3px solid rgba(95,184,185,0.22); outline-offset: 3px; }
     .cta-primary:hover { transform: translateY(-1px); }
 
-    .cta-secondary{ padding:9px 12px; border-radius:10px; border:1px solid rgba(153,153,153,0.06); color:var(--muted); font-weight:600; background:white; text-decoration:none; display:inline-flex; align-items:center; }
-
     .mobile-toggle { display:none; border-radius:8px; padding:8px; border:1px solid rgba(15,23,42,0.06); background:white; }
 
-    /* dropdown for Book menu */
-    .book-menu {
-      position:absolute;
-      right:0;
-      top:calc(100% + 10px);
-      background:white;
-      border-radius:10px;
-      box-shadow: 0 10px 30px rgba(2,6,23,0.12);
-      min-width:220px;
-      padding:8px;
-      display:none;
-      z-index:10002;
-      border:1px solid rgba(10,10,10,0.04);
-    }
-    .book-menu a {
-      display:block;
-      padding:10px 12px;
-      border-radius:8px;
-      color: #07133a;
-      text-decoration:none;
-      font-weight:600;
-      background:transparent;
-      margin:4px 0;
-    }
-    .book-menu a:hover, .book-menu a:focus { background: rgba(11,18,30,0.04); outline:none; }
-
-    /* when open */
-    .book-menu[aria-hidden="false"] { display:block; }
+    /* book dropdown */
+    .book-menu { position:absolute; right:0; top:calc(100% + 10px); background:white; border-radius:10px; box-shadow: 0 10px 30px rgba(2,6,23,0.12); min-width:220px; padding:8px; display:none; z-index:10002; border:1px solid rgba(10,10,10,0.04); }
+    .book-menu a { display:block; padding:10px 12px; border-radius:8px; color:#07133a; text-decoration:none; font-weight:600; margin:4px 0; }
+    .book-menu[aria-hidden="false"]{ display:block; }
 
     /* background video */
-    .background-video{
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -2;
-      pointer-events: none;
-    }
+    .background-video{ position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; pointer-events: none; }
 
-    /* HERO */
+    /* HERO - new 2x2 grid layout */
     .hero { position:relative; overflow:visible; font-family: 'Playfair Display', Georgia, serif; }
-
-    /* hero grid (left copy / right gallery) */
-    .hero-inner{
+    .hero-inner {
       max-width:1200px;
       margin:0 auto;
       padding:56px 20px;
       display:grid;
-      grid-template-columns: 1fr minmax(320px,560px);
-      gap:28px;
-      align-items:stretch; /* make both columns same height */
-    }
-    /* ensure left column inner wrapper can stretch to match right column */
-    .hero-left { display:block; min-width:0; text-align:left; padding-left:14px; }
-    .hero-left > div { /* IMPORTANT: allows children to stretch vertically */
-      height: 100%;
-      display:flex;
-      flex-direction:column;
-    }
-
-    .hero-right {
-      justify-self:stretch;
-      position:relative;
-      border-radius:0;
-      overflow:hidden;
-      box-shadow:none;
-      width:100%;
-      max-width:none;
-      background:transparent;
-      display:flex;
-      align-items:stretch;
-    }
-    /* ensure gallery fills its column */
-    .hero-right .grid-masonry { width:100%; height:100%; display:block; }
-
-    @media (max-width:1000px){
-      .hero-inner{ grid-template-columns:1fr; padding:36px 18px; }
-      .hero-left{ order:1; padding-left:8px; }
-      .hero-right{ order:2; justify-self:stretch; max-width:100%; margin-top:18px; min-height:260px; }
-      .hero-left > div { height: auto; } /* on small screens allow natural flow */
-    }
-
-    .brand-strap {
-      font-family: 'Playfair Display', serif;
-      font-weight: 650;
-      color: #07133a;
-      letter-spacing: -0.01em;
-      margin: 0;
-      line-height: 1;
-      font-size: clamp(13px, 1.5vw, 25px);
-      transform: scale(1.05);
-      transform-origin: left center;
-    }
-    .brand-sub { font-size: 13px; color:var(--muted); margin-top:4px; }
-
-    .kicker{
-      display:inline-block;
-      background: linear-gradient(90deg, rgba(238,238,238,0.08), rgba(238,238,238,0.06));
-      color: #000000;
-      font-weight:700;
-      padding:6px 12px;
-      border-radius:999px;
-      font-size: 28px;
-      line-height: 1;
-      margin-top:8px;
-    }
-
-    .hero-h1{ font-size:clamp(32px,4.5vw,48px); line-height:1.02; letter-spacing:-0.02em; margin-bottom:14px; color:#07133a; }
-    .hero-p{
-      color:rgba(7,19,58,0.75);
-      max-width:54ch;
-      margin-bottom:22px;
-      font-size:16px;
-      text-align:left;      /* ensure left alignment */
-    }
-
-    /* list bullets in hero */
-    .hero ul {
-      list-style: disc;
-      margin-left: 1.1rem;
-      padding-left: 1rem;
-      margin-top:8px;
-      margin-bottom:8px;
-    }
-    .hero li {
-      margin-bottom: 8px;
-    }
-
-    .hero-ctas { display:inline-flex; gap:12px; align-items:center; }
-    @media (max-width:900px){
-      /* hide full nav links but keep mobile toggle visible */
-      .nav { display:none; }
-      .mobile-toggle { display:inline-flex; }
-
-      /* make logos slightly smaller on tablets to avoid overflow */
-      .brand-logo.large { max-height: clamp(40px, 8vw, 80px); margin-right: 10px; max-width: 240px; }
-      .brand-logo { max-height: clamp(30px, 8.5vw, 80px); max-width: 220px; }
-      .header-left { gap: 20px; }
-
-      /* keep body CTAs visible and stacked when needed */
-      .hero-ctas { display:flex; flex-wrap:wrap; gap:10px; }
-    }
-
-    @media (max-width:520px){
-      /* Tiny screens — tighten spacing and hide header CTAs to save space */
-      .brand-logo.large { max-height: clamp(28px, 12vw, 64px); margin-right:8px; }
-      .brand-logo { max-height: clamp(24px, 12vw, 68px); max-width: 160px; }
-      .header-left { gap: 10px; padding-left:6px; }
-      header .header-inner { padding:8px 12px; }
-
-      /* hide booking buttons in the navbar on tiny screens */
-      .header-right .cta-primary, .header-right .cta-secondary, .header-right .acuity-embed-button { display:none !important; }
-
-      /* tighten footer/grid if needed */
-      .footer-grid { gap:16px; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .tile, .cta-primary, .reveal-up { transition: none !important; transform: none !important; }
-    }
-
-    /* SELF BY DMC: two-column (image left, text right) - fill full height of left column */
-    .self-by-dmc {
-      margin-top: 22px;
-      display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      align-items: stretch; /* stretch children vertically */
-      height: 100%; /* fill hero-left's height */
-    }
-    .self-by-dmc .self-img {
-      width: 100%;
-      height: 100%;
-      min-height: 220px;
-      overflow: hidden;
-      border-radius: 10px;
-      box-shadow: 0 8px 30px rgba(2,6,23,0.06);
-      display:block;
-    }
-    .self-by-dmc .self-img img{
-      width:100%;
-      height:100%;
-      object-fit: cover;
-      object-position: center;
-      display:block;
-    }
-    .self-by-dmc .self-text {
-      padding: 6px 2px;
-      display:flex;
-      flex-direction:column;
-      justify-content:center; /* vertically center text in column */
+      grid-template-rows: auto auto;
+      gap:28px;
+      align-items:stretch;
+      min-height: 420px; /* baseline height; adjust if needed */
     }
 
+    /* Make sure left wrapper stretches to match right */
+    .hero-left { grid-column: 1 / -1; display:none; } /* not used in new layout but kept in case */
+    /* cells */
+    .hero-cell { border-radius:10px; overflow:hidden; display:flex; align-items:stretch; background:transparent; }
+    .cell-image { position:relative; min-height:220px; }
+    .cell-image img { width:100%; height:100%; object-fit:cover; object-position:center; display:block; }
+
+    .cell-text { padding:24px; display:flex; flex-direction:column; justify-content:center; background:transparent; }
+    .cell-text .kicker{ display:inline-block; background: linear-gradient(90deg, rgba(238,238,238,0.08), rgba(238,238,238,0.06)); color:#000; font-weight:700; padding:6px 12px; border-radius:999px; font-size:20px; margin-bottom:10px; }
+    .cell-text .hero-p{ color:rgba(7,19,58,0.9); font-size:16px; margin-bottom:12px; max-width:48ch; }
+
+    /* place cells: TL image, TR text, BL text, BR image */
+    .cell-tl { grid-column: 1 / 2; grid-row: 1 / 2; }
+    .cell-tr { grid-column: 2 / 3; grid-row: 1 / 2; }
+    .cell-bl { grid-column: 1 / 2; grid-row: 2 / 3; }
+    .cell-br { grid-column: 2 / 3; grid-row: 2 / 3; }
+
+    /* Responsive: stacked on small screens */
     @media (max-width:1000px){
-      .self-by-dmc { grid-template-columns: 1fr; height: auto; }
-      .self-by-dmc .self-img { order: -1; height:auto; min-height:220px; } /* image stacks above text for mobile */
-      .self-by-dmc .self-text { justify-content:flex-start; padding-top:10px; }
+      .hero-inner {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap:18px;
+        padding:28px 16px;
+      }
+      .cell-tl, .cell-tr, .cell-bl, .cell-br { grid-column: 1 / -1; grid-row: auto; }
+      .cell-image { min-height:200px; }
+      .cell-text { padding:18px; }
+      .mobile-toggle { display:inline-flex; }
+      .header-right .cta-primary, .header-right .acuity-embed-button { display:none !important; } /* keep header tidy on small */
     }
 
-    /* FOOTER STYLES */
-    footer{
-      background: var(--footer-bg);
-      color: rgba(255,255,255,0.9);
-      padding: 48px 20px;
+    /* keep hero visuals neat on very small screens */
+    @media (max-width:520px){
+      .hero-inner { padding:20px 12px; gap:12px; min-height:0; }
+      .cell-text .kicker { font-size:16px; padding:5px 10px; }
+      .cell-text .hero-p { font-size:15px; max-width:100%; }
     }
+
+    /* Footer */
+    footer{ background: var(--footer-bg); color: rgba(255,255,255,0.9); padding: 48px 20px; }
     .footer-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns: repeat(4, 1fr); gap:28px; align-items:start; }
     .footer-brand .brand-strap { color: #eaf6f6; font-size:20px; transform:none; }
     .footer-brand p { color: rgba(255,255,255,0.78); margin-top:8px; max-width:320px; }
     footer a { color: rgba(255,255,255,0.9); text-decoration:none; }
     footer a:hover { color: var(--footer-accent); text-decoration:underline; }
     .footer-small { max-width:1200px; margin:20px auto 0; color: rgba(255,255,255,0.6); font-size:13px; padding-top:8px; border-top:1px solid rgba(255,255,255,0.03); }
-
-    .social-links svg { width:20px; height:20px; display:block; }
     .social-links a { display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:8px; background: rgba(255,255,255,0.04); transition: transform .18s ease; }
     .social-links a:hover { transform: translateY(-3px); background: rgba(255,255,255,0.06); }
 
-    @media (max-width:900px){
-      .footer-grid { grid-template-columns: 1fr 1fr; gap:18px; }
-    }
-    @media (max-width:520px){
-      .footer-grid { grid-template-columns: 1fr; gap:12px; }
-      footer { padding: 28px 12px; }
-    }
-
-    /* hero-right image (gallery) fill */
-    .hero-right img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-    }
-
-    /* Lightbox styling - keep simple */
+    /* lightbox */
     #lightbox .lightbox-wrap { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.85); z-index:99999; }
     #lightbox img { max-width:95%; max-height:92vh; border-radius:6px; }
   </style>
@@ -341,13 +159,6 @@
         <a href="#top" aria-label="Self by DMC" style="display:flex; align-items:center;">
           <img src="assets.LNPG/Untitled__700_x_200_px_-removebg-preview.png" alt="Self by DMC" class="brand-logo large" style="filter: drop-shadow(0 6px 18px rgba(15,23,42,0.06));"/>
         </a>
-
-        <!-- If you add a second logo, include it below — it will keep aspect ratio -->
-        <!--
-        <a href="#top" aria-label="DaisyMo home" style="display:flex; align-items:center;">
-          <img src="assets.LNPG/your-second-logo.png" alt="DaisyMo logo" class="brand-logo" />
-        </a>
-        -->
       </div>
 
       <div class="header-right">
@@ -369,7 +180,7 @@
             </div>
           </div>
 
-          <!-- keep Acuity embed button (small and matching blue) -->
+          <!-- Acuity embed button -->
           <a href="https://app.acuityscheduling.com/schedule.php?owner=37261287&appointmentType=category:Self%20by%20DMC"
              target="_blank" class="acuity-embed-button" style="background: var(--cta-blue); color: #fff; padding: 8px 12px; border: 0px; box-shadow: 0 6px 18px rgba(95,184,185,0.14); border-radius: 8px; text-decoration: none; display: inline-block;">Schedule</a>
 
@@ -383,11 +194,10 @@
       </div>
     </div>
 
-    <!-- mobile nav drawer (hidden by default) -->
+    <!-- mobile nav drawer -->
     <nav id="mobileNav" aria-hidden="true" style="display:none;">
       <div style="padding:12px;">
         <a href="#contact" class="block py-2">Contact Us</a>
-
         <div class="mobile-actions" style="padding-top:8px; display:flex; gap:8px;">
           <a href="https://daisymocollective.as.me/" id="mobileBookBtn" class="cta-primary" style="flex:1; text-align:center;" target="_blank" rel="noopener noreferrer">Book</a>
           <a href="https://daisymocollective.as.me/" class="cta-secondary" style="flex:1; text-align:center;">Studio</a>
@@ -400,77 +210,55 @@
     <!-- HERO -->
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="hero-inner">
-        <div class="hero-left">
-          <div style="display:flex; flex-direction:column;">
-            <span class="kicker reveal-up">DaisyMo Collective</span>
-            <p class="hero-p reveal-up">A creative space built for people who want options, flexibility, and room to make something great.</p>
-            <ul class="reveal-up">
+        <!-- TOP LEFT: IMAGE -->
+        <div class="hero-cell cell-image cell-tl reveal-up" role="img" aria-label="Studio preview top-left">
+          <img src="assets.LNPG/WhatsApp Image 2025-11-21 at 09.27.46_84f86004.jpg" alt="Studio preview 1">
+        </div>
+
+        <!-- TOP RIGHT: TEXT -->
+        <div class="hero-cell cell-text cell-tr reveal-up">
+          <div>
+            <span class="kicker">DaisyMo Collective</span>
+            <p class="hero-p">A creative space built for people who want options, flexibility, and room to make something great.</p>
+            <ul>
               <li>Use the studio for photo shoots, podcasting, small trainings, content creation, meetings, or intimate events.</li>
               <li>Bring your own team or come solo.</li>
             </ul>
 
-            <!-- MOVED booking button, now only Book the Studio for DaisyMo -->
-            <div class="reveal-up" style="margin-top:14px;">
+            <div style="margin-top:14px;">
               <a id="bookStudioHero" class="cta-primary" href="https://daisymocollective.as.me/" target="_blank" rel="noopener noreferrer" aria-label="Book DaisyMo Collective">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2" stroke="white" stroke-width="1.6"/><path d="M16 3v4M8 3v4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 Book DaisyMo
               </a>
             </div>
+          </div>
+        </div>
 
-            <!-- SELF BY DMC (image on the left, text on the right) -->
-            <div class="self-by-dmc reveal-up" id="self-by-dmc">
-              <figure class="self-img" aria-hidden="false">
-                <!-- Replace this path with your Self-by-DMC artwork and it will fill the column top-to-bottom -->
-                <img src="assets.LNPG/WhatsApp Image 2025-11-21 at 09.27.46_84f86004.jpg" alt="Self by DMC studio preview">
-              </figure>
+        <!-- BOTTOM LEFT: TEXT -->
+        <div class="hero-cell cell-text cell-bl reveal-up">
+          <div>
+            <span class="kicker">Self by DMC</span>
+            <p class="hero-p">A self-portrait studio made for people who want high-quality photos without hiring a photographer.</p>
+            <ul>
+              <li>The camera and lighting are fully set up for you.</li>
+              <li>You take the shots yourself using a remote and move at your own pace.</li>
+              <li>Perfect for birthdays, branding, couples, or anyone who just wants good photos without the pressure.</li>
+            </ul>
 
-              <div class="self-text">
-                <span class="kicker" style="margin-top:0;">Self by DMC</span>
-                <p class="hero-p">A self-portrait studio made for people who want high-quality photos without hiring a photographer.</p>
-                <ul>
-                  <li>The camera and lighting are fully set up for you.</li>
-                  <li>You take the shots yourself using a remote and move at your own pace.</li>
-                  <li>Perfect for birthdays, branding, couples, or anyone who just wants good photos without the pressure.</li>
-                </ul>
-
-                <!-- SCHEDULE APPOINTMENT remains under Self by DMC -->
-                <div style="margin-top:14px;">
-                  <a href="https://app.acuityscheduling.com/schedule.php?owner=37261287&appointmentType=category:Self%20by%20DMC"
-                     target="_blank" rel="noopener noreferrer" class="cta-primary" aria-label="Schedule Self by DMC Appointment">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2" stroke="white" stroke-width="1.6"/><path d="M16 3v4M8 3v4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    Schedule Appointment
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div class="mt-8 flex items-center gap-6 text-sm" style="color:var(--muted);">
-              <div class="flex items-center gap-3">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="text-blue-600"><path d="M12 20v-6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <div>
-                  <div class="font-semibold">Flexible bookings</div>
-                  <div class="text-xs">Hourly & daily options for creators and teams</div>
-                </div>
-              </div>
-
-              <div class="flex items-center gap-3">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="text-blue-600"><circle cx="12" cy="12" r="9" stroke-width="1.6"/></svg>
-                <div>
-                  <div class="font-semibold">Self sessions</div>
-                  <div class="text-xs">Pre-set lighting, curated backdrops, instant previews</div>
-                </div>
-              </div>
+            <div style="margin-top:14px;">
+              <a href="https://app.acuityscheduling.com/schedule.php?owner=37261287&appointmentType=category:Self%20by%20DMC"
+                 target="_blank" rel="noopener noreferrer" class="cta-primary" aria-label="Schedule Self by DMC Appointment">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2" stroke="white" stroke-width="1.6"/><path d="M16 3v4M8 3v4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Schedule Appointment
+              </a>
             </div>
           </div>
         </div>
 
-        <aside class="hero-right" aria-hidden="true">
-          <div class="grid-masonry" id="gallery">
-            <div class="tile parallax reveal-up" tabindex="0" role="button" data-src="assets.LNPG/a8a63ff5-3ed2-44f1-a124-7430ced43885.jpg">
-              <img src="assets.LNPG/WhatsApp Image 2025-11-21 at 09.27.46_84f86004.jpg" alt="Creative portrait 1" loading="lazy" decoding="async">
-            </div>
-          </div>
-        </aside>
+        <!-- BOTTOM RIGHT: IMAGE -->
+        <div class="hero-cell cell-image cell-br reveal-up" role="img" aria-label="Studio preview bottom-right">
+          <img src="assets.LNPG/a8a63ff5-3ed2-44f1-a124-7430ced43885.jpg" alt="Studio preview 2">
+        </div>
       </div>
     </section>
   </main>
@@ -507,23 +295,15 @@
         <h4 class="font-semibold mb-3" style="color:#e6f0ff">Follow Us</h4>
         <div class="flex items-center gap-3 social-links" style="margin-top:6px;">
           <a href="https://www.facebook.com/profile.php?id=61576836301594" aria-label="Facebook" target="_blank" rel="noopener noreferrer" title="Facebook">
-            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M22 12.072C22 6.477 17.523 2 11.928 2S1.856 6.477 1.856 12.072C1.856 17.087 5.827 21.166 10.69 21.98v-6.96H8.218v-2.96h2.472V9.845c0-2.444 1.462-3.79 3.7-3.79 1.073 0 2.195.193 2.195.193v2.416h-1.237c-1.219 0-1.597.755-1.597 1.53v1.835h2.716l-.434 2.96h-2.282V22C18.173 21.166 22 17.087 22 12.072z"/>
-            </svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M22 12.072C22 6.477 17.523 2 11.928 2S1.856 6.477 1.856 12.072C1.856 17.087 5.827 21.166 10.69 21.98v-6.96H8.218v-2.96h2.472V9.845c0-2.444 1.462-3.79 3.7-3.79 1.073 0 2.195.193 2.195.193v2.416h-1.237c-1.219 0-1.597.755-1.597 1.53v1.835h2.716l-.434 2.96h-2.282V22C18.173 21.166 22 17.087 22 12.072z"/></svg>
           </a>
 
           <a href="https://www.tiktok.com/@daisymo_collective" aria-label="TikTok" target="_blank" rel="noopener noreferrer" title="TikTok">
-            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M16.5 3.75a4.25 4.25 0 0 0 4.25 4.25v2.06a6.31 6.31 0 0 1-6.31-6.31H16.5zM9.75 7.5a4.5 4.5 0 1 0 4.5 4.5V5.25h-1.5v6.75a3 3 0 1 1-3-3V7.5z"/>
-            </svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16.5 3.75a4.25 4.25 0 0 0 4.25 4.25v2.06a6.31 6.31 0 0 1-6.31-6.31H16.5zM9.75 7.5a4.5 4.5 0 1 0 4.5 4.5V5.25h-1.5v6.75a3 3 0 1 1-3-3V7.5z"/></svg>
           </a>
 
           <a href="https://www.instagram.com/daisymo_collective/?hl=en" aria-label="Instagram" target="_blank" rel="noopener noreferrer" title="Instagram">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <rect x="3" y="3" width="18" height="18" rx="5" ry="5" />
-              <path d="M16 11.37A4 4 0 1 1 12.63 8" />
-              <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
-            </svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8" /><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
           </a>
         </div>
       </div>
@@ -555,7 +335,6 @@
       function openMenu(){
         btn.setAttribute('aria-expanded','true');
         menu.setAttribute('aria-hidden','false');
-        // focus first menu item
         const first = menu.querySelector('[role="menuitem"]');
         if(first) first.focus();
       }
@@ -593,47 +372,15 @@
       });
     })();
 
-    // gallery parallax & lightbox (uses <img> inside each .tile)
+    // Simple lightbox for gallery & hero images
     (function(){
-      const gallery = document.getElementById('gallery');
-      if(!gallery) return;
-      const tiles = gallery.querySelectorAll('.parallax');
-
-      function handlePointer(e){
-        const rect = gallery.getBoundingClientRect();
-        const cx = rect.left + rect.width/2;
-        const cy = rect.top + rect.height/2;
-        tiles.forEach((tile,i)=>{
-          const depth = (i % 3) * 0.8 + 0.6;
-          const dx = ((e.clientX || cx) - cx) / rect.width;
-          const dy = ((e.clientY || cy) - cy) / rect.height;
-          const tx = dx * depth * 6;
-          const ty = dy * depth * 6;
-          tile.style.transform = `translate3d(${tx}px, ${ty}px, 0) scale(${1 + depth*0.002})`;
-        });
-      }
-
-      if(window.matchMedia("(pointer: fine) and (min-width: 900px)").matches){
-        gallery.addEventListener('mousemove', handlePointer);
-        gallery.addEventListener('mouseleave', ()=> tiles.forEach(t=> t.style.transform = 'translate3d(0,0,0) scale(1)'));
-      } else {
-        window.addEventListener('scroll', ()=> {
-          const rect = gallery.getBoundingClientRect();
-          tiles.forEach((tile, i)=>{
-            const offset = (rect.top * ( (i % 4) - 1.5 )) * 0.02;
-            tile.style.transform = `translateY(${offset}px)`;
-          });
-        });
-      }
-
-      // lightbox
       const lightbox = document.getElementById('lightbox');
       function openLightbox(src, alt){
         lightbox.innerHTML = '';
         const wrapper = document.createElement('div');
         wrapper.className = 'lightbox-wrap';
         wrapper.tabIndex = 0;
-        wrapper.innerHTML = `<img src="${src}" alt="${alt||'Gallery image'}" loading="eager">`;
+        wrapper.innerHTML = `<img src="${src}" alt="${alt||'Image'}" loading="eager">`;
         wrapper.addEventListener('click', ()=> { lightbox.innerHTML=''; lightbox.setAttribute('aria-hidden','true'); document.body.style.overflow=''; });
         wrapper.addEventListener('keydown', (e)=> { if(e.key === 'Escape') { lightbox.innerHTML=''; lightbox.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }}); 
         lightbox.appendChild(wrapper);
@@ -642,25 +389,18 @@
         wrapper.focus();
       }
 
-      gallery.addEventListener('click', (e) => {
-        const tile = e.target.closest('.tile');
-        if(!tile) return;
-        const img = tile.querySelector('img');
+      // delegate clicks from images in hero and gallery
+      document.addEventListener('click', (e) => {
+        const img = e.target.closest('img');
         if(!img) return;
-        openLightbox(img.src, img.alt);
+        // don't open if link was clicked
+        if(e.target.closest('a')) return;
+        // open for images that are inside hero or gallery
+        const insideHero = img.closest('.hero-inner') || img.closest('#gallery');
+        if(insideHero) {
+          openLightbox(img.src, img.alt);
+        }
       });
-
-      // keyboard activation & accessibility
-      tiles.forEach(tile => {
-        tile.addEventListener('keydown', (e) => {
-          if(e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            const img = tile.querySelector('img');
-            if(img) openLightbox(img.src, img.alt);
-          }
-        });
-      });
-
       document.addEventListener('keydown', (e) => { if(e.key === 'Escape'){ lightbox.innerHTML=''; lightbox.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }});
     })();
 
@@ -681,14 +421,8 @@
         mobileBtn.setAttribute('aria-expanded','false');
       }
 
-      mobileBtn.addEventListener('click', function(e){
-        if(mobileNav.style.display === 'block') closeMobileNav(); else openMobileNav();
-      });
-
-      mobileNav.addEventListener('click', function(e){
-        if(e.target.closest('a')) closeMobileNav();
-      });
-
+      mobileBtn.addEventListener('click', function(e){ if(mobileNav.style.display === 'block') closeMobileNav(); else openMobileNav(); });
+      mobileNav.addEventListener('click', function(e){ if(e.target.closest('a')) closeMobileNav(); });
       document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeMobileNav(); });
       document.addEventListener('click', function(e){
         if(!mobileNav || !mobileBtn) return;
@@ -705,18 +439,7 @@
     }
   </script>
 
-  <script>
-  // Ensure background video attempts to autoplay on mobile devices by playing on first touch and on load
-  (function(){
-    const vid = document.querySelector('.background-video');
-    if(!vid) return;
-    function attemptPlay(){ vid.play().catch(()=>{}); document.removeEventListener('touchstart', attemptPlay); }
-    document.addEventListener('touchstart', attemptPlay, {passive:true});
-    window.addEventListener('load', ()=> { setTimeout(()=> vid.play().catch(()=>{}), 200); });
-  })();
-  </script>
-
-  <!-- Acuity embed script (moved outside inline script to avoid parser errors) -->
+  <!-- Acuity embed script -->
   <script src="https://embed.acuityscheduling.com/embed/button/37261287.js" async></script>
 </body>
 </html>
