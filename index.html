@@ -15,6 +15,12 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
+    /* global box-sizing + prevent accidental horizontal scroll */
+    *, *::before, *::after { box-sizing: border-box; }
+    html,body { height:100%; margin:0; padding:0; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+    /* Prevent accidental horizontal scroll while not hiding valid overflow inside components */
+    html { overflow-x: hidden; }
+
     :root{
       --accent: #0f62fe;
       --muted: #6b7280;
@@ -22,15 +28,15 @@
       --footer-accent: #5fb8b9;
       --cta-blue: #5fb8b9;
     }
-    html,body{height:100%;}
+
     body{
       font-family:'Inter',system-ui,Roboto,Arial,'Helvetica Neue',sans-serif;
       background:transparent;
       color:#0f172a;
-      -webkit-font-smoothing:antialiased;
-      margin:0;
     }
+
     a{transition:all .18s ease;}
+    img { max-width:100%; height:auto; display:block; }
 
     /* header / logos */
     .brand-logo { width:auto; max-width:220px; display:block; flex-shrink:0; max-height: clamp(30px,6vw,60px); transition:max-height .25s ease;}
@@ -95,7 +101,16 @@
     .cell-image img { width:100%; height:100%; object-fit:cover; object-position:center; display:block; }
 
     .cell-text { padding:24px; display:flex; flex-direction:column; justify-content:center; background:transparent; }
-    .cell-text .kicker{ display:inline-block; background: linear-gradient(90deg, rgba(238,238,238,0.08), rgba(238,238,238,0.06)); color:#000; font-weight:900; padding:6px 12px; border-radius:999px; font-size:40px; margin-bottom:10px; }
+    .cell-text .kicker{
+      display:inline-block;
+      background: linear-gradient(90deg, rgba(238,238,238,0.08), rgba(238,238,238,0.06));
+      color:#000;
+      font-weight:700;
+      padding:6px 12px;
+      border-radius:999px;
+      font-size:1.4rem; /* increased kicker font size as requested */
+      margin-bottom:10px;
+    }
     .cell-text .hero-p{ color:rgba(7,19,58,0.9); font-size:16px; margin-bottom:12px; max-width:48ch; }
 
     /* place cells: TL image, TR text, BL text, BR image */
@@ -121,53 +136,59 @@
 
     @media (max-width:520px){
       .hero-inner { padding:20px 12px; gap:12px; min-height:0; }
-      .cell-text .kicker { font-size:26px; padding:5px 10px; }
-      .cell-text .hero-p { font-size:12px; max-width:100%; }
-    }
-    /* Prevent footer overflow on mobile */
-footer {
-    overflow-x: hidden;
-}
-
-/* Make footer items stack nicely */
-@media (max-width: 768px) {
-    footer .footer-content,
-    footer .footer-links,
-    footer .footer-columns,
-    footer ul {
-        flex-direction: column !important;
-        text-align: center;
-        width: 100% !important;
+      .cell-text .kicker { font-size:1.1rem; padding:5px 10px; }
+      .cell-text .hero-p { font-size:15px; max-width:100%; }
     }
 
-    footer ul li {
-        margin: 8px 0;
+    /* FOOTER - responsive, no horizontal overflow */
+    footer{
+      background: var(--footer-bg);
+      color: rgba(255,255,255,0.95);
+      padding: 48px 20px;
+      overflow: visible;
     }
 
-    footer img {
-        max-width: 130px;  /* reduce logo size if it's causing overflow */
-        height: auto;
+    /* Use auto-fit so columns collapse when screen shrinks */
+    .footer-grid {
+      max-width:1200px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap:20px;
+      align-items:start;
+      width:100%;
     }
 
-    footer * {
-        max-width: 100%;
-        flex-wrap: wrap;
-    }
-}
+    .footer-brand .brand-strap { color: #eaf6f6; font-size:20px; transform:none; margin-bottom:6px; }
+    .footer-brand p { color: rgba(255,255,255,0.78); margin-top:8px; max-width:100%; }
 
-
-    /* Footer */
-    footer{ background: var(--footer-bg); color: rgba(255,255,255,0.9); padding: 48px 20px; }
-    .footer-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns: repeat(4, 1fr); gap:28px; align-items:start; }
-    .footer-brand .brand-strap { color: #eaf6f6; font-size:20px; transform:none; }
-    .footer-brand p { color: rgba(255,255,255,0.78); margin-top:8px; max-width:320px; }
-    footer a { color: rgba(255,255,255,0.9); text-decoration:none; }
+    footer a { color: rgba(255,255,255,0.92); text-decoration:none; word-break:break-word; }
     footer a:hover { color: var(--footer-accent); text-decoration:underline; }
-    .footer-small { max-width:1200px; margin:20px auto 0; color: rgba(255,255,255,0.6); font-size:13px; padding-top:8px; border-top:1px solid rgba(255,255,255,0.03); }
-    .social-links a { display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:8px; background: rgba(255,255,255,0.04); transition: transform .18s ease; }
+
+    /* ensure lists cannot overflow */
+    .footer-grid ul { padding:0; margin:0; list-style:none; max-width:100%; }
+    .footer-grid li { margin-bottom:8px; word-break: break-word; hyphens:auto; }
+
+    .footer-small { max-width:1200px; margin:20px auto 0; color: rgba(255,255,255,0.6); font-size:13px; padding-top:8px; border-top:1px solid rgba(255,255,255,0.03); width:100%; }
+
+    .social-links a { display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:10px; background: rgba(255,255,255,0.04); transition: transform .18s ease; text-decoration:none; }
+    .social-links a svg { width:18px; height:18px; display:block; }
     .social-links a:hover { transform: translateY(-3px); background: rgba(255,255,255,0.06); }
 
-    /* lightbox */
+    /* mobile footer tweaks */
+    @media (max-width:900px){
+      footer { padding:30px 16px; }
+      .footer-grid { gap:16px; }
+      .social-links a{ width:36px; height:36px; }
+    }
+
+    @media (max-width:520px){
+      footer { padding:20px 12px; }
+      .footer-grid { gap:12px; }
+      .footer-small { margin-top:12px; font-size:12px; }
+    }
+
+    /* Lightbox */
     #lightbox .lightbox-wrap { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.85); z-index:99999; }
     #lightbox img { max-width:95%; max-height:92vh; border-radius:6px; }
   </style>
@@ -302,23 +323,23 @@ footer {
 
       <div>
         <h4 class="font-semibold mb-3" style="color:#e6f0ff">Spaces</h4>
-        <ul style="list-style:none; padding:0; margin:0; color:rgba(255,255,255,0.82);">
-          <li style="margin-bottom:8px;"><a href="#top">DaisyMo Collective</a></li>
-          <li style="margin-bottom:8px;"><a href="#top">Self by DMC</a></li>
+        <ul>
+          <li><a href="#top">DaisyMo Collective</a></li>
+          <li><a href="#top">Self by DMC</a></li>
         </ul>
       </div>
 
       <div>
         <h4 class="font-semibold mb-3" style="color:#e6f0ff">Contact</h4>
-        <ul style="list-style:none; padding:0; margin:0; color:rgba(255,255,255,0.82);">
-          <li style="margin-bottom:8px;"><a href="mailto:inquiry@daisymocollective.com">inquiry@daisymocollective.com</a></li>
-          <li style="margin-bottom:8px;">📍<a href="https://maps.app.goo.gl/ZraPwQjFs9WjtXud6" target="_blank" rel="noopener noreferrer">10650 County Rd 81, Suite U, Maple Grove, MN 55369</a></li>
+        <ul>
+          <li><a href="mailto:inquiry@daisymocollective.com">inquiry@daisymocollective.com</a></li>
+          <li>📍 <a href="https://maps.app.goo.gl/ZraPwQjFs9WjtXud6" target="_blank" rel="noopener noreferrer">10650 County Rd 81, Suite U, Maple Grove, MN 55369</a></li>
         </ul>
       </div>
 
       <div>
         <h4 class="font-semibold mb-3" style="color:#e6f0ff">Follow Us</h4>
-        <div class="flex items-center gap-3 social-links" style="margin-top:6px;">
+        <div class="social-links" style="margin-top:6px;">
           <a href="https://www.facebook.com/profile.php?id=61576836301594" aria-label="Facebook" target="_blank" rel="noopener noreferrer" title="Facebook">
             <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M22 12.072C22 6.477 17.523 2 11.928 2S1.856 6.477 1.856 12.072C1.856 17.087 5.827 21.166 10.69 21.98v-6.96H8.218v-2.96h2.472V9.845c0-2.444 1.462-3.79 3.7-3.79 1.073 0 2.195.193 2.195.193v2.416h-1.237c-1.219 0-1.597.755-1.597 1.53v1.835h2.716l-.434 2.96h-2.282V22C18.173 21.166 22 17.087 22 12.072z"/></svg>
           </a>
@@ -375,7 +396,7 @@ footer {
 
       // close when clicking outside
       document.addEventListener('click', (e) => {
-        if(!menu.contains(e.target) && !btn.contains(e.target)){
+        if(menu && btn && !menu.contains(e.target) && !btn.contains(e.target)){
           closeMenu();
         }
       });
@@ -458,7 +479,7 @@ footer {
       });
     })();
 
-    // small screens: disable heavy transforms
+    // small screens: disable heavy transforms (optional)
     if(window.matchMedia("(max-width: 768px)").matches){
       document.querySelectorAll('.tile').forEach(t => t.style.transition = 'none');
     }
@@ -468,8 +489,3 @@ footer {
   <script src="https://embed.acuityscheduling.com/embed/button/37261287.js" async></script>
 </body>
 </html>
-
-
-
-
-
