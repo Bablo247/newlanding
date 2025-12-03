@@ -15,10 +15,9 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    /* global box-sizing + prevent accidental horizontal scroll */
+    /* box-sizing + prevent accidental horizontal scroll */
     *, *::before, *::after { box-sizing: border-box; }
     html,body { height:100%; margin:0; padding:0; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
-    /* Prevent accidental horizontal scroll while not hiding valid overflow inside components */
     html { overflow-x: hidden; }
 
     :root{
@@ -80,7 +79,7 @@
     /* background video */
     .background-video{ position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; pointer-events: none; }
 
-    /* HERO - equal rows so images match sizes */
+    /* HERO - 2x2 grid (equal rows by default) */
     .hero { position:relative; overflow:visible; font-family: 'Playfair Display', Georgia, serif; }
     .hero-inner {
       max-width:1200px;
@@ -88,19 +87,25 @@
       padding:56px 20px;
       display:grid;
       grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr; /* equal rows */
+      grid-template-rows: 1fr 1fr;
       gap:28px;
       align-items:stretch;
       min-height: 420px;
     }
 
-    /* cells */
     .hero-cell { border-radius:10px; overflow:hidden; display:flex; align-items:stretch; background:transparent; }
-    /* Fixed desktop image height so both images are the same size */
+    /* desktop image height so both images same size */
     .cell-image { height: 360px; min-height: 360px; position:relative; }
     .cell-image img { width:100%; height:100%; object-fit:cover; object-position:center; display:block; }
 
     .cell-text { padding:24px; display:flex; flex-direction:column; justify-content:center; background:transparent; }
+
+    /* <-- IMPORTANT: use clamp so desktop edits replicate but scale on mobile -->
+       kicker: desktop you set very large (2.5rem). clamp() will:
+       - minimum: 1.1rem (mobile readable)
+       - preferred: 4vw (fluid)
+       - maximum: 2.5rem (your desktop size)
+    */
     .cell-text .kicker{
       display:inline-block;
       background: linear-gradient(90deg, rgba(238,238,238,0.08), rgba(238,238,238,0.06));
@@ -108,10 +113,19 @@
       font-weight:900;
       padding:6px 12px;
       border-radius:999px;
-      font-size:2.5rem; /* increased kicker font size as requested */
+      font-size: clamp(1.1rem, 4vw, 2.5rem);
       margin-bottom:10px;
+      line-height:1;
     }
-    .cell-text .hero-p{ color:rgba(7,19,58,0.9); font-size:26px; margin-bottom:12px; max-width:48ch; }
+
+    /* hero paragraph size also fluid but respects your desktop 26px */
+    .cell-text .hero-p{
+      color:rgba(7,19,58,0.9);
+      font-size: clamp(15px, 2.6vw, 26px);
+      margin-bottom:12px;
+      max-width:48ch;
+      line-height:1.18;
+    }
 
     /* place cells: TL image, TR text, BL text, BR image */
     .cell-tl { grid-column: 1 / 2; grid-row: 1 / 2; }
@@ -119,7 +133,7 @@
     .cell-bl { grid-column: 1 / 2; grid-row: 2 / 3; }
     .cell-br { grid-column: 2 / 3; grid-row: 2 / 3; }
 
-    /* stacked mobile — override fixed height so images scale naturally */
+    /* stacked mobile: keep content but replicate text sizes using clamp above */
     @media (max-width:1000px){
       .hero-inner {
         grid-template-columns: 1fr;
@@ -128,19 +142,22 @@
         padding:28px 16px;
       }
       .cell-tl, .cell-tr, .cell-bl, .cell-br { grid-column: 1 / -1; grid-row: auto; }
-      .cell-image { height: auto; min-height: 200px; } /* mobile-friendly */
+      .cell-image { height: auto; min-height: 200px; }
       .cell-text { padding:18px; }
       .mobile-toggle { display:inline-flex; }
-      .header-right .cta-primary, .header-right .acuity-embed-button { display:none !important; } /* keep header tidy on small */
+      .header-right .cta-primary, .header-right .acuity-embed-button { display:none !important; }
     }
 
+    /* tighten very small screens while preserving relative / scaled sizes */
     @media (max-width:520px){
       .hero-inner { padding:20px 12px; gap:12px; min-height:0; }
-      .cell-text .kicker { font-size:1.9rem; padding:5px 10px; }
-      .cell-text .hero-p { font-size:15px; max-width:100%; }
+      .cell-text { padding:12px; }
+      /* clamp already reduces kicker and hero-p; set small adjustments */
+      .cell-text .kicker { font-size: clamp(1rem, 6.6vw, 2.1rem); padding:5px 10px; }
+      .cell-text .hero-p { font-size: clamp(14px, 4.2vw, 20px); }
     }
 
-    /* FOOTER - responsive, no horizontal overflow */
+    /* FOOTER - responsive */
     footer{
       background: var(--footer-bg);
       color: rgba(255,255,255,0.95);
@@ -148,7 +165,6 @@
       overflow: visible;
     }
 
-    /* Use auto-fit so columns collapse when screen shrinks */
     .footer-grid {
       max-width:1200px;
       margin:0 auto;
@@ -165,7 +181,6 @@
     footer a { color: rgba(255,255,255,0.92); text-decoration:none; word-break:break-word; }
     footer a:hover { color: var(--footer-accent); text-decoration:underline; }
 
-    /* ensure lists cannot overflow */
     .footer-grid ul { padding:0; margin:0; list-style:none; max-width:100%; }
     .footer-grid li { margin-bottom:8px; word-break: break-word; hyphens:auto; }
 
@@ -175,13 +190,11 @@
     .social-links a svg { width:18px; height:18px; display:block; }
     .social-links a:hover { transform: translateY(-3px); background: rgba(255,255,255,0.06); }
 
-    /* mobile footer tweaks */
     @media (max-width:900px){
       footer { padding:30px 16px; }
       .footer-grid { gap:16px; }
       .social-links a{ width:36px; height:36px; }
     }
-
     @media (max-width:520px){
       footer { padding:20px 12px; }
       .footer-grid { gap:12px; }
@@ -364,7 +377,7 @@
     // set year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // reveal on scroll
+    // reveal on scroll (basic)
     const io = new IntersectionObserver((entries)=>{
       entries.forEach(e=>{
         if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
@@ -372,53 +385,20 @@
     }, { threshold: 0.16 });
     document.querySelectorAll('.reveal-up').forEach(el => io.observe(el));
 
-    // Book menu toggle (accessible)
+    // Book menu toggle
     (function(){
       const btn = document.getElementById('bookMenuBtn');
       const menu = document.getElementById('bookMenu');
       if(!btn || !menu) return;
-
-      function openMenu(){
-        btn.setAttribute('aria-expanded','true');
-        menu.setAttribute('aria-hidden','false');
-        const first = menu.querySelector('[role="menuitem"]');
-        if(first) first.focus();
-      }
-      function closeMenu(){
-        btn.setAttribute('aria-expanded','false');
-        menu.setAttribute('aria-hidden','true');
-      }
-
-      btn.addEventListener('click', (e) => {
-        const expanded = btn.getAttribute('aria-expanded') === 'true';
-        if(expanded) closeMenu(); else openMenu();
-      });
-
-      // close when clicking outside
-      document.addEventListener('click', (e) => {
-        if(menu && btn && !menu.contains(e.target) && !btn.contains(e.target)){
-          closeMenu();
-        }
-      });
-
-      // keyboard support
-      btn.addEventListener('keydown', (e) => {
-        if(e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          openMenu();
-        }
-        if(e.key === 'Escape') closeMenu();
-      });
-      menu.addEventListener('keydown', (e) => {
-        const items = Array.from(menu.querySelectorAll('[role="menuitem"]'));
-        const idx = items.indexOf(document.activeElement);
-        if(e.key === 'ArrowDown'){ e.preventDefault(); const next = items[(idx+1) % items.length]; if(next) next.focus(); }
-        if(e.key === 'ArrowUp'){ e.preventDefault(); const prev = items[(idx-1 + items.length) % items.length]; if(prev) prev.focus(); }
-        if(e.key === 'Escape'){ closeMenu(); btn.focus(); }
-      });
+      function openMenu(){ btn.setAttribute('aria-expanded','true'); menu.setAttribute('aria-hidden','false'); const first = menu.querySelector('[role="menuitem"]'); if(first) first.focus(); }
+      function closeMenu(){ btn.setAttribute('aria-expanded','false'); menu.setAttribute('aria-hidden','true'); }
+      btn.addEventListener('click', (e) => { const expanded = btn.getAttribute('aria-expanded') === 'true'; if(expanded) closeMenu(); else openMenu(); });
+      document.addEventListener('click', (e) => { if(menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) closeMenu(); });
+      btn.addEventListener('keydown', (e) => { if(e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openMenu(); } if(e.key === 'Escape') closeMenu(); });
+      menu.addEventListener('keydown', (e) => { const items = Array.from(menu.querySelectorAll('[role="menuitem"]')); const idx = items.indexOf(document.activeElement); if(e.key === 'ArrowDown'){ e.preventDefault(); const next = items[(idx+1) % items.length]; if(next) next.focus(); } if(e.key === 'ArrowUp'){ e.preventDefault(); const prev = items[(idx-1 + items.length) % items.length]; if(prev) prev.focus(); } if(e.key === 'Escape'){ closeMenu(); btn.focus(); } });
     })();
 
-    // Simple lightbox for gallery & hero images
+    // Simple lightbox for hero images
     (function(){
       const lightbox = document.getElementById('lightbox');
       function openLightbox(src, alt){
@@ -428,24 +408,18 @@
         wrapper.tabIndex = 0;
         wrapper.innerHTML = `<img src="${src}" alt="${alt||'Image'}" loading="eager">`;
         wrapper.addEventListener('click', ()=> { lightbox.innerHTML=''; lightbox.setAttribute('aria-hidden','true'); document.body.style.overflow=''; });
-        wrapper.addEventListener('keydown', (e)=> { if(e.key === 'Escape') { lightbox.innerHTML=''; lightbox.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }}); 
+        wrapper.addEventListener('keydown', (e)=> { if(e.key === 'Escape') { lightbox.innerHTML=''; lightbox.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }});
         lightbox.appendChild(wrapper);
         lightbox.setAttribute('aria-hidden','false');
         document.body.style.overflow = 'hidden';
         wrapper.focus();
       }
-
-      // delegate clicks from images in hero and gallery
       document.addEventListener('click', (e) => {
         const img = e.target.closest('img');
         if(!img) return;
-        // don't open if link was clicked
         if(e.target.closest('a')) return;
-        // open for images that are inside hero or gallery
         const insideHero = img.closest('.hero-inner') || img.closest('#gallery');
-        if(insideHero) {
-          openLightbox(img.src, img.alt);
-        }
+        if(insideHero) openLightbox(img.src, img.alt);
       });
       document.addEventListener('keydown', (e) => { if(e.key === 'Escape'){ lightbox.innerHTML=''; lightbox.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }});
     })();
@@ -455,42 +429,16 @@
       const mobileBtn = document.getElementById('mobileBtn');
       const mobileNav = document.getElementById('mobileNav');
       if(!mobileBtn || !mobileNav) return;
-
-      function openMobileNav(){
-        mobileNav.style.display = 'block';
-        mobileNav.setAttribute('aria-hidden','false');
-        mobileBtn.setAttribute('aria-expanded','true');
-      }
-      function closeMobileNav(){
-        mobileNav.style.display = 'none';
-        mobileNav.setAttribute('aria-hidden','true');
-        mobileBtn.setAttribute('aria-expanded','false');
-      }
-
+      function openMobileNav(){ mobileNav.style.display = 'block'; mobileNav.setAttribute('aria-hidden','false'); mobileBtn.setAttribute('aria-expanded','true'); }
+      function closeMobileNav(){ mobileNav.style.display = 'none'; mobileNav.setAttribute('aria-hidden','true'); mobileBtn.setAttribute('aria-expanded','false'); }
       mobileBtn.addEventListener('click', function(e){ if(mobileNav.style.display === 'block') closeMobileNav(); else openMobileNav(); });
       mobileNav.addEventListener('click', function(e){ if(e.target.closest('a')) closeMobileNav(); });
       document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeMobileNav(); });
-      document.addEventListener('click', function(e){
-        if(!mobileNav || !mobileBtn) return;
-        const target = e.target;
-        if(mobileNav.style.display === 'block' && !mobileNav.contains(target) && !mobileBtn.contains(target)){
-          closeMobileNav();
-        }
-      });
+      document.addEventListener('click', function(e){ if(!mobileNav || !mobileBtn) return; const target = e.target; if(mobileNav.style.display === 'block' && !mobileNav.contains(target) && !mobileBtn.contains(target)){ closeMobileNav(); } });
     })();
-
-    // small screens: disable heavy transforms (optional)
-    if(window.matchMedia("(max-width: 768px)").matches){
-      document.querySelectorAll('.tile').forEach(t => t.style.transition = 'none');
-    }
   </script>
 
   <!-- Acuity embed script -->
   <script src="https://embed.acuityscheduling.com/embed/button/37261287.js" async></script>
 </body>
 </html>
-
-
-
-
-
