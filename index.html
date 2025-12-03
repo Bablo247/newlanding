@@ -124,6 +124,37 @@
       .cell-text .kicker { font-size:26px; padding:5px 10px; }
       .cell-text .hero-p { font-size:12px; max-width:100%; }
     }
+    /* Prevent footer overflow on mobile */
+footer {
+    overflow-x: hidden;
+}
+
+/* Make footer items stack nicely */
+@media (max-width: 768px) {
+    footer .footer-content,
+    footer .footer-links,
+    footer .footer-columns,
+    footer ul {
+        flex-direction: column !important;
+        text-align: center;
+        width: 100% !important;
+    }
+
+    footer ul li {
+        margin: 8px 0;
+    }
+
+    footer img {
+        max-width: 130px;  /* reduce logo size if it's causing overflow */
+        height: auto;
+    }
+
+    footer * {
+        max-width: 100%;
+        flex-wrap: wrap;
+    }
+}
+
 
     /* Footer */
     footer{ background: var(--footer-bg); color: rgba(255,255,255,0.9); padding: 48px 20px; }
@@ -437,6 +468,7 @@
   <script src="https://embed.acuityscheduling.com/embed/button/37261287.js" async></script>
 </body>
 </html>
+
 
 
 
